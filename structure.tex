@@ -1,0 +1,28 @@
+\pagenumbering{gobble}
+\begin{frame}[plain]
+    \centering
+    \maketitle
+\end{frame}
+\pagenumbering{arabic}
+
+
+\section{Sommario}
+\begin{frame}[allowframebreaks]
+    \frametitle{Sommario}
+    \setbeamertemplate{section in toc}[sections numbered]
+    \tableofcontents
+\end{frame}
+
+%\input delle sezioni da mettere nella presentazione
+\input{Sections/initial testing/testMain.tex}
+\input{Sections/grasp/graspMain.tex}
+\input{Sections/solid/solidMain.tex}
+\input{Sections/gof/gofMain.tex}
+\input{Sections/refactor/refactorMain.tex}
+\input{Sections/final testing/finalTestMain.tex}
+
+\section{Bibliografia}
+\begin{frame}[allowframebreaks]
+    \frametitle{Bibliografia}
+    \bibliography{texmf/bibtex/bib/references.bib}
+\end{frame}

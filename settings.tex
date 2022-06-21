@@ -1,0 +1,68 @@
+%Packages
+\usepackage[utf8]{inputenc}
+\usepackage{pgfpages}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{hyperref}
+
+\title[Ingegneria Del Software]{Elaborato di Ingegneria del Software}
+\author[Claudia Manfredi, Mattia Pavlovic, Elena Tonini]{Claudia Manfredi\newline Mattia Pavlovic\newline Elena Tonini}
+\institute[]{Università degli Studi di Brescia}
+\date{A.A. 2021/2022}
+
+%Settings
+%\usetheme{metropolis}
+\useoutertheme{sidebar}
+\setbeamercovered{transparent}
+\setbeamertemplate{navigation symbols}{}
+
+\bibliographystyle{ieeetr}
+
+\graphicspath{{images/}}
+
+\addtobeamertemplate{navigation symbols}{}{%
+    \usebeamerfont{footline}%
+    \usebeamercolor[fg]{footline}%
+    \hspace{3em}%
+    \raisebox{1.2pt}[1pt][1pt]{\insertframenumber}    
+}
+\setbeamercolor{footline}{fg=black}
+
+\makeatletter
+    \setbeamertemplate{sidebar left}
+    {
+        \beamer@tempdim=\beamer@sidebarwidth%
+        \advance\beamer@tempdim by -6pt%
+        \vskip4em%
+        \insertverticalnavigation{\beamer@sidebarwidth}%
+        \vfill
+        \ifx\beamer@sidebarside\beamer@lefttext%
+        \else%
+            \usebeamercolor{normal text}%
+            \llap{\usebeamertemplate***{navigation symbols}\hskip0.1cm}%
+            \vskip1pt%
+        \fi%
+    }%
+
+    \ifx\beamer@sidebarside\beamer@lefttext%
+        {%
+            \vfill%
+            \llap{\usebeamertemplate***{navigation symbols}\hskip0.1cm}%
+            \vskip1pt
+        }
+    \fi
+
+    \setbeamertemplate{section in sidebar}%{sidebar theme}
+    {%
+    \vbox{%
+        \beamer@sidebarformat{3pt}{section in sidebar}{\insertsectionheadnumber~\insertsectionhead}%
+    }%
+    }
+    \setbeamertemplate{section in sidebar shaded}%{sidebar theme}
+    {%
+    \vbox{%
+        \vskip1ex%
+        \beamer@sidebarformat{3pt}{section in sidebar shaded}{\insertsectionheadnumber~\insertsectionhead}%
+    }%
+    }
+\makeatother
