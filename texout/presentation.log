@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.9)  21 JUN 2022 18:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.9)  21 JUN 2022 19:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -731,17 +731,23 @@ l.14 \end{frame}
 <to be read again> 
                    \relax 
 l.14 \end{frame}
-                 (./Sections/initial testing/testMain.tex (./Sections/initial testing/test01.tex [2pdfTeX warning (ext4): destination with the same identifier (name{Navigation1}) has been already used, duplicate ignored
+                 (./Sections/initial testing/testMain.tex (./Sections/initial testing/test01.tex
+<images//initial testing/testApplicazione.png, id=81, 775.39688pt x 453.19313pt>
+File: images//initial testing/testApplicazione.png Graphic file (type png)
+<use images//initial testing/testApplicazione.png>
+Package pdftex.def Info: images//initial testing/testApplicazione.png  used on input line 23.
+(pdftex.def)             Requested size: 305.43423pt x 178.51488pt.
+ [2pdfTeX warning (ext4): destination with the same identifier (name{Navigation1}) has been already used, duplicate ignored
 
 \pgfpages@shipoutshipoutbox ...physicalpagesizes }
                                                   \endgroup 
-l.7 \end{frame}
-               pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
+l.23 \end{frame}
+                pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 
 \pgfpages@shipoutshipoutbox ...physicalpagesizes }
                                                   \endgroup 
-l.7 \end{frame}
-               
+l.23 \end{frame}
+                
 
 
 ] [3
@@ -750,26 +756,26 @@ pdfTeX warning (ext4): destination with the same identifier (name{Navigation2}) 
 
 \pgfpages@shipoutshipoutbox ...physicalpagesizes }
                                                   \endgroup 
-l.11 \end{frame}
+l.27 \end{frame}
                 pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has been already used, duplicate ignored
 
 \pgfpages@shipoutshipoutbox ...physicalpagesizes }
                                                   \endgroup 
-l.11 \end{frame}
+l.27 \end{frame}
                 
 
-] [4
+ <./images//initial testing/testApplicazione.png>] [4
 
 pdfTeX warning (ext4): destination with the same identifier (name{Navigation3}) has been already used, duplicate ignored
 
 \pgfpages@shipoutshipoutbox ...physicalpagesizes }
                                                   \endgroup 
-l.15 \end{frame}
+l.31 \end{frame}
                 pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has been already used, duplicate ignored
 
 \pgfpages@shipoutshipoutbox ...physicalpagesizes }
                                                   \endgroup 
-l.15 \end{frame}
+l.31 \end{frame}
                 
 
 ] [5
@@ -778,12 +784,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{Navigation4}) 
 
 \pgfpages@shipoutshipoutbox ...physicalpagesizes }
                                                   \endgroup 
-l.19 \end{frame}
+l.35 \end{frame}
                 pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has been already used, duplicate ignored
 
 \pgfpages@shipoutshipoutbox ...physicalpagesizes }
                                                   \endgroup 
-l.19 \end{frame}
+l.35 \end{frame}
                 
 
 ] [6
@@ -792,12 +798,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{Navigation5}) 
 
 \pgfpages@shipoutshipoutbox ...physicalpagesizes }
                                                   \endgroup 
-l.23 \end{frame}
+l.39 \end{frame}
                 pdfTeX warning (ext4): destination with the same identifier (name{page.5}) has been already used, duplicate ignored
 
 \pgfpages@shipoutshipoutbox ...physicalpagesizes }
                                                   \endgroup 
-l.23 \end{frame}
+l.39 \end{frame}
                 
 
 ] [7
@@ -806,12 +812,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{Navigation6}) 
 
 \pgfpages@shipoutshipoutbox ...physicalpagesizes }
                                                   \endgroup 
-l.27 \end{frame}
+l.43 \end{frame}
                 pdfTeX warning (ext4): destination with the same identifier (name{page.6}) has been already used, duplicate ignored
 
 \pgfpages@shipoutshipoutbox ...physicalpagesizes }
                                                   \endgroup 
-l.27 \end{frame}
+l.43 \end{frame}
                 
 
 ] [8
@@ -820,12 +826,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{Navigation7}) 
 
 \pgfpages@shipoutshipoutbox ...physicalpagesizes }
                                                   \endgroup 
-l.31 \end{frame}
+l.47 \end{frame}
                 pdfTeX warning (ext4): destination with the same identifier (name{page.7}) has been already used, duplicate ignored
 
 \pgfpages@shipoutshipoutbox ...physicalpagesizes }
                                                   \endgroup 
-l.31 \end{frame}
+l.47 \end{frame}
                 
 
 ] [9
@@ -834,12 +840,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{Navigation8}) 
 
 \pgfpages@shipoutshipoutbox ...physicalpagesizes }
                                                   \endgroup 
-l.35 \end{frame}
+l.51 \end{frame}
                 pdfTeX warning (ext4): destination with the same identifier (name{page.8}) has been already used, duplicate ignored
 
 \pgfpages@shipoutshipoutbox ...physicalpagesizes }
                                                   \endgroup 
-l.35 \end{frame}
+l.51 \end{frame}
                 
 
 ])) (./Sections/MVC/mvcMain.tex) (./Sections/grasp/graspMain.tex) (./Sections/solid/solidMain.tex) (./Sections/gof/gofMain.tex) (./Sections/refactor/refactorMain.tex) (./Sections/final testing/finalTestMain.tex)
@@ -887,18 +893,18 @@ Package rerunfilecheck Info: File `presentation.out' has not changed.
 (rerunfilecheck)             Checksum: 2DC04087EBD2BA52FC1822B264F13266;1085.
  ) 
 Here is how much of TeX's memory you used:
- 21707 strings out of 479390
- 421662 string characters out of 5870921
- 684548 words of memory out of 5000000
- 39253 multiletter control sequences out of 15000+600000
- 471377 words of font info for 35 fonts, out of 8000000 for 9000
+ 21724 strings out of 479390
+ 422132 string characters out of 5870921
+ 685548 words of memory out of 5000000
+ 39265 multiletter control sequences out of 15000+600000
+ 471839 words of font info for 37 fonts, out of 8000000 for 9000
  430 hyphenation exceptions out of 8191
  99i,16n,104p,474b,592s stack positions out of 5000i,500n,10000p,200000b,80000s
-<c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb>
-Output written on texout/presentation.pdf (11 pages, 65977 bytes).
+<c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
+Output written on texout/presentation.pdf (11 pages, 214733 bytes).
 PDF statistics:
- 276 PDF objects out of 1000 (max. 8388607)
- 236 compressed objects within 3 object streams
+ 289 PDF objects out of 1000 (max. 8388607)
+ 243 compressed objects within 3 object streams
  30 named destinations out of 1000 (max. 500000)
- 115 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 120 words of extra memory for PDF output out of 10000 (max. 10000000)
 

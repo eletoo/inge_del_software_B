@@ -1193,6 +1193,13 @@ INPUT ./Sections/initial testing/test01.tex
 INPUT Sections/initial testing/test01.tex
 INPUT ./Sections/initial testing/test01.tex
 INPUT Sections/initial testing/test01.tex
+INPUT ./images//initial testing/testApplicazione.png
+INPUT ./images//initial testing/testApplicazione.png
+INPUT images//initial testing/testApplicazione.png
+INPUT ./images//initial testing/testApplicazione.png
+INPUT ./images//initial testing/testApplicazione.png
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm
 INPUT ./Sections/MVC/mvcMain.tex
 INPUT Sections/MVC/mvcMain.tex
 INPUT ./Sections/MVC/mvcMain.tex
@@ -1227,3 +1234,5 @@ INPUT c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb
 INPUT c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb
 INPUT c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb
 INPUT c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb
+INPUT c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb
+INPUT c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb
