@@ -1193,6 +1193,10 @@ INPUT ./Sections/initial testing/test01.tex
 INPUT Sections/initial testing/test01.tex
 INPUT ./Sections/initial testing/test01.tex
 INPUT Sections/initial testing/test01.tex
+INPUT ./Sections/MVC/mvcMain.tex
+INPUT Sections/MVC/mvcMain.tex
+INPUT ./Sections/MVC/mvcMain.tex
+INPUT Sections/MVC/mvcMain.tex
 INPUT ./Sections/grasp/graspMain.tex
 INPUT Sections/grasp/graspMain.tex
 INPUT ./Sections/grasp/graspMain.tex

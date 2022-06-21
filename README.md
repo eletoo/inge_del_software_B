@@ -1,6 +1,6 @@
 # STRUTTURA GERARCHICA DEI FILE
 Nel file `structure.tex` si possono inserire le sezioni che si vogliono introdurre nella presentazione.
-Si è posto ogni "capitolo" della presentazione (testing, MVC, pattern Grasp, pattern SOLID, refactoring, testing finale) in una sezione diversa, in modo tale da ridurre l'articolazione della struttura della presentazione, perlomeno in fase di scrittura.
+Si è posto ogni "capitolo" della presentazione (testing, MVC, pattern Grasp, principi SOLID, pattern GoF, refactoring, testing finale) in una sezione diversa, in modo tale da ridurre l'articolazione della struttura della presentazione, perlomeno in fase di scrittura.
 
 Nella sezione `settings.tex` si trova la definizione dell'intestazione con autore, titolo, istituto e data.
 

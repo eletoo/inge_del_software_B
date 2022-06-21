@@ -1,8 +1,9 @@
 \beamer@sectionintoc {1}{Sommario}{1}{0}{1}
 \beamer@sectionintoc {2}{Testing della Versione 5}{2}{0}{2}
-\beamer@sectionintoc {3}{Pattern GRASP}{10}{0}{3}
-\beamer@sectionintoc {4}{Principi SOLID}{10}{0}{4}
-\beamer@sectionintoc {5}{Pattern della Gang of Four}{10}{0}{5}
-\beamer@sectionintoc {6}{Refactoring}{10}{0}{6}
-\beamer@sectionintoc {7}{Testing finale}{10}{0}{7}
-\beamer@sectionintoc {8}{Bibliografia}{10}{0}{8}
+\beamer@sectionintoc {3}{Pattern MVC}{10}{0}{3}
+\beamer@sectionintoc {4}{Pattern GRASP}{10}{0}{4}
+\beamer@sectionintoc {5}{Principi SOLID}{10}{0}{5}
+\beamer@sectionintoc {6}{Pattern della Gang of Four}{10}{0}{6}
+\beamer@sectionintoc {7}{Refactoring}{10}{0}{7}
+\beamer@sectionintoc {8}{Testing finale}{10}{0}{8}
+\beamer@sectionintoc {9}{Bibliografia}{10}{0}{9}

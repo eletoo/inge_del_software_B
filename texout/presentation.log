@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.9)  21 JUN 2022 18:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.9)  21 JUN 2022 18:46
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -842,7 +842,7 @@ l.35 \end{frame}
 l.35 \end{frame}
                 
 
-])) (./Sections/grasp/graspMain.tex) (./Sections/solid/solidMain.tex) (./Sections/gof/gofMain.tex) (./Sections/refactor/refactorMain.tex) (./Sections/final testing/finalTestMain.tex)
+])) (./Sections/MVC/mvcMain.tex) (./Sections/grasp/graspMain.tex) (./Sections/solid/solidMain.tex) (./Sections/gof/gofMain.tex) (./Sections/refactor/refactorMain.tex) (./Sections/final testing/finalTestMain.tex)
 No file presentation.bbl.
 [10
 
@@ -850,12 +850,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{Navigation9}) 
 
 \pgfpages@shipoutshipoutbox ...physicalpagesizes }
                                                   \endgroup 
-l.28 \end{frame}
+l.29 \end{frame}
                 pdfTeX warning (ext4): destination with the same identifier (name{page.9}) has been already used, duplicate ignored
 
 \pgfpages@shipoutshipoutbox ...physicalpagesizes }
                                                   \endgroup 
-l.28 \end{frame}
+l.29 \end{frame}
                 
 
 ])
@@ -884,21 +884,21 @@ l.11 \end{document}
 
 ] (texout/presentation.aux)
 Package rerunfilecheck Info: File `presentation.out' has not changed.
-(rerunfilecheck)             Checksum: 222325618BD82785D07F95562363D2F9;984.
+(rerunfilecheck)             Checksum: 2DC04087EBD2BA52FC1822B264F13266;1085.
  ) 
 Here is how much of TeX's memory you used:
- 21696 strings out of 479390
- 421486 string characters out of 5870921
- 683547 words of memory out of 5000000
- 39247 multiletter control sequences out of 15000+600000
+ 21707 strings out of 479390
+ 421662 string characters out of 5870921
+ 684548 words of memory out of 5000000
+ 39253 multiletter control sequences out of 15000+600000
  471377 words of font info for 35 fonts, out of 8000000 for 9000
  430 hyphenation exceptions out of 8191
  99i,16n,104p,474b,592s stack positions out of 5000i,500n,10000p,200000b,80000s
 <c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb>
-Output written on texout/presentation.pdf (11 pages, 65417 bytes).
+Output written on texout/presentation.pdf (11 pages, 65977 bytes).
 PDF statistics:
- 260 PDF objects out of 1000 (max. 8388607)
- 220 compressed objects within 3 object streams
- 29 named destinations out of 1000 (max. 500000)
- 107 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 276 PDF objects out of 1000 (max. 8388607)
+ 236 compressed objects within 3 object streams
+ 30 named destinations out of 1000 (max. 500000)
+ 115 words of extra memory for PDF output out of 10000 (max. 10000000)
 
