@@ -1,34 +1,23 @@
-package controller.actions;
+package main.controller.actions;
 
-public class Register extends ExecutableAction{
-    private String message;
+import main.controller.Selectable;
+import main.Application;
+import main.model.Registration;
+
+public class Register implements Selectable {
+    private String actionName;
 
     public Register() {
-        this.message="Registrati";
+        this.actionName ="Registrati";
     }
 
     @Override
-    public void runAction() {
-        //DECISAMENTE DA CORREGGERE
+    public void runAction(Application app) {
+        Registration.registerUser(app);
+    }
 
-        controller.dataStore.load();
-        if (controller.dataStore.isEmpty()) {
-            view.message("Non c'è alcun utente registrato -- crea un primo profilo Configuratore");
-            controller.firstAccessAsConfiguratore();
-        } else {
-            String choice = view.in("Seleziona la modalità con cui vuoi registrarti:\n1. Configuratore\n2. Fruitore");
-            switch (choice) {
-                case "1": {
-                    controller.firstAccessAsConfiguratore();
-                }
-                break;
-                case "2": {
-                    controller.firstAccessAsFruitore();
-                }
-                break;
-                default:
-                    view.errorMessage(View.ErrorMessage.E_UNAUTHORIZED_CHOICE);
-            }
-        }
+    @Override
+    public String getActionName() {
+        return this.actionName;
     }
 }

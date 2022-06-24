@@ -1,13 +1,9 @@
-package controller;
+package main.controller;
 
-import controller.actions.Access;
-import controller.actions.Exit;
-import controller.actions.Register;
-import model.*;
-import org.jetbrains.annotations.NotNull;
-import view.*;
-import view.actions.*;
-
+import main.Application;
+import main.controller.actions.Exit;
+import main.model.*;
+import main.view.*;
 import java.io.IOException;
 import java.util.*;
 
@@ -15,31 +11,20 @@ public class Controller {
 
     //parla con la view
 
-    private Controller() throws IOException {
-    }
-
     public static void run() throws IOException {
-        Controller c = new Controller();
-        //fa cose
+
+        Application app = new Application();
 
         LocalPath.createLocalDirectories();
 
         ActionSelection sel = new ActionSelection();
 
-        List<Selectable> selectable = initiateSelectableList();
+        List<Selectable> selectable = Context.initiateSelectableList();
         Selectable selected;
         do {
-            selected = sel.selectAction(selectable);//seleziono l'opzione da eseguire
-            selected.runAction();
+            selected = sel.selectAction(selectable, Selectable::getActionName);
+            selected.runAction(app);
         } while (!(selected instanceof Exit));
-    }
-
-    private static @NotNull List<Selectable> initiateSelectableList() {
-        List<Selectable> initialSelections = new LinkedList<>();
-        initialSelections.add(new Access());
-        initialSelections.add(new Register());
-        initialSelections.add(new Exit());
-        return initialSelections;
     }
 
 }

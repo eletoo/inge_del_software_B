@@ -1,4 +1,4 @@
-package view;
+package main.view;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;

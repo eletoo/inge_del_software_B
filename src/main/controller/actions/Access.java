@@ -1,18 +1,21 @@
-package controller.actions;
+package main.controller.actions;
 
-public class Access extends ExecutableAction{
-    private String message;
+import main.controller.Selectable;
+import main.Application;
+
+public class Access implements Selectable {
+    private String actionName;
 
     public Access() {
-        this.message="Accedi";
+        this.actionName ="Accedi";
     }
 
     @Override
-    public void runAction() {
+    public void runAction(Application app) {
         //DECISAMENTE DA CORREGGERE
 
-        controller.dataStore.load();
-        if (controller.dataStore.isEmpty()) {
+        app.getUserDataStore().load();
+        if (app.getUserDataStore().isEmpty()) {
             view.message("Non c'è alcun utente registrato -- crea un primo profilo Configuratore");
             controller.firstAccessAsConfiguratore();
         } else {
@@ -27,5 +30,10 @@ public class Access extends ExecutableAction{
                 view.errorMessage(View.ErrorMessage.E_UNREGISTERED_USER);
             }
         }
+    }
+
+    @Override
+    public String getActionName() {
+        return this.actionName;
     }
 }

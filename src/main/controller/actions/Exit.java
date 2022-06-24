@@ -1,16 +1,22 @@
-package controller.actions;
+package main.controller.actions;
 
-public class Exit extends ExecutableAction{
-    private String message;
+import main.controller.Selectable;
+import main.Application;
+
+public class Exit implements Selectable {
+    private String actionName;
 
     public Exit() {
-        this.message="Esci";
+        this.actionName ="Esci";
     }
 
     @Override
-    public void runAction() {
-        //DECISAMENTE DA CORREGGERE
+    public void runAction(Application app) {
+        System.exit(0);
+    }
 
-        view.interactionMessage(View.InteractionMessage.EXIT_MESSAGE);
+    @Override
+    public String getActionName() {
+        return this.actionName;
     }
 }

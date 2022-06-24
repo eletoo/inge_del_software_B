@@ -1,5 +1,7 @@
-package view;
+package main.view;
 
+import main.controller.Select;
+import main.controller.Selectable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -8,8 +10,8 @@ import java.util.function.Function;
 public class ActionSelection implements Select {
 
     @Override
-    public Selectable selectAction(List<Selectable> list) {
-        return this.choose(list, null);
+    public Selectable selectAction(List<Selectable> list, Function<Selectable, String> function) {
+        return this.choose(list, function);
     }
 
     public <T> void showList(@NotNull List<T> list) {
@@ -20,7 +22,7 @@ public class ActionSelection implements Select {
         list.forEach(e -> MessagePrinter.printText(function == null ? e.toString() : function.apply(e)));
     }
 
-    public <T> T choose(@NotNull List<T> selections, Function<T, String> function) {
+    private <T> T choose(@NotNull List<T> selections, Function<T, String> function) {
         assert selections.size() > 0;
         MessagePrinter.printText("\nSelezionare un indice.");
         int i = 0;
