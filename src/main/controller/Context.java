@@ -21,4 +21,5 @@ public class Context {
         initialSelections.add(new Exit());
         return initialSelections;
     }
+
 }

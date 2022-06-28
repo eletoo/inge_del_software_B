@@ -4,6 +4,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public enum ErrorMessage {
+    E_EMPTY_USER_DB("Non c'è alcun utente registrato -- crea un primo profilo Configuratore"),
     E_CREDENTIALS_ERROR("Errore nell'inserimento delle credenziali"),
     E_DIFFERENT_PASSWORDS("Le password non coincidono"),
     E_USERNAME_TAKEN("Username già in uso da un altro utente"),

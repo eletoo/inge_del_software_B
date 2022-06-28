@@ -13,7 +13,8 @@ public class Access implements Selectable {
     @Override
     public void runAction(Application app) {
         //DECISAMENTE DA CORREGGERE
-
+        //TODO: implementare accesso
+/*
         app.getUserDataStore().load();
         if (app.getUserDataStore().isEmpty()) {
             view.message("Non c'è alcun utente registrato -- crea un primo profilo Configuratore");
@@ -29,7 +30,7 @@ public class Access implements Selectable {
             } else {
                 view.errorMessage(View.ErrorMessage.E_UNREGISTERED_USER);
             }
-        }
+        }*/
     }
 
     @Override

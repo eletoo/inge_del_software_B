@@ -1,31 +1,30 @@
 package main.model;
 
 import main.Application;
+import main.controller.Controller;
+import main.view.ErrorMessage;
+import main.view.GenericMessage;
 import org.jetbrains.annotations.NotNull;
 
 public class Registration {
 
     public static void registerUser(@NotNull Application app){
 
-        app.getUserDataStore().load();
+        Controller.signalToView(ErrorMessage.E_EMPTY_USER_DB.getMessage());
+        Controller.signalToView(GenericMessage.STD_CREDENTIALS_MSG.getMessage());
 
-        if (app.getUserDataStore().isEmpty()) {
-            view.message("Non c'è alcun utente registrato -- crea un primo profilo Configuratore");
-            controller.firstAccessAsConfiguratore();
-        } else {
-            String choice = view.in("Seleziona la modalità con cui vuoi registrarti:\n1. Configuratore\n2. Fruitore");
-            switch (choice) {
-                case "1": {
-                    controller.firstAccessAsConfiguratore();
-                }
-                break;
-                case "2": {
-                    controller.firstAccessAsFruitore();
-                }
-                break;
-                default:
-                    view.errorMessage(View.ErrorMessage.E_UNAUTHORIZED_CHOICE);
-            }
-        }
+        String username;
+        do{
+            username = RandomItemGenerator.generateRandomString(10);
+        }while(app.getUserDataStore().isUsernameTaken(username));
+
+        String pw = RandomItemGenerator.generateRandomPassword(10);
+
+        Controller.signalToView(username);
+        Controller.signalToView(pw);
+
+        app.getUserDataStore().addUser(new Configuratore(username, pw));
+
     }
+
 }
