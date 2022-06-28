@@ -49,5 +49,4 @@ public class UserDataStore implements Loadable, Saveable{
         return userMap.get(username).authenticate(password);
     }
 
-
 }

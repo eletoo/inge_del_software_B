@@ -1,11 +1,18 @@
 package main.controller.actions;
 
+import main.controller.Controller;
+import main.controller.ListSelect;
 import main.controller.Selectable;
 import main.Application;
 import main.model.*;
+import main.view.GenericMessage;
 import org.jetbrains.annotations.NotNull;
 
-public class Register implements Selectable {
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Register implements Selectable, ListSelect {
     private String actionName;
 
     public Register() {
@@ -19,32 +26,19 @@ public class Register implements Selectable {
 
         if (app.getUserDataStore().isEmpty()) {
 
-            Registration.registerUser(app);
+            Registration.registerUser(UserType.CONFIGURATOR, app);
 
-            if(Logger.loginCurrentConfigurator(app))
+            if (Logger.loginCurrentConfigurator(app))
                 //useAsConfiguratore();
                 //todo: implementare useAsConfiguratore()
                 ;
             return;
         }
 
-        //todo: else seleziona modalità di registrazione
-        /*
-        String choice = view.in("Seleziona la modalità con cui vuoi registrarti:\n1. Configuratore\n2. Fruitore");
-        switch (choice) {
-            case "1": {
-                controller.firstAccessAsConfiguratore();
-            }
-            break;
-            case "2": {
-                controller.firstAccessAsFruitore();
-            }
-            break;
-            default:
-                view.errorMessage(View.ErrorMessage.E_UNAUTHORIZED_CHOICE);
+        Controller.signalToView(GenericMessage.SELECT_PROFILE_TYPE.getMessage());
+        List<UserType> users = Arrays.stream(UserType.values()).collect(Collectors.toList());
 
-    }*/
-
+        Registration.registerUser(choose(users, UserType::getUserType), app);
 
     }
 
@@ -52,4 +46,5 @@ public class Register implements Selectable {
     public String getActionName() {
         return this.actionName;
     }
+
 }

@@ -19,6 +19,7 @@ public class Controller {
         LocalPath.createLocalDirectories();
 
         ActionSelection sel = new ActionSelection();
+        Context context = new Context();
 
         List<Selectable> selectable = Context.initiateSelectableList();
         Selectable selected;

@@ -8,11 +8,15 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Objects;
 
-public abstract class User implements SelectableUser {
+public abstract class User implements UserAction{
     private String username;
     private String hashedPw;
     public boolean privileged;
     public UserType type;
+
+    public String getUserType() {
+        return this.type.getUserType();
+    }
 
     /**
      * @return stringa contenente lo username dell'utente

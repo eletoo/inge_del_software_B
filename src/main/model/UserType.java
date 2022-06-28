@@ -10,7 +10,9 @@ public enum UserType {
 
     private String message;
 
-    public String getMessage(){
+    public String getUserType() {
         return this.message;
     }
+
+
 }

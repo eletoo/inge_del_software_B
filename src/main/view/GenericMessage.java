@@ -10,7 +10,8 @@ public enum GenericMessage {
     STD_CREDENTIALS_MSG("\nPuoi accedere al tuo profilo usando le seguenti credenziali:"),
     CUSTOMIZE_CREDENTIALS("Personalizza le tue credenziali: "),
     CUSTOMIZE_USERNAME("Inserisci il tuo username personalizzato: "),
-    CUSTOMIZE_PW("Inserisci la tua password personalizzata: ");
+    CUSTOMIZE_PW("Inserisci la tua password personalizzata: "),
+    SELECT_PROFILE_TYPE("Seleziona la modalità con cui registrarti: ");
 
     private String message;
 
