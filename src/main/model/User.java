@@ -1,18 +1,17 @@
 package main.model;
 
-import main.Application;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Objects;
 
-public abstract class User implements UserAction {
+public abstract class User implements UserAction, Serializable {
     private String username;
     private String hashedPw;
-    public boolean privileged;
     public UserType type;
 
     public String getUserType() {

@@ -19,7 +19,6 @@ public class Controller {
         LocalPath.createLocalDirectories();
 
         ActionSelection sel = new ActionSelection();
-        Context context = new Context();
 
         List<Selectable> selectable = Context.initiateSelectableList();
         Selectable selected;
@@ -33,12 +32,10 @@ public class Controller {
         MessagePrinter.printText(message);
     }
 
-    //TODO: non mi piace chiamare un nuovo StringReaderClass
     public static String askStringFromView(GenericMessage message) {
         return (new StringReaderClass()).in(message);
     }
 
-    //TODO: non mi piace chiamare un nuovo StringReaderClass
     public static int askIntFromView(GenericMessage message) {
         return (new IntegerReader().in(message));
     }

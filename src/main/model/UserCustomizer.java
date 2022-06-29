@@ -2,13 +2,13 @@ package main.model;
 
 import main.Application;
 import main.controller.Controller;
-import main.view.ErrorMessage;
-import main.view.GenericMessage;
+import main.controller.ErrorMessage;
+import main.controller.GenericMessage;
 import org.jetbrains.annotations.NotNull;
 
 public class UserCustomizer {
 
-    public static void customizeConfiguratore(@NotNull Application app, String currentUsername){
+    public static String customizeConfigurator(@NotNull Application app, String currentUsername){
         Controller.signalToView(GenericMessage.CUSTOMIZE_CREDENTIALS.getMessage());
 
         String username;
@@ -26,5 +26,7 @@ public class UserCustomizer {
         } else {
             Controller.signalToView(ErrorMessage.E_CREDENTIALS_ERROR.getMessage());
         }
+        return currentUsername;
     }
+
 }

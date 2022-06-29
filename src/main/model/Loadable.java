@@ -1,6 +1,8 @@
 package main.model;
 
+import java.io.IOException;
+
 public interface Loadable {
 
-    public void load();
+    void load() throws IOException;
 }

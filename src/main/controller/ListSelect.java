@@ -1,6 +1,5 @@
 package main.controller;
 
-import main.view.GenericMessage;
 import main.view.IntegerReader;
 import main.view.MessagePrinter;
 import org.jetbrains.annotations.NotNull;

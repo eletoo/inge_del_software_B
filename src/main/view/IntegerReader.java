@@ -1,5 +1,8 @@
 package main.view;
 
+import main.controller.ErrorMessage;
+import main.controller.GenericMessage;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -11,7 +14,7 @@ public class IntegerReader implements IntReader{
             try {
                 return new Scanner(System.in).nextInt();
             } catch (NumberFormatException | InputMismatchException e) {
-                ErrorMessage.printErrorMessage(ErrorMessage.E_INVALID_INPUT);
+                MessagePrinter.printText(ErrorMessage.E_INVALID_INPUT.getMessage());
             }
         }
     }

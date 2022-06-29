@@ -1,12 +1,10 @@
-package main.view;
+package main.controller;
 
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 public enum ErrorMessage {
     E_EMPTY_USER_DB("Non c'è alcun utente registrato -- crea un primo profilo Configuratore"),
     E_CREDENTIALS_ERROR("Errore nell'inserimento delle credenziali"),
-    E_DIFFERENT_PASSWORDS("Le password non coincidono"),
     E_USERNAME_TAKEN("Username già in uso da un altro utente"),
     E_UNREGISTERED_USER("Utente non registrato: username inesistente"),
     E_WRONG_PASSWORD("Password errata"),
@@ -37,15 +35,6 @@ public enum ErrorMessage {
     @Contract(pure = true)
     public String getMessage() {
         return this.message;
-    }
-
-    /**
-     * Presenta all'utente un messaggio di errore
-     *
-     * @param err messaggio di errore
-     */
-    public static void printErrorMessage(@NotNull ErrorMessage err) {
-        System.err.println(err.getMessage());
     }
 
 }

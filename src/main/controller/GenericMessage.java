@@ -1,7 +1,6 @@
-package main.view;
+package main.controller;
 
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 public enum GenericMessage {
     SELECT_INDEX("\nSelezionare un indice."),
@@ -23,15 +22,6 @@ public enum GenericMessage {
     @Contract(pure = true)
     public String getMessage() {
         return this.message;
-    }
-
-    /**
-     * Presenta all'utente un messaggio
-     *
-     * @param msg messaggio
-     */
-    public static void printGenericMessage(@NotNull GenericMessage msg) {
-        System.out.println(msg.getMessage());
     }
 
 }

@@ -1,36 +1,42 @@
 package main.controller.actions;
 
+import main.controller.Controller;
 import main.controller.Selectable;
 import main.Application;
+import main.model.Registration;
+import main.controller.ErrorMessage;
+import main.controller.GenericMessage;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 
 public class Access implements Selectable {
     private String actionName;
 
     public Access() {
-        this.actionName ="Accedi";
+        this.actionName = "Accedi";
     }
 
     @Override
-    public void runAction(Application app) {
-        //DECISAMENTE DA CORREGGERE
-        //TODO: implementare accesso
-/*
-        app.getUserDataStore().load();
-        if (app.getUserDataStore().isEmpty()) {
-            view.message("Non c'è alcun utente registrato -- crea un primo profilo Configuratore");
-            controller.firstAccessAsConfiguratore();
-        } else {
-            String username = view.askUsername();
-            if (controller.dataStore.isUsernameTaken(username)) {
-                if (controller.dataStore.getUserMap().get(username) instanceof Configuratore) {
-                    controller.secondAccessAsConfiguratore(username);
-                } else if (controller.dataStore.getUserMap().get(username) instanceof Fruitore) {
-                    controller.secondAccessAsFruitore(username);
-                }
-            } else {
-                view.errorMessage(View.ErrorMessage.E_UNREGISTERED_USER);
+    public void runAction(@NotNull Application app) throws IOException {
+
+        if (Registration.firstAccessEver(app))
+            return;
+
+        String username = Controller.askStringFromView(GenericMessage.USERNAME_REQUEST);
+        if (app.getUserDataStore().isUsernameTaken(username)) {
+
+            if (app.getUserDataStore().isLoginCorrect(username, Controller.askStringFromView(GenericMessage.PASSWORD_REQUEST))) {
+                app.getUserDataStore().getUser(username).runUserMenu();
+                return;
             }
-        }*/
+
+            Controller.signalToView(ErrorMessage.E_WRONG_PASSWORD.getMessage());
+            return;
+        }
+
+        Controller.signalToView(ErrorMessage.E_UNREGISTERED_USER.getMessage());
+
     }
 
     @Override

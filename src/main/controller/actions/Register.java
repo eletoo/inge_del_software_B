@@ -5,9 +5,10 @@ import main.controller.ListSelect;
 import main.controller.Selectable;
 import main.Application;
 import main.model.*;
-import main.view.GenericMessage;
+import main.controller.GenericMessage;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,26 +21,18 @@ public class Register implements Selectable, ListSelect {
     }
 
     @Override
-    public void runAction(@NotNull Application app) {
+    public void runAction(@NotNull Application app) throws IOException {
 
         app.getUserDataStore().load();
 
-        if (app.getUserDataStore().isEmpty()) {
-
-            Registration.registerUser(UserType.CONFIGURATOR, app);
-            User user = Logger.loginFirstConfigurator(app);
-
-            if (user != null)
-                user.runUserMenu();
-            //todo: implementare runUserMenu()
-
+        if(Registration.firstAccessEver(app))
             return;
-        }
 
         Controller.signalToView(GenericMessage.SELECT_PROFILE_TYPE.getMessage());
         List<UserType> users = Arrays.stream(UserType.values()).collect(Collectors.toList());
 
-        Registration.registerUser(choose(users, UserType::getUserType), app);
+        User user = Registration.registerUser(choose(users, UserType::getUserType), app);
+        user.runUserMenu();
 
     }
 

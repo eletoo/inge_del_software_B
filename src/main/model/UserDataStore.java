@@ -1,33 +1,61 @@
 package main.model;
 
+import java.io.*;
 import java.util.*;
 
-public class UserDataStore implements Loadable, Saveable{
+public class UserDataStore implements Loadable, Saveable, Serializable {
 
     private Map<String, User> userMap;
 
-    public UserDataStore(){
+    public UserDataStore() {
         this.userMap = new HashMap<>();
     }
 
     @Override
-    public void load() {
-//todo
+    public void load() throws IOException {
+        String currentDir = System.getProperty("user.dir");
+        var db = new File(currentDir + "/db");
+        assert db.exists() || db.mkdir();
+
+        var uf = new File(currentDir + "/db/users.dat");
+
+        if (uf.exists()) {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(uf));
+            try {
+                this.setUserMap((Map<String, User>) ois.readObject());
+            } catch (ClassNotFoundException | IOException e) {
+                this.setUserMap(new HashMap<>());
+            }
+        } else
+            this.setUserMap(new HashMap<>());
     }
 
-    public void save(){
-        //todo
+    @Override
+    public void save() {
+        FileOutputStream fileOutputStream;
+        ObjectOutputStream objectOutputStream;
+        String currentDir = System.getProperty("user.dir");
+        try {
+            fileOutputStream = new FileOutputStream(currentDir + "/db/users.dat");
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(userMap);
+            objectOutputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return this.userMap.isEmpty();
     }
 
-    public boolean isUsernameTaken(String username){
+    public boolean isUsernameTaken(String username) {
         return userMap.containsKey(username);
     }
 
-    public void addUser(User user){
+    public void addUser(User user) {
         this.userMap.put(user.getUsername(), user);
         this.save();
     }
@@ -49,8 +77,11 @@ public class UserDataStore implements Loadable, Saveable{
         return userMap.get(username).authenticate(password);
     }
 
-    public User getUser(String username){
+    public User getUser(String username) {
         return this.userMap.get(username);
     }
 
+    public void setUserMap(Map<String, User> usermap) {
+        this.userMap = usermap;
+    }
 }

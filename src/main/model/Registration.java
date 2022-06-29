@@ -2,9 +2,11 @@ package main.model;
 
 import main.Application;
 import main.controller.Controller;
-import main.view.ErrorMessage;
-import main.view.GenericMessage;
+import main.controller.ErrorMessage;
+import main.controller.GenericMessage;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 
 public class Registration {
 
@@ -16,7 +18,7 @@ public class Registration {
      * @param userType tipo dell'utente
      * @param app      applicazione
      */
-    public static void registerUser(@NotNull UserType userType, Application app) {
+    public static User registerUser(@NotNull UserType userType, Application app) {
         User user = null;
         switch (userType) {
             case CONFIGURATOR:
@@ -26,8 +28,8 @@ public class Registration {
                 user = registerCustomer(app);
                 break;
         }
-        user.runUserMenu();
-        //todo: rifare perché dipende dai tipi e non è chiuso alla modifica
+        return user;
+        //todo: non è bellissimo...
     }
 
     private static @NotNull User registerConfigurator(@NotNull Application app) {
@@ -62,5 +64,19 @@ public class Registration {
         User f = new Customer(username, Controller.askStringFromView(GenericMessage.PASSWORD_REQUEST));
         app.getUserDataStore().addUser(f);
         return f;
+    }
+
+    public static boolean firstAccessEver(@NotNull Application app) throws IOException {
+        app.getUserDataStore().load();
+        if (app.getUserDataStore().isEmpty()) {
+
+            Registration.registerUser(UserType.CONFIGURATOR, app);
+            User user = Logger.loginFirstConfigurator(app);
+
+            user.runUserMenu();
+
+            return true;
+        }
+        return false;
     }
 }

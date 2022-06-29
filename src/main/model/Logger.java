@@ -2,8 +2,8 @@ package main.model;
 
 import main.Application;
 import main.controller.Controller;
-import main.view.ErrorMessage;
-import main.view.GenericMessage;
+import main.controller.ErrorMessage;
+import main.controller.GenericMessage;
 import org.jetbrains.annotations.NotNull;
 
 public class Logger {
@@ -12,18 +12,19 @@ public class Logger {
 
         boolean auth;
         String username;
+        String newName = "";
         do {
             username = Controller.askStringFromView(GenericMessage.USERNAME_REQUEST);
             auth = app.getUserDataStore().isLoginCorrect(username, Controller.askStringFromView(GenericMessage.PASSWORD_REQUEST));
 
             if (auth) {
-                UserCustomizer.customizeConfiguratore(app, username);
+                newName = UserCustomizer.customizeConfigurator(app, username);
             } else {
                 Controller.signalToView(ErrorMessage.E_CREDENTIALS_ERROR.getMessage());
             }
         } while (!auth);
 
-        return app.getUserDataStore().getUser(username);
+        return app.getUserDataStore().getUser(newName);
     }
 
 }

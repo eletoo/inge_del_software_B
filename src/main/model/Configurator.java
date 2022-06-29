@@ -10,7 +10,6 @@ public class Configurator extends User {
      */
     public Configurator(String _username, String _password) {
         super(_username, _password);
-        privileged = true;
         type = UserType.CONFIGURATOR;
     }
 
