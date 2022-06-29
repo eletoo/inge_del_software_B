@@ -49,4 +49,8 @@ public class UserDataStore implements Loadable, Saveable{
         return userMap.get(username).authenticate(password);
     }
 
+    public User getUser(String username){
+        return this.userMap.get(username);
+    }
+
 }

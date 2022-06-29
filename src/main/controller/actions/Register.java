@@ -27,11 +27,12 @@ public class Register implements Selectable, ListSelect {
         if (app.getUserDataStore().isEmpty()) {
 
             Registration.registerUser(UserType.CONFIGURATOR, app);
+            User user = Logger.loginFirstConfigurator(app);
 
-            if (Logger.loginCurrentConfigurator(app))
-                //useAsConfiguratore();
-                //todo: implementare useAsConfiguratore()
-                ;
+            if (user != null)
+                user.runUserMenu();
+            //todo: implementare runUserMenu()
+
             return;
         }
 

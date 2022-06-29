@@ -1,7 +1,5 @@
 package main.model;
 
-import main.Application;
-
 public class Configurator extends User {
 
     /**

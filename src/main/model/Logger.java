@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class Logger {
 
-    public static boolean loginCurrentConfigurator(@NotNull Application app) {
+    public static User loginFirstConfigurator(@NotNull Application app) {
 
         boolean auth;
         String username;
@@ -23,7 +23,7 @@ public class Logger {
             }
         } while (!auth);
 
-        return true;
+        return app.getUserDataStore().getUser(username);
     }
 
 }

@@ -42,8 +42,8 @@ public class Registration {
 
         String pw = RandomItemGenerator.generateRandomPassword(10);
 
-        Controller.signalToView(username);
-        Controller.signalToView(pw);
+        Controller.signalToView("Username: " + username);
+        Controller.signalToView("Password: " + pw);
 
         User c = new Configurator(username, pw);
         app.getUserDataStore().addUser(c);

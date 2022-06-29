@@ -1,7 +1,5 @@
 package main.model;
 
-import main.Application;
-
 public class Customer extends User {
 
     public Customer(String username, String password) {
