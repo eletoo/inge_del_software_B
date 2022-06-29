@@ -1,5 +1,6 @@
 package main.model;
 
+import main.Application;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -8,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Objects;
 
-public abstract class User implements UserAction{
+public abstract class User implements UserAction {
     private String username;
     private String hashedPw;
     public boolean privileged;
@@ -19,15 +20,8 @@ public abstract class User implements UserAction{
     }
 
     /**
-     * @return stringa contenente lo username dell'utente
-     */
-    @Override
-    public String toString() {
-        return username;
-    }
-
-    /**
      * Override del metodo equals()
+     *
      * @param o oggetto con cui effettuare il confronto
      * @return true se gli oggetti hanno stesso username
      */
@@ -41,6 +35,7 @@ public abstract class User implements UserAction{
 
     /**
      * Override del metodo hashCode()
+     *
      * @return hashCode dell'oggetto
      */
     @Override
@@ -64,13 +59,6 @@ public abstract class User implements UserAction{
      */
     public String getUsername() {
         return username;
-    }
-
-    /**
-     * @return password dopo l'hashing
-     */
-    public String getHashedPw() {
-        return hashedPw;
     }
 
     /**
@@ -116,4 +104,5 @@ public abstract class User implements UserAction{
     public void changeUsername(String newUsername) {
         this.username = newUsername;
     }
+
 }

@@ -8,7 +8,6 @@ public class Customer extends User {
         type = UserType.CUSTOMER;
     }
 
-
     @Override
     public void runUserMenu() {
         //todo: useAsFruitore()
