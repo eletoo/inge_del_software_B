@@ -1,5 +1,7 @@
 package main.model;
 
+import main.Application;
+
 public class Customer extends User {
 
     public Customer(String username, String password) {
@@ -8,7 +10,7 @@ public class Customer extends User {
     }
 
     @Override
-    public void runUserMenu() {
+    public void runUserMenu(Application app) {
         //todo: useAsFruitore()
     }
 }

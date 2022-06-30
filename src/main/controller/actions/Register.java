@@ -32,7 +32,7 @@ public class Register implements Selectable, ListSelect {
         List<UserType> users = Arrays.stream(UserType.values()).collect(Collectors.toList());
 
         User user = Registration.registerUser(choose(users, UserType::getUserType), app);
-        user.runUserMenu();
+        user.runUserMenu(app);
 
     }
 

@@ -29,12 +29,10 @@ public class Registration {
                 break;
         }
         return user;
-        //todo: non è bellissimo...
     }
 
     private static @NotNull User registerConfigurator(@NotNull Application app) {
 
-        Controller.signalToView(ErrorMessage.E_EMPTY_USER_DB.getMessage());
         Controller.signalToView(GenericMessage.STD_CREDENTIALS_MSG.getMessage());
 
         String username;
@@ -49,7 +47,8 @@ public class Registration {
 
         User c = new Configurator(username, pw);
         app.getUserDataStore().addUser(c);
-        return c;
+
+        return Logger.loginFirstConfigurator(app);
     }
 
     private static @NotNull User registerCustomer(@NotNull Application app) {
@@ -69,11 +68,10 @@ public class Registration {
     public static boolean firstAccessEver(@NotNull Application app) throws IOException {
         app.getUserDataStore().load();
         if (app.getUserDataStore().isEmpty()) {
+            Controller.signalToView(ErrorMessage.E_EMPTY_USER_DB.getMessage());
+            User user = Registration.registerUser(UserType.CONFIGURATOR, app);
 
-            Registration.registerUser(UserType.CONFIGURATOR, app);
-            User user = Logger.loginFirstConfigurator(app);
-
-            user.runUserMenu();
+            user.runUserMenu(app);
 
             return true;
         }

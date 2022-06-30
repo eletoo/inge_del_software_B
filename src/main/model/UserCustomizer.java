@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class UserCustomizer {
 
-    public static String customizeConfigurator(@NotNull Application app, String currentUsername){
+    public static String customizeConfigurator(@NotNull Application app, String oldname){
         Controller.signalToView(GenericMessage.CUSTOMIZE_CREDENTIALS.getMessage());
 
         String username;
@@ -22,11 +22,11 @@ public class UserCustomizer {
         String password = Controller.askStringFromView(GenericMessage.CUSTOMIZE_PW);
 
         if (password != null && username != null) {
-            app.getUserDataStore().updateUser(currentUsername, username, password);
+            app.getUserDataStore().updateUser(oldname, username, password);
         } else {
             Controller.signalToView(ErrorMessage.E_CREDENTIALS_ERROR.getMessage());
         }
-        return currentUsername;
+        return username;
     }
 
 }

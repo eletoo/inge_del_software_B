@@ -27,7 +27,7 @@ public class Access implements Selectable {
         if (app.getUserDataStore().isUsernameTaken(username)) {
 
             if (app.getUserDataStore().isLoginCorrect(username, Controller.askStringFromView(GenericMessage.PASSWORD_REQUEST))) {
-                app.getUserDataStore().getUser(username).runUserMenu();
+                app.getUserDataStore().getUser(username).runUserMenu(app);
                 return;
             }
 

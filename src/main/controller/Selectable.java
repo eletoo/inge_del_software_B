@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public interface Selectable {
 
-    public void runAction(Application app) throws IOException;
+    void runAction(Application app) throws IOException;
 
-    public String getActionName();
+    String getActionName();
 }
