@@ -50,7 +50,6 @@ public class Controller {
         s.prepareStructure(app);
         s = new ExchangeStructure();
         s.prepareStructure(app);
-        //todo: metodo prepareStructure() che richiama il load() di <Sthg>Store (analoga per tutti gli Store)
     }
 
 }

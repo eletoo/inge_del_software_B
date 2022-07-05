@@ -2,10 +2,16 @@ package main.model;
 
 import main.Application;
 import main.controller.Controller;
+import main.controller.ListSelect;
+import main.controller.Selectable;
+import main.controller.configuratorActions.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
-public class Configurator extends User {
+public class Configurator extends User implements ListSelect {
 
     /**
      * Costruttore: salva la password dopo l'hashing
@@ -21,87 +27,29 @@ public class Configurator extends User {
     @Override
     public void runUserMenu(Application app) throws IOException {
         //todo: useAsConfiguratore
-        boolean end = false;
-        String choice = "0";
+        Selectable action = null;
         do {
-            //carica i dati salvati in precedenza
             Controller.prepareStructures(app);
 
-            choice = view.selectConfiguratoreAction();
-            switch (choice) {
-                case "1": {
-                    //crea una nuova gerarchia
-                    app.createNewHierarchy(view);
-                }
-                break;
-                case "2": {
-                    //visualizza gerarchie
-                    for (String r : app.getHierarchies().keySet()) {
-                        System.out.println(app.getHierarchy(r).toString());
-                        System.out.println(app.getHierarchy(r).getRoot().toString());
-                    }
-                }
-                break;
-                case "3": {
-                    //salva dati
-                    app.saveData();
-                    app.saveInfo();
-                    app.saveOfferte();
-                    app.saveExchanges();
-                    view.interactionMessage(View.InteractionMessage.SAVED_CORRECTLY);
-                }
-                break;
-                case "4": {
-                    //configura informazioni di scambio
-                    if (app.getInformazioni() == null) {
-                        app.setInfoScambio(new InfoScambio(app, view));
-                    } else {
-                        view.interactionMessage(View.InteractionMessage.CURRENT_INFO);
-                        System.out.println(app.getInformazioni().toString());
-                        if (view.yesOrNoQuestion("\nSovrascrivere le informazioni di scambio presenti (N.B. La piazza non è modificabile)? [Y/N]")) {
-                            app.setInfoScambio(new InfoScambio(app, view));
-                        }
-                    }
-                    app.saveInfo();//se non modifico le informazioni di scambio e conf.json è corrotto/incompleto qui viene
-                    //sovrascritto con le informazioni correnti complete e non modificate
-                    view.interactionMessage(View.InteractionMessage.SAVED_CORRECTLY);
-                }
-                break;
-                case "5": {
-                    //mostra offerte per categoria
-                    Offer.viewOffersByCategory(app, view);
-                }
-                break;
-                case "6": {
-                    //visualizza offerte in scambio di una categoria foglia
-                    Offer.viewOffers(app, view, Offer.StatoOfferta.IN_SCAMBIO);
-                }
-                break;
-                case "7": {
-                    //visualizza offerte chiuse di una categoria foglia
-                    Offer.viewOffers(app, view, Offer.StatoOfferta.CHIUSA);
-                }
-                break;
-                case "8": {
-                    //configura le gerarchie da file
-                    app.importHierarchiesFromFile(this.view);
-                }
-                break;
-                case "9": {
-                    //configura le impostazioni di scambio da file
-                    app.importInfoFromFile(this.view);
-                }
-                break;
-                case "10": {
-                    //esci
-                    end = true;
-                    view.interactionMessage(View.InteractionMessage.EXIT_MESSAGE);
-                }
-                break;
-                default:
-                    view.errorMessage(View.ErrorMessage.E_ILLICIT_CHOICE);
-            }
-        } while (!end);
+            action = choose(this.createMenu(), null);
+            action.runAction(app);
+
+        } while (! (action instanceof Exit));
     }
+
+    private @NotNull List<Selectable> createMenu() {
+        List<Selectable> menu = new LinkedList<>();
+        menu.add(new HierarchyCreation());
+        menu.add(new HierarchyContentPrinter());
+        menu.add(new DataSaver());
+        menu.add(new InformationConfigurator());
+        menu.add(new OpenOffersPrinter());
+        menu.add(new ExchangingOffersPrinter());
+        menu.add(new ClosedOffersPrinter());
+        menu.add(new HierarchyFromFileConfigurator());
+        menu.add(new InfoFromFileConfigurator());
+        menu.add(new Exit());
+        return menu;
     }
+
 }

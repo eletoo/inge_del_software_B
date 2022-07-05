@@ -1,0 +1,42 @@
+05/07/2022
+
+Classe DirectoryStructure contenente il metodo prepareStructure() che viene implementato nelle varie classi <NomeClasse>Store
+
+Aggiunto metodo saveOnFile() nell'interfaccia Saveable
+Aggiunto metodo loadFromFile() nell'interfaccia Loadable
+
+Aggiunta la classe Information che crea un oggetto contenente le informazioni relative agli scambi.
+La classe è gestita da un InformationStore che implementa sia Loadable che Saveable e dunque i metodi in esse contenuti;
+Il metodo load e loadFromFile sono copiati dalla versione 5 in tutte le classi in cui sono stati implementati, per
+il momento senza apportare alcuna correzione al codice (che probabilemnte andrà refactorizzato in modo decente).
+
+
+Creato metodo generatePathListForImportFromFile() nella classe LocalPath per creare la lista di path dove trovare i file json
+
+Aggiunto la dipendenza da libreria Maven per leggere file Json (c'era già nella v5, sto solo riportando passo per passo
+cosa ho fatto)
+
+Creato due classi eccezione lanciabili nel momento in cui si cerca di caricare da file le offerte, verranno poi usate anche
+per gestire il caricamento errato di altri oggetti non customizzabili in json (es. utenti o proposte di scambio).
+In realtà in un secondo momento (se avremo tempo di riguardare tutto, cosa che sarebbe preferibile) si potrebbero rimuovere
+le eccezioni semplicemente creando un'interfaccia FileSaveable e FileLoadable per contenere i metodi loadFromFile e
+saveOnFile. Tuttavia se non ci riusciamo si può giustificare dicendo che volevamo evitare di avere troppe interfacce
+con un singolo metodo: bella l'interface segregation ma quando ci sono troppe interfacce con un solo metodo perde di
+significato.
+
+In Application ci sono tutti i rimandi agli store di dati di tutte le tipologie di contenuti.
+
+Per gestire il menù del configuratore abbiamo implementato un pattern State (o Strategy???) creando un menu delle possibili
+azioni Selectable nella classe Configurator; ognuna delle azioni corrisponde all'istanza di una nuova classe al cui
+interno è implementato il metodo runAction() che esegue le azioni corrispondenti alla voce del menù selezionata.
+
+Abbiamo creato un package contenente le classi che rappresentano le varie azioni del Configuratore e implementano tutte
+l'interfaccia Selectable.
+
+Sistemato un po' la classe TimeRange e Time in modo da correggere (in via parziale) i toString con dei print<Qualcosa>.
+
+
+AZIONI IMPLEMENTATE:
+- Exit: comunica all'utente di uscire e basta
+- DataSaver: salva tutti i dati chiamando i metodi save() degli store
+- InformationConfigurator: implementazione parziale

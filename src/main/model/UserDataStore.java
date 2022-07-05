@@ -1,5 +1,8 @@
 package main.model;
 
+import main.exceptions.NonLoadableFromFileException;
+import main.exceptions.NonSaveableOnFileException;
+
 import java.io.*;
 import java.util.*;
 
@@ -31,12 +34,16 @@ public class UserDataStore implements Loadable, Saveable, Serializable {
     }
 
     @Override
+    public void loadFromFile() {
+        throw new NonLoadableFromFileException();
+    }
+
+    @Override
     public void save() {
         FileOutputStream fileOutputStream;
         ObjectOutputStream objectOutputStream;
-        String currentDir = System.getProperty("user.dir");
         try {
-            fileOutputStream = new FileOutputStream(currentDir + "/db/users.dat");
+            fileOutputStream = new FileOutputStream(System.getProperty("user.dir") + "/db/users.dat");
             objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(userMap);
             objectOutputStream.close();
@@ -45,6 +52,12 @@ public class UserDataStore implements Loadable, Saveable, Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+    @Override
+    public void saveOnFile(Serializable s) {
+        throw new NonSaveableOnFileException();
     }
 
     public boolean isEmpty() {

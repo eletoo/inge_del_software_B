@@ -1,24 +1,37 @@
 package main.model;
 
+import com.google.gson.*;
+import main.controller.Controller;
+import main.controller.ErrorMessage;
+import main.controller.GenericMessage;
+
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class HierarchiesStore implements Loadable, Saveable, Serializable {
+    private static final String DB_JSON_FILES = System.getProperty("user.dir") + "/db/jsonFiles/";
+
     private Map<String, Hierarchy> hierarchies;
 
-    public HierarchiesStore(){
+    public HierarchiesStore() {
         this.hierarchies = new HashMap<>();
     }
 
-    public Map<String, Hierarchy> getHierarchies(){
+    public Map<String, Hierarchy> getHierarchies() {
         return this.hierarchies;
     }
 
-    public void setHierarchies(Map<String, Hierarchy> hierarchies){
+    public void setHierarchies(Map<String, Hierarchy> hierarchies) {
         this.hierarchies = hierarchies;
     }
 
+    public boolean isHierarchyNameTaken(String name) {
+        return hierarchies.containsKey(name);
+    }
 
     @Override
     public void load() throws IOException {
@@ -40,19 +53,112 @@ public class HierarchiesStore implements Loadable, Saveable, Serializable {
     }
 
     @Override
+    public void loadFromFile() throws IOException {
+        Hierarchy h;
+        try {
+            List<Path> paths = LocalPath.generatePathListForImportFromFile(DB_JSON_FILES);
+            Reader reader;
+
+            if (paths.isEmpty()) {
+                Controller.signalToView(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
+                return;
+            }
+
+            for (Path p : paths) {
+                reader = Files.newBufferedReader(p);
+                GsonBuilder builder = new GsonBuilder();
+                JsonDeserializer<Category> categoria_deserializer = (json, typeOfT, context) -> {
+                    JsonObject jsonObject = json.getAsJsonObject();
+                    if (jsonObject.get("figlie") != null && jsonObject.get("figlie").isJsonArray() && jsonObject.get("figlie").getAsJsonArray().size() > 1)
+                        return context.deserialize(jsonObject, Node.class);
+                    return context.deserialize(jsonObject, Leaf.class);
+                };
+
+                JsonDeserializer<Node> nodo_deserializer = (json, typeOfT, context) -> {
+                    JsonObject jsonObject = json.getAsJsonObject();
+                    var nodo = new Node(jsonObject.get("nome").getAsString(), jsonObject.get("descrizione").getAsString());
+                    var cn = new HashMap<String, NativeField>();
+
+                    var o = jsonObject.get("campiNativi").getAsJsonObject();
+                    o.keySet().forEach(e -> cn.put(e, context.deserialize(o.get(e), NativeField.class)));
+                    nodo.setCampiNativi(cn);
+                    jsonObject.get("figlie").getAsJsonArray().forEach(e -> nodo.addChild(context.deserialize(e, Category.class)));
+                    return nodo;
+                };
+
+                JsonDeserializer<Leaf> foglia_deserializer = (json, typeOfT, context) -> {
+                    JsonObject jsonObject = json.getAsJsonObject();
+                    var f = new Leaf(jsonObject.get("nome").getAsString(), jsonObject.get("descrizione").getAsString());
+                    var cn = new HashMap<String, NativeField>();
+
+                    var o = jsonObject.get("campiNativi").getAsJsonObject();
+                    o.keySet().forEach(e -> cn.put(e, context.deserialize(o.get(e), NativeField.class)));
+                    f.setCampiNativi(cn);
+                    return f;
+                };
+
+                Gson gson = builder
+                        .registerTypeAdapter(Category.class, categoria_deserializer)
+                        .registerTypeAdapter(Node.class, nodo_deserializer)
+                        .registerTypeAdapter(Leaf.class, foglia_deserializer)
+                        .create();
+
+                h = gson.fromJson(reader, Hierarchy.class);
+
+                boolean valid = true;
+
+                if (h.getRoot() instanceof Node)
+                    for (Category c : ((Node) h.getRoot()).getCategorieFiglie())
+                        if (!c.isNameTakenOnlyOnce(h.getRoot())) {
+                            valid = false;
+                            break;
+                        }
+
+                if (!this.isHierarchyNameTaken(h.getRoot().getNome()) && valid) {//non sovrascrive nell'applicazione gerarchie omonime già esistenti
+                    this.hierarchies.put(h.getRoot().getNome(), h);
+                }
+
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Controller.signalToView(GenericMessage.SUCCESSFUL_HIERARCHY_IMPORT.getMessage());
+        this.save();
+        return;
+    }
+
+    @Override
     public void save() throws IOException {
-        FileOutputStream fileOutputStream = new FileOutputStream(new File(System.getProperty("user.dir") + "/db/gerarchie.dat"));
+        FileOutputStream fileOutputStream = new FileOutputStream(System.getProperty("user.dir") + "/db/gerarchie.dat");
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(this.getHierarchies());
         objectOutputStream.close();
+
         for (Hierarchy h : this.getHierarchies().values()) {
-            this.printHierarchyOnFile(h);
+            this.saveOnFile(h);
         }
     }
 
-    //todo: aggiungere un metodo printOnFile e importFromFile all'interfaccia loadable e saveable
-    //implementarli in ogni <Something>Store per importare i dati da json o salvare i dati su json
-    //aggiungerli dove opportuno per gestire la lettura/scrittura dei dati
-    //chiamare printOnFile nel metodo save()
+    @Override
+    public void saveOnFile(Serializable hierarchy) {
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.registerTypeAdapter(Category.class, (JsonSerializer<Category>) (categoria, type, jsonSerializationContext) -> {
+            JsonObject ret = new JsonObject();
+            ret.addProperty("nome", categoria.getNome());
+            ret.addProperty("descrizione", categoria.getDescrizione());
+            ret.add("campiNativi", jsonSerializationContext.serialize(categoria.getCampiNativi()));
+            if (categoria instanceof Node)
+                ret.add("figlie", jsonSerializationContext.serialize(((Node) categoria).getCategorieFiglie()));
+            return ret;
+        }).create();
 
+        String file = DB_JSON_FILES + ((Hierarchy) hierarchy).getRoot().getNome() + ".json";
+        try (FileWriter wr = new FileWriter(file)) {
+            wr.write(gson.toJson(hierarchy));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

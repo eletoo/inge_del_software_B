@@ -18,4 +18,5 @@ public class IntegerReader implements IntReader{
             }
         }
     }
+
 }
