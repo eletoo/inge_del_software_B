@@ -4,6 +4,7 @@ import main.Application;
 import main.controller.Controller;
 import main.controller.ListSelect;
 import main.controller.Selectable;
+import main.controller.UserSelectable;
 import main.controller.configuratorActions.Exit;
 import main.controller.customerActions.*;
 import main.controller.customerActions.OpenOffersPrinter;
@@ -27,29 +28,15 @@ public class Customer extends User implements ListSelect {
     }
 
     @Override
-    public void runUserMenu(Application app, Controller controller) throws IOException {
-//        //todo: useAsFruitore()
-//
-//        //carica i dati salvati in precedenza
-//        Controller.prepareStructures(app);
-//
-//        //gestisce le offerte di scambio prima ancora di selezionare altre azioni
-//        Exchange.manageExchanges(app, fruitore);
-//        Exchange.managePastExchanges(app, fruitore);
-//
-//        Selectable action;
-//        do {
-//            Controller.prepareStructures(app);
-//
-//            action = choose(this.createMenu(), Selectable::getActionName);
-//            action.runAction(app, user);
-//
-//        } while (! (action instanceof Exit));
-
+    public User onLogin(Application app, Controller controller) throws IOException {
+        controller.prepareStructures(app);
+        //        Exchange.manageExchanges(app, fruitore);
+        //        Exchange.managePastExchanges(app, fruitore);
+        return null;
     }
 
-    private @NotNull List<Selectable> createMenu() {
-        List<Selectable> menu = new LinkedList<>();
+    protected List<UserSelectable> getUserMenu() {
+        List<UserSelectable> menu = new LinkedList<>();
         menu.add(new AppContentPrinter());
         menu.add(new PersonalOffersPrinter());
         menu.add(new OpenOffersPrinter());

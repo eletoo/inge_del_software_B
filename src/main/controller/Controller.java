@@ -15,6 +15,11 @@ public class Controller {
 
     //parla con la view
     private Application app;
+
+    public View getView() {
+        return view;
+    }
+
     private View view;
 
     private RegistrationHandler rh;
@@ -82,7 +87,7 @@ public class Controller {
     public boolean isFirstAccess() throws IOException {
         app.getUserDataStore().load();
         if (app.getUserDataStore().isEmpty()) {
-            this.registerUser(UserType.CONFIGURATOR).runUserMenu(app, this);
+            this.registerUser(UserType.CONFIGURATOR).onLogin(app, this).runUserMenu(app, this);
             return true;
         }
         return false;
@@ -107,5 +112,7 @@ public class Controller {
     }
 
 
-
+    public void runSelectionMenu(List<UserSelectable> userMenu, User u) throws IOException {
+        this.view.choose(userMenu, UserSelectable::getActionName).runAction(app, this, u);
+    }
 }

@@ -44,19 +44,13 @@ public class Configurator extends User implements ListSelect {
     }
 
     @Override
-    public void runUserMenu(Application app, Controller controller) throws IOException {
-        Selectable action;
-        do {
-            Controller.prepareStructures(app);
-
-            action = choose(this.createMenu(), Selectable::getActionName);
-            action.runAction(app, controller);
-
-        } while (! (action instanceof Exit));
+    public User onLogin(Application app, Controller controller) throws IOException {
+        Controller.prepareStructures(app);
+        return this;
     }
 
-    private @NotNull List<Selectable> createMenu() {
-        List<Selectable> menu = new LinkedList<>();
+    protected @NotNull List<UserSelectable> getUserMenu() {
+        List<UserSelectable> menu = new LinkedList<>();
         menu.add(new HierarchyCreation());
         menu.add(new HierarchyContentPrinter());
         menu.add(new DataSaver());

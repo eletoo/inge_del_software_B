@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HierarchyCreation implements Selectable, ListSelect {
+public class HierarchyCreation implements UserSelectable, ListSelect {
     @Override
-    public void runAction(@NotNull Application app, Controller controller) throws IOException {
+    public void runAction(@NotNull Application app, Controller controller, User user) throws IOException {
         createNewHierarchy(app);
     }
 

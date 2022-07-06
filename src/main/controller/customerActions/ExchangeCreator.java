@@ -10,10 +10,9 @@ import org.jetbrains.annotations.Nullable;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-public class ExchangeCreator implements Selectable, ListSelect {
-
+public class ExchangeCreator implements UserSelectable, ListSelect {
     @Override
-    public void runAction(@NotNull Application app, Controller controller) throws IOException {
+    public void runAction(@NotNull Application app, Controller controller, User user) throws IOException {
 //
 //        if (app.getHierarchiesStore().getHierarchies().isEmpty()) {
 //            Controller.signalToView(ErrorMessage.E_NO_CATEGORIES.getMessage());

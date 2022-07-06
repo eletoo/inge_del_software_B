@@ -4,6 +4,7 @@ import main.Application;
 import main.controller.Controller;
 import main.controller.ErrorMessage;
 import main.controller.Selectable;
+import main.controller.UserSelectable;
 import main.exceptions.InvalidMethodException;
 import main.model.Hierarchy;
 import main.model.User;
@@ -12,10 +13,9 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.Map;
 
-public class AppContentPrinter implements Selectable {
-
+public class AppContentPrinter implements UserSelectable {
     @Override
-    public void runAction(@NotNull Application app, Controller controller) throws IOException {
+    public void runAction(@NotNull Application app, Controller controller, User user) throws IOException {
 
         if (this.getHierarchies(app).isEmpty()) {
             Controller.signalToView(ErrorMessage.NO_HIERARCHIES_YET.getMessage());

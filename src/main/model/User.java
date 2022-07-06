@@ -2,13 +2,17 @@ package main.model;
 
 import main.Application;
 import main.controller.Controller;
+import main.controller.Selectable;
+import main.controller.UserSelectable;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class User implements UserAction, Serializable {
@@ -106,5 +110,14 @@ public abstract class User implements UserAction, Serializable {
         this.username = newUsername;
     }
 
+    @Override
+    public void runUserMenu(Application app, Controller controller) throws IOException {
+        controller.runSelectionMenu(this.getUserMenu(), this);
+    }
+
     public abstract User onFirstLogin(Application app, Controller controller);
+
+    public abstract User onLogin(Application app, Controller controller) throws IOException;
+
+    protected abstract List<UserSelectable> getUserMenu();
 }

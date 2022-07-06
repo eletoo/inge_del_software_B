@@ -12,9 +12,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class InformationConfigurator implements Selectable, ListSelect {
+public class InformationConfigurator implements UserSelectable, ListSelect {
     @Override
-    public void runAction(@NotNull Application app, Controller controller) throws IOException {
+    public void runAction(@NotNull Application app, Controller controller, User user) throws IOException {
 
         if (this.getInfo(app) == null) {
             this.setInfo(app, new Information(Controller.askStringFromView(GenericMessage.PLACE),
