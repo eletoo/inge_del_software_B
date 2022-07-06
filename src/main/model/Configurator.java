@@ -5,6 +5,7 @@ import main.controller.Controller;
 import main.controller.ListSelect;
 import main.controller.Selectable;
 import main.controller.configuratorActions.*;
+import main.exceptions.InvalidMethodException;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -25,8 +26,13 @@ public class Configurator extends User implements ListSelect {
     }
 
     @Override
+    public void runUserMenu(Application app, User user) throws IOException {
+        throw new InvalidMethodException();
+    }
+
+    @Override
     public void runUserMenu(Application app) throws IOException {
-        Selectable action = null;
+        Selectable action;
         do {
             Controller.prepareStructures(app);
 

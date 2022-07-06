@@ -7,14 +7,6 @@ import main.controller.Selectable;
 
 import java.io.IOException;
 
-public class Exit implements Selectable {
-    @Override
-    public void runAction(Application app) throws IOException {
-        Controller.signalToView(GenericMessage.EXIT_MESSAGE.getMessage());
-    }
+public class Exit extends main.controller.customerActions.Exit {
 
-    @Override
-    public String getActionName() {
-        return "Logout";
-    }
 }

@@ -4,6 +4,8 @@ import main.Application;
 import main.controller.Controller;
 import main.controller.GenericMessage;
 import main.controller.Selectable;
+import main.exceptions.InvalidMethodException;
+import main.model.User;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -21,5 +23,10 @@ public class DataSaver implements Selectable {
     @Override
     public String getActionName() {
         return "Salva";
+    }
+
+    @Override
+    public void runAction(Application app, User user) {
+        throw new InvalidMethodException();
     }
 }

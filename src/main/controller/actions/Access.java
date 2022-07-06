@@ -3,9 +3,11 @@ package main.controller.actions;
 import main.controller.Controller;
 import main.controller.Selectable;
 import main.Application;
+import main.exceptions.InvalidMethodException;
 import main.model.Registration;
 import main.controller.ErrorMessage;
 import main.controller.GenericMessage;
+import main.model.User;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -37,6 +39,12 @@ public class Access implements Selectable {
 
         Controller.signalToView(ErrorMessage.E_UNREGISTERED_USER.getMessage());
 
+    }
+
+
+    @Override
+    public void runAction(Application app, User user) {
+        throw new InvalidMethodException();
     }
 
     @Override

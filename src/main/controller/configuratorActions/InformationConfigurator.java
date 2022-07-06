@@ -2,10 +2,8 @@ package main.controller.configuratorActions;
 
 import main.Application;
 import main.controller.*;
-import main.model.Day;
-import main.model.Information;
-import main.model.Time;
-import main.model.TimeRange;
+import main.exceptions.InvalidMethodException;
+import main.model.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -43,6 +41,11 @@ public class InformationConfigurator implements Selectable, ListSelect {
         //se non modifico le informazioni di scambio e conf.json è corrotto/incompleto qui viene
         //sovrascritto con le informazioni correnti complete e non modificate
         Controller.signalToView(GenericMessage.SAVED_CORRECTLY.getMessage());
+    }
+
+    @Override
+    public void runAction(Application app, User user) {
+        throw new InvalidMethodException();
     }
 
     @NotNull

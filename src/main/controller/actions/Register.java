@@ -4,6 +4,7 @@ import main.controller.Controller;
 import main.controller.ListSelect;
 import main.controller.Selectable;
 import main.Application;
+import main.exceptions.InvalidMethodException;
 import main.model.*;
 import main.controller.GenericMessage;
 import org.jetbrains.annotations.NotNull;
@@ -34,6 +35,11 @@ public class Register implements Selectable, ListSelect {
         User user = Registration.registerUser(choose(users, UserType::getUserType), app);
         user.runUserMenu(app);
 
+    }
+
+    @Override
+    public void runAction(Application app, User user) {
+        throw new InvalidMethodException();
     }
 
     @Override

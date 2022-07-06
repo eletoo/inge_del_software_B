@@ -10,7 +10,9 @@ public enum YesOrNoMessage implements Message {
     ADD_NATIVE_FIELD("Inserire un altro campo descrittivo alla categoria? (Y/N)"),
     COMPULSORY_FIELD("Campo a compilazione obbligatoria? (Y/N)"),
     ADD_CATEGORY("Aggiungere una nuova categoria? [Y/N]"),
-    SAVE_HIERARCHY("Salvare la gerarchia creata? [Y/N]");
+    SAVE_HIERARCHY("Salvare la gerarchia creata? [Y/N]"),
+    SELECT_EXCHANGE("\nSelezionare uno scambio da gestire dalla lista? [Y/N]"),
+    ACCEPT_MEETING("\nAccettare l'appuntamento? [Y/N]");
 
     private String message;
 

@@ -1,14 +1,17 @@
 package main.model.stores;
 
+import main.Application;
 import main.exceptions.NonLoadableFromFileException;
 import main.exceptions.NonSaveableOnFileException;
 import main.model.Exchange;
 import main.model.Loadable;
 import main.model.Saveable;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ExchangesStore implements Saveable, Loadable, Serializable {
     public static final String EXCHANGES_DIR = System.getProperty("user.dir") + "/db/scambi.dat";
@@ -25,6 +28,14 @@ public class ExchangesStore implements Saveable, Loadable, Serializable {
 
     public void setExchanges(List<Exchange> exchanges) {
         this.exchanges = exchanges;
+    }
+
+    public void addExchange(Exchange exchange){
+        this.exchanges.add(exchange);
+    }
+
+    public void removeExchange(Exchange exchange){
+        this.exchanges.remove(exchange);
     }
 
     @Override
@@ -48,6 +59,10 @@ public class ExchangesStore implements Saveable, Loadable, Serializable {
     @Override
     public void loadFromFile() throws IOException {
         throw new NonLoadableFromFileException();
+    }
+
+    public List<Exchange> getValidExchanges(@NotNull List<Exchange> scambi, Application app) {
+        return scambi.stream().filter(e -> e.isValidExchange(app)).collect(Collectors.toList());
     }
 
     @Override

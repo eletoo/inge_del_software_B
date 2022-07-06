@@ -2,6 +2,7 @@ package main.controller.configuratorActions;
 
 import main.Application;
 import main.controller.*;
+import main.exceptions.InvalidMethodException;
 import main.model.*;
 import main.model.stores.HierarchiesStore;
 import org.jetbrains.annotations.Contract;
@@ -15,6 +16,11 @@ public class HierarchyCreation implements Selectable, ListSelect {
     @Override
     public void runAction(@NotNull Application app) throws IOException {
         createNewHierarchy(app);
+    }
+
+    @Override
+    public void runAction(Application app, User user) {
+        throw new InvalidMethodException();
     }
 
     @Override

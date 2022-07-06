@@ -31,8 +31,23 @@ public class OffersStore implements Loadable, Saveable, Serializable, ListSelect
         return this.offers.stream().filter(e -> e.getCategory().equals(categoria)).collect(Collectors.toList());
     }
 
-    public List<Offer> getOffers(Customer customer) {
+    public List<Offer> getOffers(User customer) {
+        assert customer instanceof Customer;
         return this.offers.stream().filter(e -> e.getOwner().equals(customer)).collect(Collectors.toList());
+    }
+
+    public void undoOffer(Application app,User user) throws IOException {
+        var user_offers = this.getOffers(user)
+                .stream()
+                .filter(e -> e.getState() == OfferState.APERTA)
+                .collect(Collectors.toList());
+        if (user_offers.isEmpty()) {
+            Controller.signalToView(ErrorMessage.E_NO_OFFERS.getMessage());
+        } else {
+            var to_edit = (Offer) choose(user_offers, null);
+            to_edit.setState(OfferState.RITIRATA);
+            this.save();
+        }
     }
 
     @Override
@@ -145,7 +160,7 @@ public class OffersStore implements Loadable, Saveable, Serializable, ListSelect
      *
      * @param fruitore utente di cui visualizzare le offerte
      */
-    public void viewPersonalOffers(Customer fruitore) {
+    public void viewPersonalOffers(User fruitore) {
         Controller.signalListToView(this.getOffers(fruitore), null);
     }
 
@@ -196,11 +211,22 @@ public class OffersStore implements Loadable, Saveable, Serializable, ListSelect
         return (Leaf) choose(choices, Category::printShortDescription);
     }
 
+    public Offer getOffer(Offer off) {
+        if (this.offers.contains(off))
+            return this.offers.get(this.offers.indexOf(off));
+        throw new RuntimeException("ERROR"); //should not happen
+    }
+
+    public List<Offer> getOffers(Customer utente, OfferState stato) {
+        return this.offers
+                .stream()
+                .filter(e -> e.getOwner().equals(utente))
+                .filter(e -> e.getState().equals(stato))
+                .collect(Collectors.toList());
+    }
 
     /**
      * Permette di selezionare un'offerta da ritirare e modificarne lo stato opportunamente
-     *
-     * @param app      applicazione
      * @param customer fruitore
      * @throws IOException eccezione I/O
      */

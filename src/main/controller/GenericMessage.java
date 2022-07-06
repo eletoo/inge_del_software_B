@@ -31,7 +31,14 @@ public enum GenericMessage implements Message {
     AT_LEAST_TWO_CHILDREN("\nN.B. Ogni categoria nodo deve avere almeno due sotto-categorie"),
     SELECT_CATEGORY("Scegliere una categoria della quale visualizzare le offerte: "),
     NAME("Nome: "),
-    CHOOSE_CATEGORY_TO_PUBLISH("Selezionare una categoria dove pubblicare l'offerta");
+    CHOOSE_CATEGORY_TO_PUBLISH("Selezionare una categoria dove pubblicare l'offerta"),
+    CHOOSE_OFFER("\nSeleziona una tua offerta da scambiare: "),
+    CHOOSE_OTHER_OFFER("\nSeleziona un'offerta con cui scambiare il tuo prodotto: "),
+    NO_PAST_OFFERS("\n\nNon hai nessun'altra proposta di scambio arretrata"),
+    PAST_OFFERS("\nLe tue proposte di scambio arretrate:"),
+    NO_NEW_OFFERS("\nNon hai nessuna nuova proposta di scambio"),
+    NEW_OFFERS("\nLe tue nuove proposte di scambio:"),
+    CLOSED_OFFER("\n\nOfferta chiusa\n");
 
     private String message;
 
