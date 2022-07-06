@@ -1,9 +1,9 @@
 package main.view;
 
-import main.controller.GenericMessage;
+import main.controller.Message;
 
 public interface IntReader {
 
-    int in(GenericMessage message);
+    int in(Message message);
 
 }

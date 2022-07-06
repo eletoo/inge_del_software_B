@@ -1,5 +1,7 @@
 package main.model;
 
+import main.controller.Controller;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,17 +47,15 @@ public class Node extends Category {
     /**
      * @return stringa descrittiva della categoria nodo
      */
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(super.toString());
+    public void printCategory() {
+        super.printCategory();
         if (categorieFiglie.size() != 0) {
-            sb.append("\n\nCategorie figlie di " + this.getNome() + ":");
+            Controller.signalToView("\n\nCategorie figlie di " + this.getNome() + ":");
             int i = 1;
             for (Category c : categorieFiglie) {
-                sb.append("\n\n" + (i++) + ")");
-                sb.append(c.toString());
+                Controller.signalToView("\n\n" + (i++) + ")");
+                c.printCategory();
             }
         }
-        return sb.toString();
     }
 }

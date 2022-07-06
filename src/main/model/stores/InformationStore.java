@@ -1,7 +1,11 @@
-package main.model;
+package main.model.stores;
 
 import com.google.gson.*;
 import main.controller.*;
+import main.model.Information;
+import main.model.Loadable;
+import main.model.LocalPath;
+import main.model.Saveable;
 
 import java.io.*;
 import java.nio.file.*;

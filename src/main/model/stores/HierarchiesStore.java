@@ -1,9 +1,11 @@
-package main.model;
+package main.model.stores;
 
 import com.google.gson.*;
 import main.controller.Controller;
 import main.controller.ErrorMessage;
 import main.controller.GenericMessage;
+import main.model.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -31,6 +33,14 @@ public class HierarchiesStore implements Loadable, Saveable, Serializable {
 
     public boolean isHierarchyNameTaken(String name) {
         return hierarchies.containsKey(name);
+    }
+
+    public void addHierarchy(Hierarchy h){
+        this.hierarchies.put(h.getRoot().getNome(), h);
+    }
+
+    public void removeHierarchy(@NotNull Hierarchy h){
+        this.hierarchies.remove(h.getRoot().getNome());
     }
 
     @Override
@@ -81,7 +91,7 @@ public class HierarchiesStore implements Loadable, Saveable, Serializable {
 
                     var o = jsonObject.get("campiNativi").getAsJsonObject();
                     o.keySet().forEach(e -> cn.put(e, context.deserialize(o.get(e), NativeField.class)));
-                    nodo.setCampiNativi(cn);
+                    nodo.setNativeFields(cn);
                     jsonObject.get("figlie").getAsJsonArray().forEach(e -> nodo.addChild(context.deserialize(e, Category.class)));
                     return nodo;
                 };
@@ -93,7 +103,7 @@ public class HierarchiesStore implements Loadable, Saveable, Serializable {
 
                     var o = jsonObject.get("campiNativi").getAsJsonObject();
                     o.keySet().forEach(e -> cn.put(e, context.deserialize(o.get(e), NativeField.class)));
-                    f.setCampiNativi(cn);
+                    f.setNativeFields(cn);
                     return f;
                 };
 
@@ -148,7 +158,7 @@ public class HierarchiesStore implements Loadable, Saveable, Serializable {
             JsonObject ret = new JsonObject();
             ret.addProperty("nome", categoria.getNome());
             ret.addProperty("descrizione", categoria.getDescrizione());
-            ret.add("campiNativi", jsonSerializationContext.serialize(categoria.getCampiNativi()));
+            ret.add("campiNativi", jsonSerializationContext.serialize(categoria.getNativeFields()));
             if (categoria instanceof Node)
                 ret.add("figlie", jsonSerializationContext.serialize(((Node) categoria).getCategorieFiglie()));
             return ret;

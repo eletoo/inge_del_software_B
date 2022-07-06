@@ -40,3 +40,38 @@ AZIONI IMPLEMENTATE:
 - Exit: comunica all'utente di uscire e basta
 - DataSaver: salva tutti i dati chiamando i metodi save() degli store
 - InformationConfigurator: implementazione parziale
+
+
+06/07/2022
+Proseguo con l'implementazione delle azioni del configuratore.
+
+Ho creato l'interfaccia Message in modo tale che i metodi ask<something>FromView() richiedano un parametro Message anziché
+un tipo di messaggio specifico.
+
+Aggiunto il metodo askBooleanFromView(Message m) nel controller per gestire le richieste all'utente con risposta SI/NO
+
+Usato pattern di refactoring extract Method nella classe InformationConfigurator per creare i metodi per il setup di giorni,
+ore, etc. e poi il pattern replace temp with query per richiamare tali metodi direttamente tra i parametri del
+costruttore anziché creare delle variabili temporanee che poi vengono usate solo in quella chiamata al costruttore.
+
+- InformationConfigurator: se le informazioni nella app sono null le imposta, altrimenti chiede se sovrascrivere
+- HierarchyCreation
+- HierarchyContentPrinter: ho sistemato tutti i toString nelle classi Category, Node e Leaf per far sì che stampino
+autonomamente il contenuto formattato come lo formattava il toString prima ma almeno non c'è il nome toString()
+che fa tanta paura all'esercitatore
+- OpenOffersPrinter: creo enum OfferState per gestire lo stato dell'offerta (prima l'enum era all'interno di Offer)
+- ExchangingOffersPrinter
+- HierarchyFromFileConfigurator
+- InfoFromFileConfigurator
+
+Non sto qui ad aggiungere tutti i metodi che ho introdotto nelle varie classi, ho messo un po' di setter e getter qua e là
+perché serviranno per la lettura da/scrittura su json e un po' di metodi tipo addHierarchy e removeHierarchy.
+I don't have the sbatt to scrivere tutto.
+
+Spostato i metodi per la creazione, aggiunta, rimozione e visualizzazione delle offerte nella classe OffersStore perché
+effettivamente ha più senso che sia lei a operare su liste di offerte piuttosto che la singola offerta (daje SRP).
+
+I metodi per visualizzare le offerte non sono più statici altrimenti non potevo più usare il metodo choose per selezionare
+un elemento da una lista perché è definito su interfaccia e non può essere static quindi non posso usarlo in contesti
+statici.
+

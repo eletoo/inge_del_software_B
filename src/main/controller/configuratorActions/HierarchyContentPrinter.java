@@ -2,6 +2,7 @@ package main.controller.configuratorActions;
 
 import main.Application;
 import main.controller.Selectable;
+import main.model.Hierarchy;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -9,10 +10,10 @@ import java.io.IOException;
 public class HierarchyContentPrinter implements Selectable {
     @Override
     public void runAction(@NotNull Application app) throws IOException {
-        //todo: implementare
-        for (String r : app.getHierarchiesStore().getHierarchies().keySet()) {
-            System.out.println(app.getHierarchy(r).toString());
-            System.out.println(app.getHierarchy(r).getRoot().toString());
+
+        for (Hierarchy h : app.getHierarchiesStore().getHierarchies().values()) {
+            h.printHierarchy();
+            h.getRoot().printCategory();
         }
     }
 

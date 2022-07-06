@@ -9,13 +9,11 @@ import java.io.IOException;
 public class HierarchyFromFileConfigurator implements Selectable {
     @Override
     public void runAction(@NotNull Application app) throws IOException {
-        //todo: implementare
-        app.importHierarchiesFromFile(this.view);
-
+        app.getHierarchiesStore().loadFromFile();
     }
 
     @Override
     public String getActionName() {
-        return "Visualizza offerte chiuse";
+        return "Importa gerarchie da file";
     }
 }

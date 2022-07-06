@@ -2,17 +2,14 @@ package main.controller;
 
 import org.jetbrains.annotations.Contract;
 
-public enum ErrorMessage {
+public enum ErrorMessage implements Message{
     E_EMPTY_USER_DB("Non c'è alcun utente registrato -- crea un primo profilo Configuratore"),
     E_CREDENTIALS_ERROR("Errore nell'inserimento delle credenziali"),
     E_USERNAME_TAKEN("Username già in uso da un altro utente"),
     E_UNREGISTERED_USER("Utente non registrato: username inesistente"),
     E_WRONG_PASSWORD("Password errata"),
-    E_ILLICIT_CHOICE("Opzione non consentita"),
     E_EXISTING_ROOT_CATEGORY("ERRORE: Il nome è già stato assegnato a un'altra categoria radice"),
     E_EXISTING_NAME_IN_HIERARCHY("ERRORE: Nome già presente nella gerarchia"),
-    E_UNAUTHORIZED_CHOICE("ERRORE: Azione non consentita"),
-    E_WRONG_FORMAT("ERRORE: formato errato, inserire un numero"),
     E_INVALID_TIME("ERRORE: uno degli orari inseriti non è valido"),
     E_INVALID_TIME_RANGE("ERRORE: intervallo orario invalido"),
     E_INVALID_INPUT("ERRORE: Input invalido"),
@@ -33,6 +30,7 @@ public enum ErrorMessage {
     }
 
     @Contract(pure = true)
+    @Override
     public String getMessage() {
         return this.message;
     }

@@ -9,8 +9,7 @@ import java.io.IOException;
 public class InfoFromFileConfigurator implements Selectable {
     @Override
     public void runAction(@NotNull Application app) throws IOException {
-        //todo: implementare
-        app.importInfoFromFile(this.view);
+        app.getInformationStore().loadFromFile();
     }
 
     @Override

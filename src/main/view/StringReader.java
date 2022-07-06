@@ -1,8 +1,8 @@
 package main.view;
 
-import main.controller.GenericMessage;
+import main.controller.Message;
 
 public interface StringReader {
 
-    public String in(GenericMessage prompt);
+    String in(Message prompt);
 }

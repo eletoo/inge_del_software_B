@@ -12,12 +12,12 @@ public class Information implements Serializable {
     private int deadline;
     private List<Day> days;
 
-    public Information(String place, List<String> address, List<TimeRange> timeIntervals, int deadline, List<Day> days){
+    public Information(String place, List<String> address, List<Day> days, List<TimeRange> timeIntervals, int deadline){
         this.place = place;
         this.addresses = address;
+        this.days = days;
         this.timeIntervals = timeIntervals;
         this.deadline = deadline;
-        this.days = days;
     }
 
     public List<String> getAddresses() {
@@ -38,6 +38,26 @@ public class Information implements Serializable {
 
     public List<Day> getDays() {
         return days;
+    }
+
+    public void setAddresses(List<String> addresses) {
+        this.addresses = addresses;
+    }
+
+    public void setDays(List<Day> days) {
+        this.days = days;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public void setDeadline(int deadline) {
+        this.deadline = deadline;
+    }
+
+    public void setTimeIntervals(List<TimeRange> timeIntervals) {
+        this.timeIntervals = timeIntervals;
     }
 
     public void print(){

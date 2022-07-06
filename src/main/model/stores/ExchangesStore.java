@@ -1,7 +1,10 @@
-package main.model;
+package main.model.stores;
 
 import main.exceptions.NonLoadableFromFileException;
 import main.exceptions.NonSaveableOnFileException;
+import main.model.Exchange;
+import main.model.Loadable;
+import main.model.Saveable;
 
 import java.io.*;
 import java.util.LinkedList;

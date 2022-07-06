@@ -2,7 +2,7 @@ package main.controller;
 
 import org.jetbrains.annotations.Contract;
 
-public enum GenericMessage {
+public enum GenericMessage implements Message {
     SELECT_INDEX("\nSelezionare un indice."),
     USERNAME_REQUEST("Inserisci il tuo username: "),
     PASSWORD_REQUEST("Inserisci la tua password: "),
@@ -19,7 +19,19 @@ public enum GenericMessage {
     STARTING_HOUR("Ora di inizio [hh] [00-24]: "),
     STARTING_MINUTES("Minuti di inizio [mm] [00 o 30]: "),
     ENDING_HOUR("Ora di fine [hh] [00-24]: "),
-    ENDING_MINUTES("Minuti di fine [mm] [00 o 30]: ");
+    ENDING_MINUTES("Minuti di fine [mm] [00 o 30]: "),
+    PLACE("Piazza (N.B. NON modificabile in futuro): "),
+    ADDRESS("Luogo: "),
+    DAY("Giorno: "),
+    EXCHANGE_HOURS_EVERY_30_MINS("\nGli scambi potranno avvenire allo scoccare dell'ora o della mezz'ora all'interno della fascia oraria specificata"),
+    DEADLINE("Scadenza dell'offerta dopo un numero di giorni pari a (inserire un numero maggiore di 0): "),
+    CATEGORY_NAME("Inserisci il nome della categoria: "),
+    CATEGORY_DESCRIPTION("Inserire la descrizione della categoria: "),
+    FIELD_NAME("Nome campo: "),
+    AT_LEAST_TWO_CHILDREN("\nN.B. Ogni categoria nodo deve avere almeno due sotto-categorie"),
+    SELECT_CATEGORY("Scegliere una categoria della quale visualizzare le offerte: "),
+    NAME("Nome: "),
+    CHOOSE_CATEGORY_TO_PUBLISH("Selezionare una categoria dove pubblicare l'offerta");
 
     private String message;
 
@@ -29,6 +41,7 @@ public enum GenericMessage {
     }
 
     @Contract(pure = true)
+    @Override
     public String getMessage() {
         return this.message;
     }

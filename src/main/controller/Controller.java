@@ -5,9 +5,11 @@ import main.controller.actions.Exit;
 import main.controller.structures.*;
 import main.model.*;
 import main.view.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.function.Function;
 
 public class Controller {
 
@@ -33,12 +35,33 @@ public class Controller {
         MessagePrinter.printText(message);
     }
 
-    public static String askStringFromView(GenericMessage message) {
+    public static <T> void signalListToView(@NotNull List<T> toPrint, Function<T, String> toApply){
+        toPrint.forEach(e -> signalToView(toApply == null ? e.toString() : toApply.apply(e)));
+    }
+
+    public static String askStringFromView(Message message) {
         return (new StringReaderClass()).in(message);
     }
 
-    public static int askIntFromView(GenericMessage message) {
+    public static String askPotentiallyEmptyStringFromView(Message message){
+        return (new StringReaderClass()).inPotentiallyEmptyLine(message);
+    }
+
+    public static String askLineFromVew(Message message){
+        return (new StringReaderClass()).inLine(message);
+    }
+
+    public static int askIntFromView(Message message) {
         return (new IntegerReader().in(message));
+    }
+
+    public static boolean askBooleanFromView(Message message){
+        String ans;
+        do {
+            ans = askStringFromView(message);
+        } while (!ans.equalsIgnoreCase("y") && !ans.equalsIgnoreCase("n"));
+
+        return ans.equalsIgnoreCase("y");
     }
 
     public static void prepareStructures(Application app) throws IOException {

@@ -12,7 +12,7 @@ public class Leaf extends Category {
     /**
      * @return stringa descrittiva del contenuto della foglia
      */
-    public String toString() {
-        return super.toString();
+    public void printCategory() {
+        super.printCategory();
     }
 }

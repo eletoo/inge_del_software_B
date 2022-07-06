@@ -26,12 +26,11 @@ public class Configurator extends User implements ListSelect {
 
     @Override
     public void runUserMenu(Application app) throws IOException {
-        //todo: useAsConfiguratore
         Selectable action = null;
         do {
             Controller.prepareStructures(app);
 
-            action = choose(this.createMenu(), null);
+            action = choose(this.createMenu(), Selectable::getActionName);
             action.runAction(app);
 
         } while (! (action instanceof Exit));

@@ -27,7 +27,7 @@ public class LocalPath {
     public static void createLocalDirectories() throws IOException {
         if (!Files.isDirectory(getConfigurationFileDirectory()) || !Files.isDirectory(getJsonFilesDirectory())) {
             Files.createDirectories(getJsonFilesDirectory());
-            Files.createDirectories(getJsonFilesDirectory());
+            Files.createDirectories(getConfigurationFileDirectory());
         }
     }
 

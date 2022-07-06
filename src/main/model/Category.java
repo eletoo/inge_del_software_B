@@ -1,5 +1,8 @@
 package main.model;
 
+import main.controller.Controller;
+import main.controller.GenericMessage;
+import main.controller.YesOrNoMessage;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -8,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public abstract class Category implements Serializable{
+public abstract class Category implements Serializable {
 
     private String nome;
     private String descrizione;
@@ -43,7 +46,7 @@ public abstract class Category implements Serializable{
     /**
      * @return mappa dei campi nativi
      */
-    public Map<String, NativeField> getCampiNativi() {
+    public Map<String, NativeField> getNativeFields() {
         return campiNativi;
     }
 
@@ -64,8 +67,7 @@ public abstract class Category implements Serializable{
     /**
      * @param campi campi da assegnare alla categoria
      */
-    public void setCampiNativi(Map<String, NativeField> campi) {
-
+    public void setNativeFields(Map<String, NativeField> campi) {
         this.campiNativi = campi;
     }
 
@@ -74,7 +76,7 @@ public abstract class Category implements Serializable{
      *
      * @return stringa contenente nome, descrizione, elenco dei campi e obbligatorieta' di ciascuno di essi
      */
-    public String toString() {
+    public void printCategory() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n\nNome: " + this.nome);
         sb.append("\nDescrizione: " + this.descrizione);
@@ -83,7 +85,7 @@ public abstract class Category implements Serializable{
             sb.append("\n-> " + n);
             sb.append(campiNativi.get(n).isObbligatorio() ? " (Obbligatorio)" : " (Falcotativo)");
         }
-        return sb.toString();
+        Controller.signalToView(sb.toString());
     }
 
     /**
@@ -176,7 +178,7 @@ public abstract class Category implements Serializable{
      *
      * @return campi da assegnare alla categoria radice
      */
-    private @NotNull Map<String, NativeField> generaCampiNativiRadice() {
+    private @NotNull Map<String, NativeField> generateRootNativeFields() {
         NativeField statoConservazione = new NativeField(true, NativeField.Tipo.STRING);
         NativeField descrizioneLibera = new NativeField(false, NativeField.Tipo.STRING);
         Map<String, NativeField> campi = new HashMap<>();
@@ -192,30 +194,30 @@ public abstract class Category implements Serializable{
      * @param parent categoria parent da cui ereditare i campi
      * @return campi nativi
      */
-    public @NotNull Map<String, NativeField> generaCampiNativi(Category parent, View view) {
+    public @NotNull Map<String, NativeField> generateNativeFields(Category parent) {
         Map<String, NativeField> campi = new HashMap<>();
 
         if (parent == null) {
-            campi.putAll(generaCampiNativiRadice());
+            campi.putAll(generateRootNativeFields());
         } else {
-            campi.putAll(parent.getCampiNativi());
+            campi.putAll(parent.getNativeFields());
         }
 
         boolean ans;
         do {
-            ans = view.yesOrNoQuestion("Inserire un altro campo descrittivo alla categoria " + this.getNome() + "? (Y/N)");
+            ans = Controller.askBooleanFromView(YesOrNoMessage.ADD_NATIVE_FIELD);
 
             if (ans) {
-                String nome = view.insertFieldName();
+                String name = Controller.askStringFromView(GenericMessage.FIELD_NAME);
                 boolean obbligatorio;
 
-                if (view.yesOrNoQuestion("Campo a compilazione obbligatoria? (Y/N)")) {
+                if (Controller.askBooleanFromView(YesOrNoMessage.COMPULSORY_FIELD)) {
                     obbligatorio = true;
                 } else {
                     obbligatorio = false;
                 }
                 NativeField nuovo = new NativeField(obbligatorio, NativeField.Tipo.STRING);
-                campi.put(nome, nuovo);
+                campi.put(name, nuovo);
             }
         } while (ans);
 
@@ -249,8 +251,8 @@ public abstract class Category implements Serializable{
     /**
      * @return stringa contenente una breve descrizione della categoria (solo nome)
      */
-    public String toShortString() {
-        return "Categoria " + nome;
+    public String printShortDescription() {
+        return "Categoria " + this.nome;
     }
 }
 

@@ -1,5 +1,7 @@
 package main.model;
 
+import main.controller.Controller;
+
 import java.io.Serializable;
 
 public class Hierarchy implements Serializable {
@@ -23,8 +25,8 @@ public class Hierarchy implements Serializable {
     /**
      * @return stringa descrittiva della gerarchia
      */
-    public String toString() {
-        return "\nGerarchia: " + root.getNome() + "\nDescrizione: " + root.getDescrizione();
+    public void printHierarchy() {
+        Controller.signalToView("\nGerarchia: " + root.getNome() + "\nDescrizione: " + root.getDescrizione());
     }
 
 

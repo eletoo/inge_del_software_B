@@ -1,6 +1,6 @@
 package main;
 
-import main.model.*;
+import main.model.stores.*;
 
 public class Application {
     private UserDataStore userDataStore = new UserDataStore();
