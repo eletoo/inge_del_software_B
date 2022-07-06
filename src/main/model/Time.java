@@ -26,7 +26,7 @@ public class Time implements Serializable {
     /**
      * @return stringa contenente la descrizione dell'orario nel formato hh:mm
      */
-    public String printTime() {//todo: rinominare!!
+    public String printTime() {
         String hour = this.hour == 0 ? "00" : String.valueOf(this.hour);
         String mins = this.minutes == 0 ? "00" : String.valueOf(this.minutes);
         return hour + ":" + mins;

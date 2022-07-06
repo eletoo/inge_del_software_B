@@ -26,7 +26,7 @@ public class Configurator extends User implements ListSelect {
     @Override
     public User onFirstLogin(Application app, Controller controller) {
         controller.signalToView(GenericMessage.CUSTOMIZE_CREDENTIALS.getMessage());
-        boolean auth;
+
         String username;
         do {
             username = controller.askStringFromView(GenericMessage.CUSTOMIZE_USERNAME);

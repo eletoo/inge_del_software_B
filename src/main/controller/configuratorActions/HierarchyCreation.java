@@ -30,7 +30,7 @@ public class HierarchyCreation implements UserSelectable, ListSelect {
             return;
         }
 
-        Category root = new Leaf(rootname, Controller.askPotentiallyEmptyStringFromView(GenericMessage.CATEGORY_DESCRIPTION));
+        Category root = new Leaf(rootname, Controller.askPotentiallyEmptyStringFromView(GenericMessage.CATEGORY_DESCRIPTION));//todo: mi costrige a inserire una descrizione
         root.setNativeFields(root.generateNativeFields(null));
 
         //Se la struttura non è valida l'utente dovrà proseguire nell'aggiunta al fine di renderla tale (oppure se ha sbagliato ricomincia)

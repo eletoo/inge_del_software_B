@@ -25,13 +25,13 @@ public class Register implements Selectable {
 
         app.getUserDataStore().load();
 
-        if(controller.isFirstAccess())
+        if (controller.isFirstAccess())
             return;
 
         controller.signalToView(GenericMessage.SELECT_PROFILE_TYPE.getMessage());
-        List<UserType> users = Arrays.stream(UserType.values()).collect(Collectors.toList());
+        List<UserType> userTypes = Arrays.stream(UserType.values()).collect(Collectors.toList());
 
-        User user = controller.registerUser(UserType.CUSTOMER);
+        User user = controller.registerUser(UserType.CUSTOMER); //todo: perché se non è il primo accesso costringe a registrarsi come fruitore?
         user.runUserMenu(app, controller);
     }
 
