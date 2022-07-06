@@ -1,6 +1,7 @@
 package main.controller.customerActions;
 
 import main.Application;
+import main.controller.Controller;
 import main.controller.Selectable;
 import main.exceptions.InvalidMethodException;
 import main.model.User;
@@ -11,13 +12,8 @@ import java.io.IOException;
 public class PersonalOffersPrinter implements Selectable {
 
     @Override
-    public void runAction(@NotNull Application app) throws IOException {
-        throw new InvalidMethodException();
-    }
-
-    @Override
-    public void runAction(@NotNull Application app, User user) {
-        app.getOffersStore().viewPersonalOffers(user);
+    public void runAction(@NotNull Application app, Controller controller) {
+        //app.getOffersStore().viewPersonalOffers(user);
     }
 
     @Override

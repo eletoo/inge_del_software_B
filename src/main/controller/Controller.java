@@ -14,20 +14,24 @@ import java.util.function.Function;
 public class Controller {
 
     //parla con la view
+    private Application app;
+    private View view;
 
-    public static void run() throws IOException {
+    private RegistrationHandler rh;
 
-        Application app = new Application();
+    public Controller(Application app, View view) {
+        this.app = app;
+        this.view = view;
+        this.rh = new RegistrationHandler(app);
+    }
 
-        LocalPath.createLocalDirectories();
-
+    public void run() throws IOException {
         ActionSelection sel = new ActionSelection();
-
         List<Selectable> selectable = Context.initiateSelectableList();
         Selectable selected;
         do {
             selected = sel.selectAction(selectable, Selectable::getActionName);
-            selected.runAction(app);
+            selected.runAction(app, this);
         } while (!(selected instanceof Exit));
     }
 
@@ -74,5 +78,34 @@ public class Controller {
         s = new ExchangeStructure();
         s.prepareStructure(app);
     }
+
+    public boolean isFirstAccess() throws IOException {
+        app.getUserDataStore().load();
+        if (app.getUserDataStore().isEmpty()) {
+            this.registerUser(UserType.CONFIGURATOR).runUserMenu(app, this);
+            return true;
+        }
+        return false;
+    }
+
+    public User registerUser(UserType type) throws IOException {
+        String username;
+        do {
+            if(type == UserType.CONFIGURATOR)
+                username = RandomItemGenerator.generateRandomString(10);
+            else
+                username = this.askStringFromView(GenericMessage.USERNAME_REQUEST);
+        } while (app.getUserDataStore().isUsernameTaken(username));
+
+        String pw = type == UserType.CONFIGURATOR ?
+                RandomItemGenerator.generateRandomPassword(10) :
+                this.askStringFromView(GenericMessage.PASSWORD_REQUEST);
+
+        User user = this.rh.registerUser(type, username, pw, this);
+        app.getUserDataStore().save();
+        return user;
+    }
+
+
 
 }

@@ -22,30 +22,30 @@ public class Customer extends User implements ListSelect {
     }
 
     @Override
-    public void runUserMenu(Application app, User user) throws IOException {
-        //todo: useAsFruitore()
-
-        //carica i dati salvati in precedenza
-        Controller.prepareStructures(app);
-
-        //gestisce le offerte di scambio prima ancora di selezionare altre azioni
-        Exchange.manageExchanges(app, fruitore);
-        Exchange.managePastExchanges(app, fruitore);
-
-        Selectable action;
-        do {
-            Controller.prepareStructures(app);
-
-            action = choose(this.createMenu(), Selectable::getActionName);
-            action.runAction(app, user);
-
-        } while (! (action instanceof Exit));
-
+    public User onFirstLogin(Application app, Controller controller) {
+        return this;
     }
 
     @Override
-    public void runUserMenu(Application app) {
-        throw new InvalidMethodException();
+    public void runUserMenu(Application app, Controller controller) throws IOException {
+//        //todo: useAsFruitore()
+//
+//        //carica i dati salvati in precedenza
+//        Controller.prepareStructures(app);
+//
+//        //gestisce le offerte di scambio prima ancora di selezionare altre azioni
+//        Exchange.manageExchanges(app, fruitore);
+//        Exchange.managePastExchanges(app, fruitore);
+//
+//        Selectable action;
+//        do {
+//            Controller.prepareStructures(app);
+//
+//            action = choose(this.createMenu(), Selectable::getActionName);
+//            action.runAction(app, user);
+//
+//        } while (! (action instanceof Exit));
+
     }
 
     private @NotNull List<Selectable> createMenu() {

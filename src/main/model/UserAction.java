@@ -1,13 +1,11 @@
 package main.model;
 
 import main.Application;
+import main.controller.Controller;
 
 import java.io.IOException;
 
 public interface UserAction {
 
-    void runUserMenu(Application app, User user) throws IOException;
-
-    void runUserMenu(Application app) throws IOException;
-
+    void runUserMenu(Application app, Controller controller) throws IOException;
 }

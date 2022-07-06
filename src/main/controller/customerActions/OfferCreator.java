@@ -1,6 +1,7 @@
 package main.controller.customerActions;
 
 import main.Application;
+import main.controller.Controller;
 import main.controller.Selectable;
 import main.exceptions.InvalidMethodException;
 import main.model.Customer;
@@ -10,14 +11,10 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 
 public class OfferCreator implements Selectable {
-    @Override
-    public void runAction(Application app) throws IOException {
-        throw new InvalidMethodException();
-    }
 
     @Override
-    public void runAction(@NotNull Application app, User user) throws IOException {
-        app.getOffersStore().createOffer(app, (Customer) user);
+    public void runAction(@NotNull Application app, Controller controller) throws IOException {
+        //app.getOffersStore().createOffer(app, (Customer) user);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package main.controller.configuratorActions;
 
 import main.Application;
+import main.controller.Controller;
 import main.controller.Selectable;
 import main.exceptions.InvalidMethodException;
 import main.model.OfferState;
@@ -11,7 +12,7 @@ import java.io.IOException;
 
 public class ClosedOffersPrinter implements Selectable {
     @Override
-    public void runAction(@NotNull Application app) throws IOException {
+    public void runAction(@NotNull Application app, Controller controller) throws IOException {
         app.getOffersStore().viewOffers(app, OfferState.CHIUSA);
     }
 
@@ -20,8 +21,4 @@ public class ClosedOffersPrinter implements Selectable {
         return "Visualizza offerte chiuse";
     }
 
-    @Override
-    public void runAction(Application app, User user) {
-        throw new InvalidMethodException();
-    }
 }

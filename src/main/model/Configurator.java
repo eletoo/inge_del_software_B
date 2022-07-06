@@ -1,9 +1,7 @@
 package main.model;
 
 import main.Application;
-import main.controller.Controller;
-import main.controller.ListSelect;
-import main.controller.Selectable;
+import main.controller.*;
 import main.controller.configuratorActions.*;
 import main.exceptions.InvalidMethodException;
 import org.jetbrains.annotations.NotNull;
@@ -26,18 +24,33 @@ public class Configurator extends User implements ListSelect {
     }
 
     @Override
-    public void runUserMenu(Application app, User user) throws IOException {
-        throw new InvalidMethodException();
+    public User onFirstLogin(Application app, Controller controller) {
+        controller.signalToView(GenericMessage.CUSTOMIZE_CREDENTIALS.getMessage());
+        boolean auth;
+        String username;
+        do {
+            username = controller.askStringFromView(GenericMessage.CUSTOMIZE_USERNAME);
+            if(app.getUserDataStore().isUsernameTaken(username)) {
+                Controller.signalToView(ErrorMessage.E_CREDENTIALS_ERROR.getMessage());
+                continue;
+            }
+
+            String password = Controller.askStringFromView(GenericMessage.CUSTOMIZE_PW);
+
+            app.getUserDataStore().updateUser(this.getUsername(), username, password);
+            app.getUserDataStore().save();
+            return app.getUserDataStore().getUser(username);
+        } while (true);
     }
 
     @Override
-    public void runUserMenu(Application app) throws IOException {
+    public void runUserMenu(Application app, Controller controller) throws IOException {
         Selectable action;
         do {
             Controller.prepareStructures(app);
 
             action = choose(this.createMenu(), Selectable::getActionName);
-            action.runAction(app);
+            action.runAction(app, controller);
 
         } while (! (action instanceof Exit));
     }

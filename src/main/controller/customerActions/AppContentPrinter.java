@@ -15,7 +15,7 @@ import java.util.Map;
 public class AppContentPrinter implements Selectable {
 
     @Override
-    public void runAction(@NotNull Application app) throws IOException {
+    public void runAction(@NotNull Application app, Controller controller) throws IOException {
 
         if (this.getHierarchies(app).isEmpty()) {
             Controller.signalToView(ErrorMessage.NO_HIERARCHIES_YET.getMessage());
@@ -35,11 +35,6 @@ public class AppContentPrinter implements Selectable {
 
     private Map<String, Hierarchy> getHierarchies(@NotNull Application app) {
         return app.getHierarchiesStore().getHierarchies();
-    }
-
-    @Override
-    public void runAction(Application app, User user) {
-        throw new InvalidMethodException();
     }
 
     @Override

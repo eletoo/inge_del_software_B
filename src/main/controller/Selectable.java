@@ -7,9 +7,7 @@ import java.io.IOException;
 
 public interface Selectable {
 
-    void runAction(Application app) throws IOException;
-
-    void runAction(Application app, User user) throws IOException;
+    void runAction(Application app, Controller controller) throws IOException;
 
     String getActionName();
 }

@@ -1,6 +1,7 @@
 package main.controller.customerActions;
 
 import main.Application;
+import main.controller.Controller;
 import main.controller.ListSelect;
 import main.controller.Selectable;
 import main.exceptions.InvalidMethodException;
@@ -12,25 +13,20 @@ import java.util.stream.Collectors;
 
 public class LatestMessagePrinter implements Selectable, ListSelect {
     @Override
-    public void runAction(@NotNull Application app, User user) throws IOException {
-        //todo
-        if (app.getExchangesStore().getExchanges().isEmpty())
-            return;
+    public void runAction(@NotNull Application app, Controller controller) throws IOException {
+//        //todo
+//        if (app.getExchangesStore().getExchanges().isEmpty())
+//            return;
+//
+//        var exc = choose(app.getExchangesStore()
+//                .getExchanges()
+//                .stream()
+//                .filter(e -> e.getAuthor().equals(user) || e.getDest().equals(user))
+//                .collect(Collectors.toList()), null
+//        );
+//
+//        exc.viewLastMessageByCounterpart(user);
 
-        var exc = choose(app.getExchangesStore()
-                .getExchanges()
-                .stream()
-                .filter(e -> e.getAuthor().equals(user) || e.getDest().equals(user))
-                .collect(Collectors.toList()), null
-        );
-
-        exc.viewLastMessageByCounterpart(user);
-
-    }
-
-    @Override
-    public void runAction(Application app) {
-        throw new InvalidMethodException();
     }
 
     @Override

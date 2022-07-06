@@ -13,28 +13,23 @@ import java.util.stream.Collectors;
 public class ExchangeCreator implements Selectable, ListSelect {
 
     @Override
-    public void runAction(@NotNull Application app, User user) throws IOException {
-
-        if (app.getHierarchiesStore().getHierarchies().isEmpty()) {
-            Controller.signalToView(ErrorMessage.E_NO_CATEGORIES.getMessage());
-            return;
-        }
-
-        if (app.getInformationStore().getInformation() == null) {
-            Controller.signalToView(ErrorMessage.E_NO_INFO.getMessage());
-            return;
-        }
-
-        var sc = createExchange(app, (Customer) user);
-        if (sc != null) {
-            app.getExchangesStore().addExchange(sc);
-            app.getExchangesStore().save();
-        }
-    }
-
-    @Override
-    public void runAction(Application app) {
-        throw new InvalidMethodException();
+    public void runAction(@NotNull Application app, Controller controller) throws IOException {
+//
+//        if (app.getHierarchiesStore().getHierarchies().isEmpty()) {
+//            Controller.signalToView(ErrorMessage.E_NO_CATEGORIES.getMessage());
+//            return;
+//        }
+//
+//        if (app.getInformationStore().getInformation() == null) {
+//            Controller.signalToView(ErrorMessage.E_NO_INFO.getMessage());
+//            return;
+//        }
+//
+//        var sc = createExchange(app, (Customer) user);
+//        if (sc != null) {
+//            app.getExchangesStore().addExchange(sc);
+//            app.getExchangesStore().save();
+//        }
     }
 
     @Override

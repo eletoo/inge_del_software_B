@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class DataSaver implements Selectable {
     @Override
-    public void runAction(@NotNull Application app) throws IOException {
+    public void runAction(@NotNull Application app, Controller controller) throws IOException {
         app.getHierarchiesStore().save();
         app.getInformationStore().save();
         app.getOffersStore().save();
@@ -25,8 +25,4 @@ public class DataSaver implements Selectable {
         return "Salva";
     }
 
-    @Override
-    public void runAction(Application app, User user) {
-        throw new InvalidMethodException();
-    }
 }

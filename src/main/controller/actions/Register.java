@@ -1,7 +1,6 @@
 package main.controller.actions;
 
 import main.controller.Controller;
-import main.controller.ListSelect;
 import main.controller.Selectable;
 import main.Application;
 import main.exceptions.InvalidMethodException;
@@ -14,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Register implements Selectable, ListSelect {
+public class Register implements Selectable {
     private String actionName;
 
     public Register() {
@@ -22,24 +21,18 @@ public class Register implements Selectable, ListSelect {
     }
 
     @Override
-    public void runAction(@NotNull Application app) throws IOException {
+    public void runAction(@NotNull Application app, Controller controller) throws IOException {
 
         app.getUserDataStore().load();
 
-        if(Registration.firstAccessEver(app))
+        if(controller.isFirstAccess())
             return;
 
-        Controller.signalToView(GenericMessage.SELECT_PROFILE_TYPE.getMessage());
+        controller.signalToView(GenericMessage.SELECT_PROFILE_TYPE.getMessage());
         List<UserType> users = Arrays.stream(UserType.values()).collect(Collectors.toList());
 
-        User user = Registration.registerUser(choose(users, UserType::getUserType), app);
-        user.runUserMenu(app);
-
-    }
-
-    @Override
-    public void runAction(Application app, User user) {
-        throw new InvalidMethodException();
+        User user = controller.registerUser(UserType.CUSTOMER);
+        user.runUserMenu(app, controller);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package main.controller.actions;
 
+import main.controller.Controller;
 import main.controller.Selectable;
 import main.Application;
 import main.exceptions.InvalidMethodException;
@@ -13,13 +14,8 @@ public class Exit implements Selectable {
     }
 
     @Override
-    public void runAction(Application app) {
+    public void runAction(Application app, Controller controller) {
         System.exit(0);
-    }
-
-    @Override
-    public void runAction(Application app, User user) {
-        throw new InvalidMethodException();
     }
 
     @Override

@@ -14,13 +14,8 @@ import java.util.List;
 
 public class HierarchyCreation implements Selectable, ListSelect {
     @Override
-    public void runAction(@NotNull Application app) throws IOException {
+    public void runAction(@NotNull Application app, Controller controller) throws IOException {
         createNewHierarchy(app);
-    }
-
-    @Override
-    public void runAction(Application app, User user) {
-        throw new InvalidMethodException();
     }
 
     @Override

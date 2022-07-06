@@ -1,6 +1,7 @@
 package main.controller.customerActions;
 
 import main.Application;
+import main.controller.Controller;
 import main.controller.Selectable;
 import main.exceptions.InvalidMethodException;
 import main.model.User;
@@ -11,12 +12,7 @@ import java.io.IOException;
 public class OpenOffersPrinter implements Selectable {
 
     @Override
-    public void runAction(@NotNull Application app) throws IOException {
-        app.getOffersStore().viewOffersByCategory(app);
-    }
-
-    @Override
-    public void runAction(Application app, User user) throws IOException {
+    public void runAction(Application app, Controller controller) throws IOException {
         throw new InvalidMethodException();
     }
 

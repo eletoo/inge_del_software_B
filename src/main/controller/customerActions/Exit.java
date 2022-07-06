@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class Exit implements Selectable {
     @Override
-    public void runAction(Application app) throws IOException {
+    public void runAction(Application app, Controller controller) throws IOException {
         Controller.signalToView(GenericMessage.EXIT_MESSAGE.getMessage());
     }
 

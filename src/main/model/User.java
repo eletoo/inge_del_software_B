@@ -1,5 +1,7 @@
 package main.model;
 
+import main.Application;
+import main.controller.Controller;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -104,4 +106,5 @@ public abstract class User implements UserAction, Serializable {
         this.username = newUsername;
     }
 
+    public abstract User onFirstLogin(Application app, Controller controller);
 }

@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class InformationConfigurator implements Selectable, ListSelect {
     @Override
-    public void runAction(@NotNull Application app) throws IOException {
+    public void runAction(@NotNull Application app, Controller controller) throws IOException {
 
         if (this.getInfo(app) == null) {
             this.setInfo(app, new Information(Controller.askStringFromView(GenericMessage.PLACE),
@@ -41,11 +41,6 @@ public class InformationConfigurator implements Selectable, ListSelect {
         //se non modifico le informazioni di scambio e conf.json è corrotto/incompleto qui viene
         //sovrascritto con le informazioni correnti complete e non modificate
         Controller.signalToView(GenericMessage.SAVED_CORRECTLY.getMessage());
-    }
-
-    @Override
-    public void runAction(Application app, User user) {
-        throw new InvalidMethodException();
     }
 
     @NotNull
