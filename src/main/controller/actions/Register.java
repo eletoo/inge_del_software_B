@@ -24,7 +24,7 @@ public class Register implements Selectable {
 
         controller.getApp().getUserDataStore().load();
 
-        if(controller.isFirstAccess())
+        if (controller.isFirstAccess())
             return;
 
         List<UserType> users = Arrays.stream(UserType.values()).collect(Collectors.toList());
