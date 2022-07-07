@@ -80,10 +80,10 @@ public class Exchange implements Serializable {
         this.getInformation(app).getTimeIntervals().stream().forEach(e -> orari.addAll(e.getSingoliOrari()));
         sb.append("\nOrario: " + controller.getView().choose(GenericMessage.TIME_RANGE, orari, Time::getTime).getTime());
 
-        if (this.ownOffer.getOwner().equals(f))
-            this.counterMessage.setMessage(sb.toString());
+        if (this.selectedOffer.getOwner().equals(f))//se l'offerta selezionata è la mia
+            this.counterMessage.setMessage(sb.toString());//imposto il messaggio B con il mio messaggio
         else
-            this.ownerMessage.setMessage(sb.toString());
+            this.ownerMessage.setMessage(sb.toString());//altrimenti io sono il proprietario dell'offerta e imposto il mio msg
 
         this.dateTime = LocalDateTime.now();
     }
@@ -123,9 +123,9 @@ public class Exchange implements Serializable {
      */
     private @NotNull ExchangeMessage getLastMsg(User f) {
         if (this.counterMessage.getAuthor().equals(f))
-            return this.counterMessage;
-
-        return this.ownerMessage;
+            return this.ownerMessage;
+//todo: se ci sono errori scambiare i due return
+        return this.counterMessage;
     }
 
     public ExchangeMessage getLastMessageByCounterpart(User user) {

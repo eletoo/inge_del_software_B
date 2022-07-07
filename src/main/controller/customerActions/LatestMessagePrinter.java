@@ -22,7 +22,7 @@ public class LatestMessagePrinter implements UserSelectable {
         );
         var msg = exc.getLastMessageByCounterpart(user);
 
-        controller.signalToView( exc.getSelectedOffer().getName() + " <--> " + exc.getOwnOffer().getName() + ": " + (msg != null ? msg.getMessage() : "--"));
+        controller.signalToView( exc.getSelectedOffer().getName() + " <--> " + exc.getOwnOffer().getName() + ": " + (msg.getMessage() != null ? msg.getMessage() : "--"));
     }
 
     @Override

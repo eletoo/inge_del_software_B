@@ -146,15 +146,16 @@ public class Controller {
     }
 
     private void manageExchange(@NotNull Exchange e, Customer c) throws IOException {
-        if (e.getOwnerMessage().getMessage() == null) {
-            e.suggestMeeting(this, this.app, c);
+        if (e.getOwnerMessage().getMessage() == null && e.getCounterMessage() == null) {//A propone lo scambio, B lo riceve per la prima volta, messageA è ancora null
+            e.suggestMeeting(this, this.app, c);//todo: potrebbe essere da rimuovere la seconda condizione in AND
             app.getOffersStore().getOffer(e.getSelectedOffer()).setState(OfferState.IN_SCAMBIO);
             app.getOffersStore().getOffer(e.getOwnOffer()).setState(OfferState.IN_SCAMBIO);
             app.save();
             return;
         }
 
-        this.signalToView(e.getLastMessageByCounterpart(c).getMessage());
+        //altrimenti è già stato proposto almeno uno scambio
+        this.signalToView(e.getLastMessageByCounterpart(c).getMessage());//todo: potenziale errore in getLastMessageByCounterpart
 
         if (this.askBooleanFromView(YesOrNoMessage.ACCEPT_MEETING)) {
             app.getOffersStore().getOffer(e.getSelectedOffer()).setState(OfferState.CHIUSA);
@@ -188,21 +189,22 @@ public class Controller {
                 break;
             }
         }
+        this.signalToView(noExchanges);
     }
 
     public User onUserLogin(Customer customer) throws IOException {
 
-        var valid_exchanges = app.getExchangesStore().getExchanges().stream()
-                .filter(e -> e.isValidExchange(app))
+        var valid_exchanges = this.app.getExchangesStore().getExchanges().stream()
+                .filter(e -> e.isValidExchange(this.app))
                 .filter(e -> e.getDest().equals(customer))
                 .collect(Collectors.toList());
 
-        var invalid_exchanges = app.getExchangesStore().getExchanges().stream()
-                .filter(e -> !e.isValidExchange(app))
+        var invalid_exchanges = this.app.getExchangesStore().getExchanges().stream()
+                .filter(e -> !e.isValidExchange(this.app))
                 .collect(Collectors.toList());
 
-        var past_exchanges = app.getExchangesStore().getExchanges().stream()
-                .filter(e -> e.isValidExchange(app))
+        var past_exchanges = this.app.getExchangesStore().getExchanges().stream()
+                .filter(e -> e.isValidExchange(this.app))
                 .filter(e -> e.getAuthor().equals(customer))
                 .collect(Collectors.toList());
 
@@ -221,12 +223,12 @@ public class Controller {
                 past_exchanges);
 
         for (Exchange s : invalid_exchanges) {
-            app.getOffersStore().getOffer(s.getOwnOffer()).setState(OfferState.APERTA);
-            app.getOffersStore().getOffer(s.getSelectedOffer()).setState(OfferState.APERTA);
-            app.getExchangesStore().removeExchange(s);
+            this.app.getOffersStore().getOffer(s.getOwnOffer()).setState(OfferState.APERTA);
+            this.app.getOffersStore().getOffer(s.getSelectedOffer()).setState(OfferState.APERTA);
+            this.app.getExchangesStore().removeExchange(s);
         }
 
-        app.getExchangesStore().save();
+        this.app.getExchangesStore().save();
         return customer;
     }
 }
