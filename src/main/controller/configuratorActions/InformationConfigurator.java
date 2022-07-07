@@ -19,10 +19,10 @@ public class InformationConfigurator implements UserSelectable {
             writeInfos(controller, controller.askStringFromView(GenericMessage.PLACE));
 
         } else {
-            Controller.signalToView(GenericMessage.CURRENT_INFO.getMessage());
-            this.getInfo(controller.getApp()).print();
+            controller.signalToView(GenericMessage.CURRENT_INFO.getMessage());
+            controller.signalToView(this.getInfo(controller.getApp()).getInformations());
 
-            if (Controller.askBooleanFromView(YesOrNoMessage.OVERWRITE_INFO))
+            if (controller.askBooleanFromView(YesOrNoMessage.OVERWRITE_INFO))
                 writeInfos(controller, this.getInfo(controller.getApp()).getPlace());
 
         }

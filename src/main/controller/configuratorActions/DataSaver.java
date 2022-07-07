@@ -13,7 +13,7 @@ public class DataSaver implements UserSelectable {
     @Override
     public void runAction(Controller controller, User user) throws IOException {
         controller.getApp().save();
-        Controller.signalToView(GenericMessage.SAVED_CORRECTLY.getMessage());
+        controller.signalToView(GenericMessage.SAVED_CORRECTLY.getMessage());
     }
 
     @Override

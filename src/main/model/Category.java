@@ -43,6 +43,7 @@ public abstract class Category implements Serializable {
         return nome;
     }
 
+
     /**
      * @return mappa dei campi nativi
      */
@@ -78,7 +79,7 @@ public abstract class Category implements Serializable {
      */
     public String getCategoryDefinition() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\n\nNome: ").append(this.nome);
+        sb.append("Nome: ").append(this.nome);
         sb.append("\nDescrizione: ").append(this.descrizione);
         sb.append("\nCampi nativi:");
         for (String n : campiNativi.keySet()) {
@@ -178,49 +179,12 @@ public abstract class Category implements Serializable {
      *
      * @return campi da assegnare alla categoria radice
      */
-    private @NotNull Map<String, NativeField> generateRootNativeFields() {
+    public static @NotNull Map<String, NativeField> generateRootNativeFields() {
         NativeField statoConservazione = new NativeField(true, NativeField.Tipo.STRING);
         NativeField descrizioneLibera = new NativeField(false, NativeField.Tipo.STRING);
         Map<String, NativeField> campi = new HashMap<>();
         campi.put("Stato Conservazione", statoConservazione);
         campi.put("Descrizione Libera", descrizioneLibera);
-        return campi;
-    }
-
-    /**
-     * Genera i campi nativi (chiedendone nome e obbligatorieta') da aggiungere alla categoria c e aggiunge quelli che
-     * essa eredita dalla categoria parent
-     *
-     * @param parent categoria parent da cui ereditare i campi
-     * @return campi nativi
-     */
-    public @NotNull Map<String, NativeField> generateNativeFields(Category parent) {
-        Map<String, NativeField> campi = new HashMap<>();
-
-        if (parent == null) {
-            campi.putAll(generateRootNativeFields());
-        } else {
-            campi.putAll(parent.getNativeFields());
-        }
-
-        boolean ans;
-        do {
-            ans = Controller.askBooleanFromView(YesOrNoMessage.ADD_NATIVE_FIELD);
-
-            if (ans) {
-                String name = Controller.askStringFromView(GenericMessage.FIELD_NAME);
-                boolean obbligatorio;
-
-                if (Controller.askBooleanFromView(YesOrNoMessage.COMPULSORY_FIELD)) {
-                    obbligatorio = true;
-                } else {
-                    obbligatorio = false;
-                }
-                NativeField nuovo = new NativeField(obbligatorio, NativeField.Tipo.STRING);
-                campi.put(name, nuovo);
-            }
-        } while (ans);
-
         return campi;
     }
 

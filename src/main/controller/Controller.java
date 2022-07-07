@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Controller {
 
@@ -40,32 +41,28 @@ public class Controller {
         } while (!(selected instanceof Exit));
     }
 
-    public static void signalToView(String message) {
+    public void signalToView(String message) {
         // this.view.notify(message);
         MessagePrinter.printText(message);
     }
 
-    public static <T> void signalListToView(@NotNull List<T> toPrint, Function<T, String> toApply){
+    public <T> void signalListToView(@NotNull List<T> toPrint, Function<T, String> toApply) {
         toPrint.forEach(e -> signalToView(toApply == null ? e.toString() : toApply.apply(e)));
     }
 
-    public static String askStringFromView(Message message) {
+    public String askStringFromView(Message message) {
         return (new StringReaderClass()).in(message);
     }
 
-    public static String askPotentiallyEmptyStringFromView(Message message){
+    public String askPotentiallyEmptyStringFromView(Message message) {
         return (new StringReaderClass()).inPotentiallyEmptyLine(message); //todo check
     }
 
-    public static String askLineFromVew(Message message){
-        return (new StringReaderClass()).inLine(message);
-    }
-
-    public static int askIntFromView(Message message) {
+    public int askIntFromView(Message message) {
         return (new IntegerReader().in(message));
     }
 
-    public static boolean askBooleanFromView(Message message){
+    public boolean askBooleanFromView(Message message) {
         String ans;
         do {
             ans = askStringFromView(message);
@@ -97,7 +94,7 @@ public class Controller {
     public User registerUser(UserType type) throws IOException {
         String username;
         do {
-            if(type == UserType.CONFIGURATOR)
+            if (type == UserType.CONFIGURATOR)
                 username = RandomItemGenerator.generateRandomString(10);
             else
                 username = this.askStringFromView(GenericMessage.USERNAME_REQUEST);
@@ -123,5 +120,107 @@ public class Controller {
 
     public Application getApp() {
         return this.app;
+    }
+
+    public User onConfiguratorFirstLogin(Configurator u) {
+        this.signalToView(GenericMessage.CUSTOMIZE_CREDENTIALS.getMessage());
+
+        String username;
+        do {
+            username = this.askStringFromView(GenericMessage.CUSTOMIZE_USERNAME);
+            if (this.getApp().getUserDataStore().isUsernameTaken(username)) {
+                this.signalToView(ErrorMessage.E_CREDENTIALS_ERROR.getMessage());
+                continue;
+            }
+
+            String password = this.askStringFromView(GenericMessage.CUSTOMIZE_PW);
+
+            this.getApp().getUserDataStore().updateUser(u.getUsername(), username, password);
+            this.getApp().getUserDataStore().save();
+            return this.getApp().getUserDataStore().getUser(username);
+        } while (true);
+    }
+
+    private void manageExchange(Exchange e, Customer c) throws IOException {
+        if (e.getMessageA().getMessage() == null) {
+            e.suggestMeeting(app, c);
+            app.getOffersStore().getOffer(e.getSelectedOffer()).setState(OfferState.IN_SCAMBIO);
+            app.getOffersStore().getOffer(e.getOwnOffer()).setState(OfferState.IN_SCAMBIO);
+            return;
+        }
+
+        this.signalToView(e.getMessageA().getMessage());
+
+        if (this.askBooleanFromView(YesOrNoMessage.ACCEPT_MEETING)) {
+            app.getOffersStore().getOffer(e.getSelectedOffer()).setState(OfferState.CHIUSA);
+            app.getOffersStore().getOffer(e.getOwnOffer()).setState(OfferState.CHIUSA);
+            this.signalToView(GenericMessage.CLOSED_OFFER.getMessage());
+            app.getExchangesStore().removeExchange(e);
+            app.getExchangesStore().save();
+            return;
+        }
+
+        e.suggestMeeting(app, c);
+        app.getOffersStore().getOffer(e.getSelectedOffer()).setState(OfferState.IN_SCAMBIO);
+        app.getOffersStore().getOffer(e.getOwnOffer()).setState(OfferState.IN_SCAMBIO);
+    }
+
+    private void manageExchange(Customer c, String noExchanges, String existingExchanges, Message selectExchange, List<Exchange> userExchanges) throws IOException {
+        while (!userExchanges.isEmpty()) {
+            Exchange toAccept;
+            this.signalToView(existingExchanges);
+            this.signalListToView(userExchanges, null);
+
+            if (this.askBooleanFromView(selectExchange)) {
+                toAccept = this.view.choose(userExchanges, null);
+
+                manageExchange(toAccept, c);
+
+                userExchanges.remove(toAccept);
+                app.getExchangesStore().save();
+            } else {
+                break;
+            }
+        }
+    }
+
+    public User onUserLogin(Customer customer) throws IOException {
+
+        var valid_exchanges = app.getExchangesStore().getExchanges().stream()
+                .filter(e -> e.isValidExchange(app))
+                .filter(e -> e.getDest().equals(customer))
+                .collect(Collectors.toList());
+
+        var invalid_exchanges = app.getExchangesStore().getExchanges().stream()
+                .filter(e -> !e.isValidExchange(app))
+                .collect(Collectors.toList());
+
+        var past_exchanges = app.getExchangesStore().getExchanges().stream()
+                .filter(e -> e.isValidExchange(app))
+                .filter(e -> e.getAuthor().equals(customer))
+                .collect(Collectors.toList());
+
+        manageExchange(
+                customer,
+                GenericMessage.NO_NEW_OFFERS.getMessage(),
+                GenericMessage.NEW_OFFERS.getMessage(),
+                YesOrNoMessage.SELECT_EXCHANGE,
+                valid_exchanges);
+
+        manageExchange(
+                customer,
+                GenericMessage.NO_PAST_OFFERS.getMessage(),
+                GenericMessage.PAST_OFFERS.getMessage(),
+                YesOrNoMessage.SELECT_EXCHANGE,
+                past_exchanges);
+
+        for (Exchange s : invalid_exchanges) {
+            app.getOffersStore().getOffer(s.getOwnOffer()).setState(OfferState.APERTA);
+            app.getOffersStore().getOffer(s.getSelectedOffer()).setState(OfferState.APERTA);
+            app.getExchangesStore().removeExchange(s);
+        }
+
+        app.getExchangesStore().save();
+        return customer;
     }
 }

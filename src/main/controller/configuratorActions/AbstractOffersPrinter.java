@@ -7,9 +7,9 @@ import main.controller.UserSelectable;
 import main.model.*;
 
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 public abstract class AbstractOffersPrinter implements UserSelectable {
-
     private OfferState requiredState;
 
     public AbstractOffersPrinter(OfferState requiredState) {
@@ -24,20 +24,20 @@ public abstract class AbstractOffersPrinter implements UserSelectable {
      */
     @Override
     public void runAction(Controller controller, User user) throws IOException {
-
         if (controller.getApp().getHierarchiesStore().getHierarchies().size() == 0) {
-            Controller.signalToView(ErrorMessage.E_NO_CATEGORIES.getMessage());
+            controller.signalToView(ErrorMessage.E_NO_CATEGORIES.getMessage());
             return;
         }
 
         Leaf leaf = controller.getView().choose(
                 GenericMessage.SELECT_CATEGORY,
-                controller.getApp().getOffersStore().getLeafCategories(controller.getApp()),
+                controller.getApp().getOffersStore().getLeafCategories(controller.getApp()).stream().map(e -> (Leaf) e.getCat()).collect(Collectors.toList()),
                 Category::printShortDescription
         );
 
-        var offers = controller.getApp().getOffersStore().viewOffers(leaf, this.requiredState);
+        var offers = controller.getApp().getOffersStore().getOffers(leaf, this.requiredState);
         controller.signalListToView(offers, Offer::getOfferInfos);
+
     }
 
 }

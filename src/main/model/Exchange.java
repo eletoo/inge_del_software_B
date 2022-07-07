@@ -23,16 +23,18 @@ public class Exchange implements Serializable, ListSelect {
     /**
      * Costruttore
      *
-     * @param app      applicazione
      * @param own      offerta accoppiata
      * @param selected offerta selezionata
      */
-    public Exchange(@NotNull Application app, @NotNull Offer own, @NotNull Offer selected) {
+    public Exchange(@NotNull Offer own, @NotNull Offer selected) {
         this.ownOffer = own;
         this.selectedOffer = selected;
 
-        app.getOffersStore().getOffer(this.ownOffer).setState(OfferState.ACCOPPIATA);
-        app.getOffersStore().getOffer(this.selectedOffer).setState(OfferState.SELEZIONATA);
+        //todo will it work?
+//        app.getOffersStore().getOffer(this.ownOffer).setState(OfferState.ACCOPPIATA);
+//        app.getOffersStore().getOffer(this.selectedOffer).setState(OfferState.SELEZIONATA);
+        this.ownOffer.setState(OfferState.ACCOPPIATA);
+        this.selectedOffer.setState(OfferState.SELEZIONATA);
 
         this.dateTime = LocalDateTime.now();
         this.messageA = new ExchangeMessage(null, own.getOwner());
@@ -68,30 +70,12 @@ public class Exchange implements Serializable, ListSelect {
         return app.getInformationStore().getInformation();
     }
 
+    public ExchangeMessage getMessageA() {
+        return messageA;
+    }
 
-    private void manageExchange(@NotNull Application app, Customer f) throws IOException {
-        if (this.messageA.getMessage() == null) {
-            suggestMeeting(app, f);
-            app.getOffersStore().getOffer(this.selectedOffer).setState(OfferState.IN_SCAMBIO);
-            app.getOffersStore().getOffer(this.ownOffer).setState(OfferState.IN_SCAMBIO);
-            return;
-        }
-
-        Controller.signalToView(this.messageA.getMessage());
-
-        if (Controller.askBooleanFromView(YesOrNoMessage.ACCEPT_MEETING)) {
-            app.getOffersStore().getOffer(this.selectedOffer).setState(OfferState.CHIUSA);
-            app.getOffersStore().getOffer(this.ownOffer).setState(OfferState.CHIUSA);
-            Controller.signalToView(GenericMessage.CLOSED_OFFER.getMessage());
-            app.getExchangesStore().removeExchange(this);
-            app.getExchangesStore().save();
-            return;
-        }
-
-        suggestMeeting(app, f);
-        app.getOffersStore().getOffer(this.selectedOffer).setState(OfferState.IN_SCAMBIO);
-        app.getOffersStore().getOffer(this.ownOffer).setState(OfferState.IN_SCAMBIO);
-
+    public ExchangeMessage getMessageB() {
+        return messageB;
     }
 
     /**
@@ -100,7 +84,7 @@ public class Exchange implements Serializable, ListSelect {
      * @param app  applicazione
      * @param f    autore della proposta di appuntamento
      */
-    private void suggestMeeting(@NotNull Application app, Customer f) {
+    public void suggestMeeting(@NotNull Application app, Customer f) {
         StringBuilder sb = new StringBuilder();
         sb.append("\n\nInformazioni appuntamento per lo scambio:");
         sb.append("\nLuogo: " + choose(this.getInformation(app).getAddresses(), null));
@@ -136,7 +120,6 @@ public class Exchange implements Serializable, ListSelect {
      * Gestisce le offerte di scambio di cui l'utente e' destinatario
      *
      * @param app  applicazione
-     * @param view view
      * @param dest utente destinatario
      * @throws IOException eccezione
      */
@@ -178,35 +161,35 @@ public class Exchange implements Serializable, ListSelect {
      */
     private void manage(@NotNull Application app, String noExchanges, String existingExchanges, Message selectExchange, Customer f, Function<Exchange, Customer> predicate) throws IOException {
         //gestione scambi validi
-        List<Exchange> userExchanges;
-        if (getExchanges(app) == null)
-            userExchanges = new ArrayList<>();
-        else
-            userExchanges = app.getExchangesStore()
-                    .getValidExchanges(this.getExchanges(app), app)
-                    .stream()
-                    .filter(e -> predicate.apply(e).equals(f))
-                    .collect(Collectors.toList());
-
-        if (userExchanges.isEmpty())
-            Controller.signalToView(noExchanges);
-
-        while (!userExchanges.isEmpty()) {
-            Exchange toAccept;
-            Controller.signalToView(existingExchanges);
-            Controller.signalListToView(userExchanges, null);
-
-            if (Controller.askBooleanFromView(selectExchange)) {
-                toAccept = choose(userExchanges, null);
-                toAccept.manageExchange(app, f);
-                userExchanges.remove(toAccept);
-                app.getExchangesStore().save();
-            } else {
-                break;
-            }
-        }
-        //gestione scambi invalidi
-        this.manageInvalidExchanges(app);
+//        List<Exchange> userExchanges;
+//        if (getExchanges(app) == null)
+//            userExchanges = new ArrayList<>();
+//        else
+//            userExchanges = app.getExchangesStore()
+//                    .getValidExchanges(this.getExchanges(app), app)
+//                    .stream()
+//                    .filter(e -> predicate.apply(e).equals(f))
+//                    .collect(Collectors.toList());
+//
+//        if (userExchanges.isEmpty())
+//            Controller.signalToView(noExchanges);
+//
+//        while (!userExchanges.isEmpty()) {
+//            Exchange toAccept;
+//            Controller.signalToView(existingExchanges);
+//            Controller.signalListToView(userExchanges, null);
+//
+//            if (Controller.askBooleanFromView(selectExchange)) {
+//                toAccept = choose(userExchanges, null);
+//                toAccept.manageExchange(app, f);
+//                userExchanges.remove(toAccept);
+//                app.getExchangesStore().save();
+//            } else {
+//                break;
+//            }
+//        }
+//        //gestione scambi invalidi
+//        this.manageInvalidExchanges(app);
     }
 
     private List<Exchange> getExchanges(@NotNull Application app) {
@@ -237,6 +220,14 @@ public class Exchange implements Serializable, ListSelect {
         app.getExchangesStore().save();
     }
 
+    public Offer getSelectedOffer() {
+        return selectedOffer;
+    }
+
+    public Offer getOwnOffer() {
+        return ownOffer;
+    }
+
     /**
      * @return stringa contenente una breve descrizione dello scambio da effettuare
      */
@@ -248,15 +239,16 @@ public class Exchange implements Serializable, ListSelect {
      * @return stringa contenente una breve descrizione dello scambio e l'ultimo messaggio a esso relativo introdotto
      * dall'utente controparte nello scambio
      */
-    private @NotNull String getLastMsgString(User f) {
+    private @NotNull ExchangeMessage getLastMsg(User f) {
         if (this.messageB.getAuthor().equals(f))
-            return (this.messageB.getMessage() == null) ? "--" : this + ": " + this.messageB.getMessage();
+            return this.messageB;
 
-        return (this.messageA.getMessage() == null) ? "--" : this + ": " + this.messageA.getMessage();
+//        return (this.messageA.getMessage() == null) ? "--" : this + ": " + this.messageA.getMessage();
+        return this.messageA;
     }
 
-    public void viewLastMessageByCounterpart(User user) {
-        Controller.signalToView(this.getLastMsgString(user));
+    public ExchangeMessage getLastMessageByCounterpart(User user) {
+        return this.getLastMsg(user);
     }
 
 }

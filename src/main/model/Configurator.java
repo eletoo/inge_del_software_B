@@ -23,22 +23,7 @@ public class Configurator extends User implements ListSelect {
 
     @Override
     public User onFirstLogin(Controller controller) {
-        controller.signalToView(GenericMessage.CUSTOMIZE_CREDENTIALS.getMessage());
-
-        String username;
-        do {
-            username = controller.askStringFromView(GenericMessage.CUSTOMIZE_USERNAME);
-            if(controller.getApp().getUserDataStore().isUsernameTaken(username)) {
-                Controller.signalToView(ErrorMessage.E_CREDENTIALS_ERROR.getMessage());
-                continue;
-            }
-
-            String password = Controller.askStringFromView(GenericMessage.CUSTOMIZE_PW);
-
-            controller.getApp().getUserDataStore().updateUser(this.getUsername(), username, password);
-            controller.getApp().getUserDataStore().save();
-            return controller.getApp().getUserDataStore().getUser(username);
-        } while (true);
+        return controller.onConfiguratorFirstLogin(this);
     }
 
     @Override

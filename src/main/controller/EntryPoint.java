@@ -17,6 +17,9 @@ public class EntryPoint {
         Application app = new Application();
         LocalPath.createLocalDirectories();
         View view = new View();
+
+        app.load();
+
         Controller controller = new Controller(app, view);
         controller.run();
     }

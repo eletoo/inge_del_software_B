@@ -4,7 +4,6 @@ import main.model.Application;
 import main.controller.*;
 import main.exceptions.NonLoadableFromFileException;
 import main.exceptions.NonSaveableOnFileException;
-import main.exceptions.RequiredConstraintFailureException;
 import main.model.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -34,20 +33,6 @@ public class OffersStore implements Loadable, Saveable, Serializable, ListSelect
     public List<Offer> getOffers(User customer) {
         assert customer instanceof Customer;
         return this.offers.stream().filter(e -> e.getOwner().equals(customer)).collect(Collectors.toList());
-    }
-
-    public void undoOffer(Application app,User user) throws IOException {
-        var user_offers = this.getOffers(user)
-                .stream()
-                .filter(e -> e.getState() == OfferState.APERTA)
-                .collect(Collectors.toList());
-        if (user_offers.isEmpty()) {
-            Controller.signalToView(ErrorMessage.E_NO_OFFERS.getMessage());
-        } else {
-            var to_edit = (Offer) choose(user_offers, null);
-            to_edit.setState(OfferState.RITIRATA);
-            this.save();
-        }
     }
 
     @Override
@@ -130,39 +115,10 @@ public class OffersStore implements Loadable, Saveable, Serializable, ListSelect
 //        this.save();
     }
 
-    private void addOffer(Offer offer) {
+    public void addOffer(Offer offer) {
         this.offers.add(offer);
     }
 
-    /**
-     * Permette l'inserimento del valore di un campo
-     *
-     * @param offer offerta
-     * @param field campo da compilare
-     */
-    private static void inputField(@NotNull Offer offer, Map.@NotNull Entry<String, NativeField> field) {
-        Controller.signalToView("Valore per "
-                + field.getKey()
-                + (field.getValue().isObbligatorio() ? " (Obbligatorio) " : "(Opzionale)")
-                + "-- SOLO per campi opzionali: Enter per saltare");
-
-        offer.getFieldsValues()
-                .put(
-                        field.getKey(),
-                        field.getValue().getType().deserialize(
-                                Controller.askStringFromView(null)
-                        )
-                );
-    }
-
-    /**
-     * Mostra la lista di offerte personali relative a un utente
-     *
-     * @param fruitore utente di cui visualizzare le offerte
-     */
-    public void viewPersonalOffers(User fruitore) {
-        Controller.signalListToView(this.getOffers(fruitore), null);
-    }
 
     /**
      * Visualizza le offerte di una categoria foglia specificata dall'utente
@@ -170,7 +126,7 @@ public class OffersStore implements Loadable, Saveable, Serializable, ListSelect
      * @param leaf foglia
      * @param s   stato delle offerte da visualizzare
      */
-    public List<Offer> viewOffers(Leaf leaf, OfferState s) {
+    public List<Offer> getOffers(Leaf leaf, OfferState s) {
         return this
                 .getOffers()
                 .stream()
@@ -183,18 +139,21 @@ public class OffersStore implements Loadable, Saveable, Serializable, ListSelect
      * @param app    applicazione
      * @return categoria foglia selezionata dall'utente
      */
-    public List<Leaf> getLeafCategories(@NotNull Application app) {
-        List<Leaf> choices = new LinkedList<>();
-        var stack = new Stack<Category>();
+    public List<CategoryEntry> getLeafCategories(@NotNull Application app) {
+        List<CategoryEntry> choices = new LinkedList<>();
+        var stack = new Stack<CategoryEntry>();
         for (var gerarchia : app.getHierarchiesStore().getHierarchies().entrySet()) {
             stack.clear();
-            stack.push(gerarchia.getValue().getRoot());
+            stack.push(new CategoryEntry(gerarchia.getValue().getRoot(), null, gerarchia.getValue().getRoot().getNome()));
             while (!stack.empty()) {
                 var c = stack.pop();
-                if (c instanceof Leaf)
-                    choices.add((Leaf) c);
+                if (c.getCat() instanceof Leaf)
+                    choices.add(c);
                 else
-                    stack.addAll(((Node) c).getCategorieFiglie());
+                    stack.addAll(((Node) c.getCat()).getCategorieFiglie().stream()
+                            .map(e -> new CategoryEntry(e, (Node) c.getCat(), c.getDisplayName() + " > " + e.getNome()))
+                            .collect(Collectors.toList())
+                    );
             }
         }
         return choices;
@@ -212,26 +171,6 @@ public class OffersStore implements Loadable, Saveable, Serializable, ListSelect
                 .filter(e -> e.getOwner().equals(utente))
                 .filter(e -> e.getState().equals(stato))
                 .collect(Collectors.toList());
-    }
-
-    /**
-     * Permette di selezionare un'offerta da ritirare e modificarne lo stato opportunamente
-     * @param customer fruitore
-     * @throws IOException eccezione I/O
-     */
-    public void undoOffer(Customer customer) throws IOException {
-        var user_offers = this
-                .getOffers(customer)
-                .stream()
-                .filter(e -> e.getState() == OfferState.APERTA)
-                .collect(Collectors.toList());
-        if (user_offers.isEmpty()) {
-            Controller.signalToView(ErrorMessage.E_NO_OFFERS.getMessage());
-            return;
-        }
-        var to_edit = (Offer) this.choose(user_offers, null);
-        to_edit.setState(OfferState.RITIRATA);
-        this.save();
     }
 
 }

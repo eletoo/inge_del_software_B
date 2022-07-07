@@ -9,9 +9,48 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HierarchyCreation implements UserSelectable {
+
+    /**
+     * Genera i campi nativi (chiedendone nome e obbligatorieta') da aggiungere alla categoria c e aggiunge quelli che
+     * essa eredita dalla categoria parent
+     *
+     * @param parent categoria parent da cui ereditare i campi
+     * @return campi nativi
+     */
+    public @NotNull Map<String, NativeField> generateNativeFields(Category parent, Controller controller) {
+        Map<String, NativeField> campi = new HashMap<>();
+
+        if (parent == null) {
+            campi.putAll(Category.generateRootNativeFields());
+        } else {
+            campi.putAll(parent.getNativeFields());
+        }
+
+        boolean ans;
+        do {
+            ans = controller.askBooleanFromView(YesOrNoMessage.ADD_NATIVE_FIELD);
+
+            if (ans) {
+                String name = controller.askStringFromView(GenericMessage.FIELD_NAME);
+                boolean obbligatorio;
+
+                if (controller.askBooleanFromView(YesOrNoMessage.COMPULSORY_FIELD)) {
+                    obbligatorio = true;
+                } else {
+                    obbligatorio = false;
+                }
+                NativeField nuovo = new NativeField(obbligatorio, NativeField.Tipo.STRING);
+                campi.put(name, nuovo);
+            }
+        } while (ans);
+
+        return campi;
+    }
 
     public Category addChildToCategory(Controller controller, @NotNull CategoryEntry padre, Category root){
         if (padre.getCat() == root)
@@ -24,7 +63,7 @@ public class HierarchyCreation implements UserSelectable {
         if (!root.isNameTaken(name)) {
             String desc = controller.askStringFromView(GenericMessage.CATEGORY_DESCRIPTION);
             var cat = new Leaf(name, desc);
-            cat.setNativeFields(cat.generateNativeFields(padre.getCat()));
+            cat.setNativeFields(this.generateNativeFields(padre.getCat(), controller));
             ((Node) padre.getCat()).addChild(cat);
         } else
             controller.signalToView(ErrorMessage.E_EXISTING_NAME_IN_HIERARCHY.getMessage());
@@ -34,7 +73,7 @@ public class HierarchyCreation implements UserSelectable {
 
     public Category makeCategory(@NotNull Controller controller, String rootname){
         Category root = new Leaf(rootname, controller.askPotentiallyEmptyStringFromView(GenericMessage.CATEGORY_DESCRIPTION));
-        root.setNativeFields(root.generateNativeFields(null));
+        root.setNativeFields(this.generateNativeFields(null, controller));
 
         //Se la struttura non è valida l'utente dovrà proseguire nell'aggiunta al fine di renderla tale (oppure se ha sbagliato ricomincia)
         //altrimenti chiediamo se vuole aggiungere una categoria

@@ -9,7 +9,11 @@ import main.model.User;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class AppContentPrinter implements UserSelectable {
     @Override
@@ -19,16 +23,18 @@ public class AppContentPrinter implements UserSelectable {
             controller.signalToView(ErrorMessage.NO_HIERARCHIES_YET.getMessage());
             return;
         }
+
         controller.signalToView("GERARCHIE:");
 
-        for (Hierarchy h : this.getHierarchies(controller.getApp()).values()) {
-            //h.printHierarchy();
-        }
+        controller.signalListToView(
+                new LinkedList<>(this.getHierarchies(controller.getApp()).values()),
+                (Hierarchy h) -> h.getRoot().getCategoryDefinition()
+        );
 
         if (controller.getApp().getInformationStore().getInformation() != null)
-            controller.getApp().getInformationStore().getInformation().print();
+            controller.signalToView(controller.getApp().getInformationStore().getInformation().getInformations());
         else
-            Controller.signalToView(ErrorMessage.NO_INFO_YET.getMessage());
+            controller.signalToView(ErrorMessage.NO_INFO_YET.getMessage());
     }
 
     private Map<String, Hierarchy> getHierarchies(@NotNull Application app) {

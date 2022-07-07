@@ -26,10 +26,7 @@ public class Customer extends User implements ListSelect {
     @Override
     public User onLogin(Controller controller) throws IOException {
         controller.prepareStructures(controller.getApp());
-        //todo
-        //        Exchange.manageExchanges(app, fruitore);
-        //        Exchange.managePastExchanges(app, fruitore);
-        return this;
+        return controller.onUserLogin(this);
     }
 
     protected List<UserSelectable> getUserMenu() {
@@ -41,7 +38,7 @@ public class Customer extends User implements ListSelect {
         menu.add(new OfferDeleter());
         menu.add(new ExchangeCreator());
         menu.add(new LatestMessagePrinter());
-        menu.add(new Exit());
+        menu.add(new main.controller.customerActions.Exit());
         return menu;
     }
 }

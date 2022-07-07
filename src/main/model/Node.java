@@ -53,8 +53,7 @@ public class Node extends Category {
             string.append("\n\nCategorie figlie di ").append(this.getNome()).append(":");
             int i = 1;
             for (Category c : categorieFiglie) {
-               string.append("\n\n").append(i++).append(")");
-                c.getCategoryDefinition();
+               string.append("\n\n").append(i++).append(") ").append(c.getCategoryDefinition());
             }
         }
         return string.toString();

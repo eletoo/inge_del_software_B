@@ -11,7 +11,7 @@ public class Exit implements UserSelectable {
 
     @Override
     public void runAction(Controller controller, User user) throws IOException {
-        Controller.signalToView(GenericMessage.EXIT_MESSAGE.getMessage());
+        controller.signalToView(GenericMessage.EXIT_MESSAGE.getMessage());
     }
 
     @Override

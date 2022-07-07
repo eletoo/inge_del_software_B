@@ -60,7 +60,7 @@ public class Information implements Serializable {
         this.timeIntervals = timeIntervals;
     }
 
-    public void print(){
+    public String getInformations(){
         StringBuilder sb = new StringBuilder();
         sb.append("INFORMAZIONI SCAMBI:");
         sb.append("\nPiazza: ");
@@ -83,7 +83,6 @@ public class Information implements Serializable {
                 sb.append(", ");
         }
         sb.append("\nScadenza offerte dopo " + this.deadline + " giorni");
-
-        Controller.signalToView(sb.toString());
+        return sb.toString();
     }
 }
