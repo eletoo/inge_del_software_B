@@ -1,7 +1,6 @@
 package main.model.stores;
 
 import main.model.Application;
-import main.controller.*;
 import main.exceptions.NonLoadableFromFileException;
 import main.exceptions.NonSaveableOnFileException;
 import main.model.*;
@@ -11,7 +10,7 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class OffersStore implements Loadable, Saveable, Serializable, ListSelect {
+public class OffersStore implements Loadable, Saveable, Serializable {
     private List<Offer> offers;
 
     public OffersStore() {
@@ -69,50 +68,6 @@ public class OffersStore implements Loadable, Saveable, Serializable, ListSelect
     @Override
     public void saveOnFile(Serializable s) {
         throw new NonSaveableOnFileException();
-    }
-
-    public void viewOffersByCategory(@NotNull Application app) {
-//        if (app.getHierarchiesStore().getHierarchies().size() == 0) {
-//            Controller.signalToView(ErrorMessage.E_NO_CATEGORIES.getMessage());
-//            return;
-//        }
-//
-//        Controller.signalListToView(
-//                this.getOffers(getLeafCategories(GenericMessage.SELECT_CATEGORY.getMessage(), app))
-//                        .stream()
-//                        .filter(e -> e.getState() == OfferState.APERTA)
-//                        .collect(Collectors.toList()), null
-//        );
-    }
-
-    /**
-     * Permette di creare un'offerta indicando la categoria foglia di appartenenza, il nome dell'offerta e il valore dei
-     * campi nativi (obbligatori e facoltativi)
-     *
-     * @param app      applicazione
-     * @param fruitore utente fruitore
-     * @throws IOException eccezione I/O
-     */
-    public void createOffer(@NotNull Application app, Customer fruitore) throws IOException {
-//        if (app.getHierarchiesStore().getHierarchies().isEmpty()) {
-//            Controller.signalToView(ErrorMessage.E_NO_CATEGORIES.getMessage());
-//            return;
-//        }
-//
-//        var cat = getLeafCategories(GenericMessage.CHOOSE_CATEGORY_TO_PUBLISH.getMessage(), app);
-//        var offer = new Offer(Controller.askStringFromView(GenericMessage.NAME), cat, fruitore, OfferState.APERTA);
-//
-//        for (var field : cat.getNativeFields().entrySet()) {
-//            inputField(offer, field);
-//        }
-//
-//        try {
-//            this.addOffer(offer);
-//        } catch (RequiredConstraintFailureException e) {
-//            e.printStackTrace(); //should not happen
-//        }
-//
-//        this.save();
     }
 
     public void addOffer(Offer offer) {

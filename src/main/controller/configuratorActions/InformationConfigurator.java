@@ -13,10 +13,10 @@ import java.util.stream.Collectors;
 
 public class InformationConfigurator implements UserSelectable {
     @Override
-    public void runAction(Controller controller, User user) throws IOException {
+    public void runAction(@NotNull Controller controller, User user) throws IOException {
 
         if (this.getInfo(controller.getApp()) == null) {
-            writeInfos(controller, controller.askStringFromView(GenericMessage.PLACE));
+            writeInfos(controller, controller.askLineFromView(GenericMessage.PLACE));
 
         } else {
             controller.signalToView(GenericMessage.CURRENT_INFO.getMessage());
@@ -34,7 +34,7 @@ public class InformationConfigurator implements UserSelectable {
         controller.signalToView(GenericMessage.SAVED_CORRECTLY.getMessage());
     }
 
-    private void writeInfos(Controller controller, String place){
+    private void writeInfos(@NotNull Controller controller, String place){
         this.setInfo(controller.getApp(), new Information(
                 place,
                 setupAddresses(controller),
@@ -62,7 +62,7 @@ public class InformationConfigurator implements UserSelectable {
         return timeRanges;
     }
 
-    public Time askTime(Message startMessageH, Message startMessageM, Controller controller) {
+    public Time askTime(Message startMessageH, Message startMessageM, @NotNull Controller controller) {
         Time hour;
         int h;
         int m;
@@ -91,7 +91,7 @@ public class InformationConfigurator implements UserSelectable {
     private List<String> setupAddresses(Controller controller) {
         List<String> addresses = new LinkedList<>();
         while (addresses.isEmpty() || controller.askBooleanFromView(YesOrNoMessage.ADD_ADDRESS)) {
-            addresses.add(controller.askStringFromView(GenericMessage.ADDRESS));
+            addresses.add(controller.askLineFromView(GenericMessage.ADDRESS));
         }
         return addresses;
     }

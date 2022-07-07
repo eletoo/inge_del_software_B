@@ -1,13 +1,9 @@
 package main.model;
 
-import main.controller.Controller;
-import main.controller.ListSelect;
-
 import java.io.Serializable;
 import java.util.*;
 
-public class Offer implements Serializable, ListSelect {
-
+public class Offer implements Serializable {
     private String name;
     private Leaf category;
     private Customer owner;

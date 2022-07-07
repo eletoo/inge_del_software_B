@@ -3,11 +3,11 @@ package main.model;
 import java.io.Serializable;
 
 public enum Day implements Serializable {
-    MONDAY("Lunedì"),
-    TUESDAY("Martedì"),
-    WEDNESDAY("Mercoledì"),
-    THURSDAY("Giovedì"),
-    FRIDAY("Venerdì"),
+    MONDAY("Lunedi'"),
+    TUESDAY("Martedi'"),
+    WEDNESDAY("Mercoledi'"),
+    THURSDAY("Giovedi'"),
+    FRIDAY("Venerdi'"),
     SATURDAY("Sabato"),
     SUNDAY("Domenica");
 

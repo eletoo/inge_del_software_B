@@ -1,7 +1,5 @@
 package main.model;
 
-import main.controller.Controller;
-
 import java.io.Serializable;
 
 public class Hierarchy implements Serializable {

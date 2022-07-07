@@ -1,6 +1,5 @@
 package main.controller.configuratorActions;
 
-import main.model.Application;
 import main.controller.Controller;
 import main.controller.GenericMessage;
 import main.controller.UserSelectable;
@@ -11,7 +10,7 @@ import java.io.IOException;
 
 public class DataSaver implements UserSelectable {
     @Override
-    public void runAction(Controller controller, User user) throws IOException {
+    public void runAction(@NotNull Controller controller, User user) throws IOException {
         controller.getApp().save();
         controller.signalToView(GenericMessage.SAVED_CORRECTLY.getMessage());
     }

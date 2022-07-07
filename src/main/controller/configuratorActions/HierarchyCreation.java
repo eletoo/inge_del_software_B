@@ -36,7 +36,7 @@ public class HierarchyCreation implements UserSelectable {
             ans = controller.askBooleanFromView(YesOrNoMessage.ADD_NATIVE_FIELD);
 
             if (ans) {
-                String name = controller.askStringFromView(GenericMessage.FIELD_NAME);
+                String name = controller.askLineFromView(GenericMessage.FIELD_NAME);
                 boolean obbligatorio;
 
                 if (controller.askBooleanFromView(YesOrNoMessage.COMPULSORY_FIELD)) {
@@ -59,9 +59,9 @@ public class HierarchyCreation implements UserSelectable {
             padre.asNode();
         }
 
-        String name = controller.askStringFromView(GenericMessage.CATEGORY_NAME);
+        String name = controller.askLineFromView(GenericMessage.CATEGORY_NAME);
         if (!root.isNameTaken(name)) {
-            String desc = controller.askStringFromView(GenericMessage.CATEGORY_DESCRIPTION);
+            String desc = controller.askPotentiallyEmptyStringFromView(GenericMessage.CATEGORY_DESCRIPTION);
             var cat = new Leaf(name, desc);
             cat.setNativeFields(this.generateNativeFields(padre.getCat(), controller));
             ((Node) padre.getCat()).addChild(cat);
@@ -92,7 +92,7 @@ public class HierarchyCreation implements UserSelectable {
     @Override
     public void runAction(@NotNull Controller controller, User user) throws IOException {
         Application app = controller.getApp();
-        String rootname = controller.askStringFromView(GenericMessage.CATEGORY_NAME);
+        String rootname = controller.askLineFromView(GenericMessage.CATEGORY_NAME);
 
         if (this.getHierarchies(app).isHierarchyNameTaken(rootname)) {
             controller.signalToView(ErrorMessage.E_EXISTING_ROOT_CATEGORY.getMessage());

@@ -1,6 +1,7 @@
 package main.view;
 
 import main.controller.Message;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Scanner;
 
@@ -19,15 +20,13 @@ public class StringReaderClass implements StringReader {
         String s = null;
         while (s == null || s.equalsIgnoreCase("")) {
             MessagePrinter.printText(prompt.getMessage());
-            s = new Scanner(System.in).next();
+            s = new Scanner(System.in).nextLine();
         }
         return s;
     }
 
-    public String inPotentiallyEmptyLine(Message prompt) {
-
+    public String inPotentiallyEmptyLine(@NotNull Message prompt) {
         MessagePrinter.printText(prompt.getMessage());
-        return new Scanner(System.in).next();
-
+        return new Scanner(System.in).nextLine();
     }
 }

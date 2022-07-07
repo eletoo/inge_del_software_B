@@ -109,7 +109,7 @@ public abstract class User implements UserAction, Serializable {
     }
 
     @Override
-    public void runUserMenu(Controller controller) throws IOException {
+    public void runUserMenu(@NotNull Controller controller) throws IOException {
         controller.runSelectionMenu(this.getUserMenu(), this);
     }
 

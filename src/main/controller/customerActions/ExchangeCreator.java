@@ -1,6 +1,5 @@
 package main.controller.customerActions;
 
-import main.model.Application;
 import main.controller.*;
 import main.model.*;
 import org.jetbrains.annotations.NotNull;
@@ -11,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class ExchangeCreator implements UserSelectable {
     @Override
-    public void runAction(Controller controller, User user) throws IOException {
+    public void runAction(@NotNull Controller controller, User user) throws IOException {
 
         if (controller.getApp().getHierarchiesStore().getHierarchies().isEmpty()) {
             controller.signalToView(ErrorMessage.E_NO_CATEGORIES.getMessage());
@@ -45,7 +44,7 @@ public class ExchangeCreator implements UserSelectable {
         var ownOffer = controller.getView().choose(GenericMessage.CHOOSE_OFFER, controller.getApp().getOffersStore().getOffers(author)
                 .stream()
                 .filter(Offer::isAvailableOffer)
-                .collect(Collectors.toList()), null);
+                .collect(Collectors.toList()), Offer::getName);
 
         var possible_offers = controller.getApp().getOffersStore().getOffers(ownOffer.getCategory())
                 .stream()
@@ -58,7 +57,7 @@ public class ExchangeCreator implements UserSelectable {
             return null;
         }
 
-        var selectedOffer = controller.getView().choose(GenericMessage.CHOOSE_OTHER_OFFER, possible_offers, null);
+        var selectedOffer = controller.getView().choose(GenericMessage.CHOOSE_OTHER_OFFER, possible_offers, Offer::getName);
 
         return new Exchange(ownOffer, selectedOffer);
     }

@@ -91,7 +91,7 @@ public class InformationStore implements Loadable, Saveable, Serializable {
 
     @Override
     public void save() throws IOException {
-        FileOutputStream fos = new FileOutputStream(new File(System.getProperty("user.dir") + "/db/info.dat"));
+        FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir") + "/db/info.dat");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(this.getInformation());
         oos.close();

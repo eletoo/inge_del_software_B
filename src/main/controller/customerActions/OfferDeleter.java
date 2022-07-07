@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class OfferDeleter implements UserSelectable {
     @Override
-    public void runAction(Controller controller, User user) throws IOException {
+    public void runAction(@NotNull Controller controller, User user) throws IOException {
         var user_offers = controller.getApp().getOffersStore().getOffers(user)
                 .stream()
                 .filter(e -> e.getState() == OfferState.APERTA)

@@ -2,7 +2,6 @@ package main.controller.actions;
 
 import main.controller.Controller;
 import main.controller.Selectable;
-import main.model.Application;
 
 public class Exit implements Selectable {
     private String actionName;

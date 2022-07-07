@@ -1,10 +1,9 @@
 package main.controller.actions;
 
 import main.controller.Controller;
-import main.controller.Selectable;
-import main.model.Application;
 import main.controller.ErrorMessage;
 import main.controller.GenericMessage;
+import main.controller.Selectable;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -17,7 +16,7 @@ public class Access implements Selectable {
     }
 
     @Override
-    public void runAction(Controller controller) throws IOException {
+    public void runAction(@NotNull Controller controller) throws IOException {
 
         if (controller.isFirstAccess())
             return;

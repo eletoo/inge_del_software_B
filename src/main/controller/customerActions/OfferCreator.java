@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class OfferCreator implements UserSelectable {
     @Override
-    public void runAction(Controller controller, User user) throws IOException {
+    public void runAction(@NotNull Controller controller, User user) throws IOException {
         if (controller.getApp().getHierarchiesStore().getHierarchies().isEmpty()) {
             controller.signalToView(ErrorMessage.E_NO_CATEGORIES.getMessage());
             return;
@@ -24,7 +24,7 @@ public class OfferCreator implements UserSelectable {
                 CategoryEntry::getDisplayName
         );
 
-        var offer = new Offer(controller.askStringFromView(GenericMessage.NAME), (Leaf) cat.getCat(), (Customer) user, OfferState.APERTA);
+        var offer = new Offer(controller.askLineFromView(GenericMessage.NAME), (Leaf) cat.getCat(), (Customer) user, OfferState.APERTA);
 
         for (var field : cat.getCat().getNativeFields().entrySet()) {
             inputField(controller, offer, field);
@@ -44,17 +44,19 @@ public class OfferCreator implements UserSelectable {
      * @param offer offerta
      * @param field campo da compilare
      */
-    private void inputField(Controller controller, @NotNull Offer offer, Map.@NotNull Entry<String, NativeField> field) {
+    private void inputField(@NotNull Controller controller, @NotNull Offer offer, Map.@NotNull Entry<String, NativeField> field) {
         controller.signalToView("Valore per "
                 + field.getKey()
                 + (field.getValue().isObbligatorio() ? " (Obbligatorio) " : "(Opzionale)")
-                + "-- SOLO per campi opzionali: Enter per saltare");
+        );
 
         offer.getFieldsValues()
                 .put(
                         field.getKey(),
                         field.getValue().getType().deserialize(
-                                controller.askStringFromView(null)
+                                field.getValue().isObbligatorio() ?
+                                        controller.askLineFromView(GenericMessage.OPTIONAL_FIELD)
+                                        : controller.askPotentiallyEmptyStringFromView(GenericMessage.OPTIONAL_FIELD)
                         )
                 );
     }

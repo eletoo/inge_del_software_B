@@ -1,6 +1,5 @@
 package main.controller.customerActions;
 
-import main.model.Application;
 import main.controller.Controller;
 import main.controller.UserSelectable;
 import main.model.Offer;
@@ -11,7 +10,7 @@ import java.io.IOException;
 
 public class PersonalOffersPrinter implements UserSelectable {
     @Override
-    public void runAction(Controller controller, User user) throws IOException {
+    public void runAction(@NotNull Controller controller, User user) throws IOException {
         controller.signalListToView(
                 controller.getApp().getOffersStore().getOffers(user),
                 Offer::getOfferInfos

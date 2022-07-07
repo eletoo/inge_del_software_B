@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.function.Function;
 
 public class NativeField implements Serializable {
-
-
     private boolean obbligatorio;
     private Tipo type;
 

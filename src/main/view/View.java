@@ -1,14 +1,13 @@
 package main.view;
 
 import main.controller.GenericMessage;
-import main.controller.ListSelect;
 import main.controller.Message;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.function.Function;
 
-public class View implements ListSelect //todo remove
+public class View
 {
 
     public <T> void showList(@NotNull List<T> list) {
@@ -45,7 +44,7 @@ public class View implements ListSelect //todo remove
         this.printText(text);
     }
 
-    public void notify(Message m){
+    public void notify(@NotNull Message m){
         this.notify(m.getMessage());
     }
 

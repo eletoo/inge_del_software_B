@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Configurator extends User implements ListSelect {
+public class Configurator extends User {
 
     /**
      * Costruttore: salva la password dopo l'hashing
@@ -22,12 +22,12 @@ public class Configurator extends User implements ListSelect {
     }
 
     @Override
-    public User onFirstLogin(Controller controller) {
+    public User onFirstLogin(@NotNull Controller controller) {
         return controller.onConfiguratorFirstLogin(this);
     }
 
     @Override
-    public User onLogin(Controller controller) throws IOException {
+    public User onLogin(@NotNull Controller controller) throws IOException {
         Controller.prepareStructures(controller.getApp());
         return this;
     }

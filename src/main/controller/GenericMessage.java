@@ -6,11 +6,10 @@ public enum GenericMessage implements Message {
     SELECT_INDEX("\nSelezionare un indice."),
     USERNAME_REQUEST("Inserisci il tuo username: "),
     PASSWORD_REQUEST("Inserisci la tua password: "),
-    STD_CREDENTIALS_MSG("\nPuoi accedere al tuo profilo usando le seguenti credenziali:"),
-    CUSTOMIZE_CREDENTIALS("Personalizza le tue credenziali: "),
+    CUSTOMIZE_CREDENTIALS("Accesso effettuato con credenziali provvisorie -- Personalizza le tue credenziali: "),
     CUSTOMIZE_USERNAME("Inserisci il tuo username personalizzato: "),
     CUSTOMIZE_PW("Inserisci la tua password personalizzata: "),
-    SELECT_PROFILE_TYPE("Seleziona la modalità con cui registrarti: "),
+    SELECT_PROFILE_TYPE("Seleziona la modalita' con cui registrarti: "),
     SUCCESSFUL_IMPORT("Informazioni importate correttamente"),
     SUCCESSFUL_HIERARCHY_IMPORT("Gerarchie importate correttamente"),
     EXIT_MESSAGE("Arrivederci"),
@@ -23,6 +22,7 @@ public enum GenericMessage implements Message {
     PLACE("Piazza (N.B. NON modificabile in futuro): "),
     ADDRESS("Luogo: "),
     DAY("Giorno: "),
+    TIME_RANGE("Intervallo orario: "),
     EXCHANGE_HOURS_EVERY_30_MINS("\nGli scambi potranno avvenire allo scoccare dell'ora o della mezz'ora all'interno della fascia oraria specificata"),
     DEADLINE("Scadenza dell'offerta dopo un numero di giorni pari a (inserire un numero maggiore di 0): "),
     CATEGORY_NAME("Inserisci il nome della categoria: "),
@@ -38,7 +38,8 @@ public enum GenericMessage implements Message {
     PAST_OFFERS("\nLe tue proposte di scambio arretrate:"),
     NO_NEW_OFFERS("\nNon hai nessuna nuova proposta di scambio"),
     NEW_OFFERS("\nLe tue nuove proposte di scambio:"),
-    CLOSED_OFFER("\n\nOfferta chiusa\n");
+    CLOSED_OFFER("\n\nOfferta chiusa\n"),
+    OPTIONAL_FIELD("-- SOLO per campi opzionali: Enter per saltare --");
 
     private String message;
 

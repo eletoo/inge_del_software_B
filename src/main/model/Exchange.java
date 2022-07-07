@@ -3,21 +3,16 @@ package main.model;
 import main.controller.*;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
-public class Exchange implements Serializable, ListSelect {
-
+public class Exchange implements Serializable {
     private Offer ownOffer;
     private Offer selectedOffer;
-    private ExchangeMessage messageA;
-    private ExchangeMessage messageB;
+    private ExchangeMessage ownerMessage;
+    private ExchangeMessage counterMessage;
     private LocalDateTime dateTime;
 
     /**
@@ -37,20 +32,10 @@ public class Exchange implements Serializable, ListSelect {
         this.selectedOffer.setState(OfferState.SELEZIONATA);
 
         this.dateTime = LocalDateTime.now();
-        this.messageA = new ExchangeMessage(null, own.getOwner());
-        this.messageB = new ExchangeMessage(null, selected.getOwner());
+        this.ownerMessage = new ExchangeMessage(null, own.getOwner());
+        this.counterMessage = new ExchangeMessage(null, selected.getOwner());
 
     }
-
-
-    /**
-     * Fa selezionare le due offerte da scambiare, gestendo i casi in cui l'elenco di offerte di uno dei due autori sia vuoto
-     *
-     * @param app    applicazione
-     * @param author autore della proposta di scambio
-     * @return nuovo oggetto scambio
-     */
-
 
     /**
      * @param app applicazione
@@ -70,34 +55,35 @@ public class Exchange implements Serializable, ListSelect {
         return app.getInformationStore().getInformation();
     }
 
-    public ExchangeMessage getMessageA() {
-        return messageA;
+    public ExchangeMessage getOwnerMessage() {
+        return ownerMessage;
     }
 
-    public ExchangeMessage getMessageB() {
-        return messageB;
+    public ExchangeMessage getCounterMessage() {
+        return counterMessage;
     }
 
     /**
      * Chiede all'utente le informazioni per un appuntamento per lo scambio
      *
-     * @param app  applicazione
-     * @param f    autore della proposta di appuntamento
+     * @param app applicazione
+     * @param f   autore della proposta di appuntamento
      */
-    public void suggestMeeting(@NotNull Application app, Customer f) {
+    public void suggestMeeting(@NotNull Controller controller, @NotNull Application app, Customer f) {
         StringBuilder sb = new StringBuilder();
         sb.append("\n\nInformazioni appuntamento per lo scambio:");
-        sb.append("\nLuogo: " + choose(this.getInformation(app).getAddresses(), null));
-        sb.append("\nGiorno: " + choose(this.getInformation(app).getDays(), Day::getDay));
+        sb.append("\nPiazza: " + app.getInformationStore().getInformation().getPlace());
+        sb.append("\nLuogo: " + controller.getView().choose(GenericMessage.ADDRESS, this.getInformation(app).getAddresses(), null));
+        sb.append("\nGiorno: " + controller.getView().choose(GenericMessage.DAY, this.getInformation(app).getDays(), Day::getDay).getDay());
 
         List<Time> orari = new LinkedList<>();
         this.getInformation(app).getTimeIntervals().stream().forEach(e -> orari.addAll(e.getSingoliOrari()));
-        sb.append("\nOrario: " + choose(orari, null));
+        sb.append("\nOrario: " + controller.getView().choose(GenericMessage.TIME_RANGE, orari, Time::getTime).getTime());
 
         if (this.ownOffer.getOwner().equals(f))
-            this.messageB.setMessage(sb.toString());
+            this.counterMessage.setMessage(sb.toString());
         else
-            this.messageA.setMessage(sb.toString());
+            this.ownerMessage.setMessage(sb.toString());
 
         this.dateTime = LocalDateTime.now();
     }
@@ -116,110 +102,6 @@ public class Exchange implements Serializable, ListSelect {
         return this.ownOffer.getOwner();
     }
 
-    /**
-     * Gestisce le offerte di scambio di cui l'utente e' destinatario
-     *
-     * @param app  applicazione
-     * @param dest utente destinatario
-     * @throws IOException eccezione
-     */
-    public void manageExchanges(@NotNull Application app, Customer dest) throws IOException {
-        this.manage(app,
-                GenericMessage.NO_NEW_OFFERS.getMessage(),
-                GenericMessage.NEW_OFFERS.getMessage(),
-                YesOrNoMessage.SELECT_EXCHANGE,
-                dest,
-                Exchange::getDest);
-    }
-
-    /**
-     * Gestisce le offerte di scambio di cui l'utente e' autore
-     *
-     * @param app    applicazione
-     * @param author utente autore
-     * @throws IOException eccezione
-     */
-    public void managePastExchanges(@NotNull Application app, Customer author) throws IOException {
-        this.manage(app,
-                GenericMessage.NO_PAST_OFFERS.getMessage(),
-                GenericMessage.PAST_OFFERS.getMessage(),
-                YesOrNoMessage.SELECT_EXCHANGE,
-                author,
-                Exchange::getAuthor);
-    }
-
-    /**
-     * Gestisce le offerte di scambio di un utente
-     *
-     * @param app               applicazione
-     * @param noExchanges       messaggio che comunica che non ci sono offerte di scambio
-     * @param existingExchanges messaggio che comunica che ci sono offerte di scambio
-     * @param selectExchange    richiesta di selezione di uno scambio da una lista
-     * @param f                 utente fruitore
-     * @param predicate         predicato da applicare a un oggetto Scambio per selezionare gli scambi con un determinato autore o destinatario
-     * @throws IOException eccezione
-     */
-    private void manage(@NotNull Application app, String noExchanges, String existingExchanges, Message selectExchange, Customer f, Function<Exchange, Customer> predicate) throws IOException {
-        //gestione scambi validi
-//        List<Exchange> userExchanges;
-//        if (getExchanges(app) == null)
-//            userExchanges = new ArrayList<>();
-//        else
-//            userExchanges = app.getExchangesStore()
-//                    .getValidExchanges(this.getExchanges(app), app)
-//                    .stream()
-//                    .filter(e -> predicate.apply(e).equals(f))
-//                    .collect(Collectors.toList());
-//
-//        if (userExchanges.isEmpty())
-//            Controller.signalToView(noExchanges);
-//
-//        while (!userExchanges.isEmpty()) {
-//            Exchange toAccept;
-//            Controller.signalToView(existingExchanges);
-//            Controller.signalListToView(userExchanges, null);
-//
-//            if (Controller.askBooleanFromView(selectExchange)) {
-//                toAccept = choose(userExchanges, null);
-//                toAccept.manageExchange(app, f);
-//                userExchanges.remove(toAccept);
-//                app.getExchangesStore().save();
-//            } else {
-//                break;
-//            }
-//        }
-//        //gestione scambi invalidi
-//        this.manageInvalidExchanges(app);
-    }
-
-    private List<Exchange> getExchanges(@NotNull Application app) {
-        return app.getExchangesStore().getExchanges();
-    }
-
-    /**
-     * Gestisce le offerte di scambio invalide, cioe' scadute
-     *
-     * @param app
-     */
-    private void manageInvalidExchanges(@NotNull Application app) throws IOException {
-        if (this.getExchanges(app) == null)
-            return;
-
-        var scambi = this.getExchanges(app)
-                .stream()
-                .filter(e -> !e.isValidExchange(app))
-                .collect(Collectors.toList());
-
-        for (Exchange s : scambi) {
-            app.getOffersStore().getOffer(s.ownOffer).setState(OfferState.APERTA);
-            app.getOffersStore().getOffer(s.selectedOffer).setState(OfferState.APERTA);
-
-            app.getExchangesStore().removeExchange(s);
-        }
-
-        app.getExchangesStore().save();
-    }
-
     public Offer getSelectedOffer() {
         return selectedOffer;
     }
@@ -231,20 +113,19 @@ public class Exchange implements Serializable, ListSelect {
     /**
      * @return stringa contenente una breve descrizione dello scambio da effettuare
      */
-    public String toString() {
+    public String getExchangeDescription() {
         return this.selectedOffer.getName() + " <--> " + this.ownOffer.getName();
-    }//TODO: TOSTRING
+    }
 
     /**
      * @return stringa contenente una breve descrizione dello scambio e l'ultimo messaggio a esso relativo introdotto
      * dall'utente controparte nello scambio
      */
     private @NotNull ExchangeMessage getLastMsg(User f) {
-        if (this.messageB.getAuthor().equals(f))
-            return this.messageB;
+        if (this.counterMessage.getAuthor().equals(f))
+            return this.counterMessage;
 
-//        return (this.messageA.getMessage() == null) ? "--" : this + ": " + this.messageA.getMessage();
-        return this.messageA;
+        return this.ownerMessage;
     }
 
     public ExchangeMessage getLastMessageByCounterpart(User user) {

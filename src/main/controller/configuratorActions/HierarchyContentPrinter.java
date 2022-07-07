@@ -1,6 +1,5 @@
 package main.controller.configuratorActions;
 
-import main.model.Application;
 import main.controller.Controller;
 import main.controller.UserSelectable;
 import main.model.Hierarchy;
@@ -17,7 +16,7 @@ public class HierarchyContentPrinter implements UserSelectable {
      * @throws IOException
      */
     @Override
-    public void runAction(Controller controller, User user) throws IOException {
+    public void runAction(@NotNull Controller controller, User user) throws IOException {
 
         for (Hierarchy h : controller.getApp().getHierarchiesStore().getHierarchies().values()) {
             controller.signalToView(h.getRoot().getNome() + " " + h.getRoot().getDescrizione()); //todo

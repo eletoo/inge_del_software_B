@@ -5,6 +5,7 @@ import main.controller.ErrorMessage;
 import main.controller.GenericMessage;
 import main.controller.UserSelectable;
 import main.model.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.stream.Collectors;
@@ -23,7 +24,7 @@ public abstract class AbstractOffersPrinter implements UserSelectable {
      * @throws IOException
      */
     @Override
-    public void runAction(Controller controller, User user) throws IOException {
+    public void runAction(@NotNull Controller controller, User user) throws IOException {
         if (controller.getApp().getHierarchiesStore().getHierarchies().size() == 0) {
             controller.signalToView(ErrorMessage.E_NO_CATEGORIES.getMessage());
             return;

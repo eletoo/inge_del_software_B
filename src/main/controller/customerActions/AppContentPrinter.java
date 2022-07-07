@@ -9,15 +9,12 @@ import main.model.User;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class AppContentPrinter implements UserSelectable {
     @Override
-    public void runAction(Controller controller, User user) throws IOException {
+    public void runAction(@NotNull Controller controller, User user) throws IOException {
 
         if (this.getHierarchies(controller.getApp()).isEmpty()) {
             controller.signalToView(ErrorMessage.NO_HIERARCHIES_YET.getMessage());

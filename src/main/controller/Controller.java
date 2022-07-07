@@ -36,7 +36,7 @@ public class Controller {
         List<Selectable> selectable = Context.initiateSelectableList();
         Selectable selected;
         do {
-            selected = sel.selectAction(selectable, Selectable::getActionName);
+            selected = sel.selectAction(this.view, selectable, Selectable::getActionName);
             selected.runAction(this);
         } while (!(selected instanceof Exit));
     }
@@ -52,6 +52,10 @@ public class Controller {
 
     public String askStringFromView(Message message) {
         return (new StringReaderClass()).in(message);
+    }
+
+    public String askLineFromView(Message message) {
+        return (new StringReaderClass()).inLine(message);
     }
 
     public String askPotentiallyEmptyStringFromView(Message message) {
@@ -91,7 +95,7 @@ public class Controller {
         return false;
     }
 
-    public User registerUser(UserType type) throws IOException {
+    public User registerUser(UserType type) {
         String username;
         do {
             if (type == UserType.CONFIGURATOR)
@@ -141,43 +145,45 @@ public class Controller {
         } while (true);
     }
 
-    private void manageExchange(Exchange e, Customer c) throws IOException {
-        if (e.getMessageA().getMessage() == null) {
-            e.suggestMeeting(app, c);
+    private void manageExchange(@NotNull Exchange e, Customer c) throws IOException {
+        if (e.getOwnerMessage().getMessage() == null) {
+            e.suggestMeeting(this, this.app, c);
             app.getOffersStore().getOffer(e.getSelectedOffer()).setState(OfferState.IN_SCAMBIO);
             app.getOffersStore().getOffer(e.getOwnOffer()).setState(OfferState.IN_SCAMBIO);
+            app.save();
             return;
         }
 
-        this.signalToView(e.getMessageA().getMessage());
+        this.signalToView(e.getLastMessageByCounterpart(c).getMessage());
 
         if (this.askBooleanFromView(YesOrNoMessage.ACCEPT_MEETING)) {
             app.getOffersStore().getOffer(e.getSelectedOffer()).setState(OfferState.CHIUSA);
             app.getOffersStore().getOffer(e.getOwnOffer()).setState(OfferState.CHIUSA);
             this.signalToView(GenericMessage.CLOSED_OFFER.getMessage());
             app.getExchangesStore().removeExchange(e);
-            app.getExchangesStore().save();
+            app.save();
             return;
         }
 
-        e.suggestMeeting(app, c);
+        e.suggestMeeting(this, this.app, c);
         app.getOffersStore().getOffer(e.getSelectedOffer()).setState(OfferState.IN_SCAMBIO);
         app.getOffersStore().getOffer(e.getOwnOffer()).setState(OfferState.IN_SCAMBIO);
+        app.save();
     }
 
-    private void manageExchange(Customer c, String noExchanges, String existingExchanges, Message selectExchange, List<Exchange> userExchanges) throws IOException {
+    private void manageExchange(Customer c, String noExchanges, String existingExchanges, Message selectExchange, @NotNull List<Exchange> userExchanges) throws IOException {
         while (!userExchanges.isEmpty()) {
             Exchange toAccept;
             this.signalToView(existingExchanges);
-            this.signalListToView(userExchanges, null);
+            this.signalListToView(userExchanges, Exchange::getExchangeDescription);
 
             if (this.askBooleanFromView(selectExchange)) {
-                toAccept = this.view.choose(userExchanges, null);
+                toAccept = this.view.choose(userExchanges, Exchange::getExchangeDescription);
 
                 manageExchange(toAccept, c);
 
                 userExchanges.remove(toAccept);
-                app.getExchangesStore().save();
+                app.save();
             } else {
                 break;
             }
