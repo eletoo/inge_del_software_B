@@ -2,8 +2,7 @@ package main.controller.actions;
 
 import main.controller.Controller;
 import main.controller.Selectable;
-import main.Application;
-import main.model.RegistrationHandler;
+import main.model.Application;
 import main.controller.ErrorMessage;
 import main.controller.GenericMessage;
 import org.jetbrains.annotations.NotNull;
@@ -18,16 +17,16 @@ public class Access implements Selectable {
     }
 
     @Override
-    public void runAction(@NotNull Application app, Controller controller) throws IOException {
+    public void runAction(Controller controller) throws IOException {
 
         if (controller.isFirstAccess())
             return;
 
         String username = controller.askStringFromView(GenericMessage.USERNAME_REQUEST);
-        if (app.getUserDataStore().isUsernameTaken(username)) {
+        if (controller.getApp().getUserDataStore().isUsernameTaken(username)) {
 
-            if (app.getUserDataStore().isLoginCorrect(username, controller.askStringFromView(GenericMessage.PASSWORD_REQUEST))) {
-                app.getUserDataStore().getUser(username).onLogin(app, controller).runUserMenu(app, controller);
+            if (controller.getApp().getUserDataStore().isLoginCorrect(username, controller.askStringFromView(GenericMessage.PASSWORD_REQUEST))) {
+                controller.getApp().getUserDataStore().getUser(username).onLogin(controller).runUserMenu(controller);
                 return;
             }
 

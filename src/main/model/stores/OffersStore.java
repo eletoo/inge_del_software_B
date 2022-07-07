@@ -1,6 +1,6 @@
 package main.model.stores;
 
-import main.Application;
+import main.model.Application;
 import main.controller.*;
 import main.exceptions.NonLoadableFromFileException;
 import main.exceptions.NonSaveableOnFileException;
@@ -87,17 +87,17 @@ public class OffersStore implements Loadable, Saveable, Serializable, ListSelect
     }
 
     public void viewOffersByCategory(@NotNull Application app) {
-        if (app.getHierarchiesStore().getHierarchies().size() == 0) {
-            Controller.signalToView(ErrorMessage.E_NO_CATEGORIES.getMessage());
-            return;
-        }
-
-        Controller.signalListToView(
-                this.getOffers(chooseLeaf(GenericMessage.SELECT_CATEGORY.getMessage(), app))
-                        .stream()
-                        .filter(e -> e.getState() == OfferState.APERTA)
-                        .collect(Collectors.toList()), null
-        );
+//        if (app.getHierarchiesStore().getHierarchies().size() == 0) {
+//            Controller.signalToView(ErrorMessage.E_NO_CATEGORIES.getMessage());
+//            return;
+//        }
+//
+//        Controller.signalListToView(
+//                this.getOffers(getLeafCategories(GenericMessage.SELECT_CATEGORY.getMessage(), app))
+//                        .stream()
+//                        .filter(e -> e.getState() == OfferState.APERTA)
+//                        .collect(Collectors.toList()), null
+//        );
     }
 
     /**
@@ -109,25 +109,25 @@ public class OffersStore implements Loadable, Saveable, Serializable, ListSelect
      * @throws IOException eccezione I/O
      */
     public void createOffer(@NotNull Application app, Customer fruitore) throws IOException {
-        if (app.getHierarchiesStore().getHierarchies().isEmpty()) {
-            Controller.signalToView(ErrorMessage.E_NO_CATEGORIES.getMessage());
-            return;
-        }
-
-        var cat = chooseLeaf(GenericMessage.CHOOSE_CATEGORY_TO_PUBLISH.getMessage(), app);
-        var offer = new Offer(Controller.askStringFromView(GenericMessage.NAME), cat, fruitore, OfferState.APERTA);
-
-        for (var field : cat.getNativeFields().entrySet()) {
-            inputField(offer, field);
-        }
-
-        try {
-            this.addOffer(offer);
-        } catch (RequiredConstraintFailureException e) {
-            e.printStackTrace(); //should not happen
-        }
-
-        this.save();
+//        if (app.getHierarchiesStore().getHierarchies().isEmpty()) {
+//            Controller.signalToView(ErrorMessage.E_NO_CATEGORIES.getMessage());
+//            return;
+//        }
+//
+//        var cat = getLeafCategories(GenericMessage.CHOOSE_CATEGORY_TO_PUBLISH.getMessage(), app);
+//        var offer = new Offer(Controller.askStringFromView(GenericMessage.NAME), cat, fruitore, OfferState.APERTA);
+//
+//        for (var field : cat.getNativeFields().entrySet()) {
+//            inputField(offer, field);
+//        }
+//
+//        try {
+//            this.addOffer(offer);
+//        } catch (RequiredConstraintFailureException e) {
+//            e.printStackTrace(); //should not happen
+//        }
+//
+//        this.save();
     }
 
     private void addOffer(Offer offer) {
@@ -167,34 +167,23 @@ public class OffersStore implements Loadable, Saveable, Serializable, ListSelect
     /**
      * Visualizza le offerte di una categoria foglia specificata dall'utente
      *
-     * @param app applicazione
+     * @param leaf foglia
      * @param s   stato delle offerte da visualizzare
      */
-    public void viewOffers(@NotNull Application app, OfferState s) {
-        if (app.getHierarchiesStore().getHierarchies().size() == 0) {
-            Controller.signalToView(ErrorMessage.E_NO_CATEGORIES.getMessage());
-            return;
-        }
-
-        Leaf leaf = chooseLeaf(GenericMessage.SELECT_CATEGORY.getMessage(), app);
-        Controller.signalListToView(this
+    public List<Offer> viewOffers(Leaf leaf, OfferState s) {
+        return this
                 .getOffers()
                 .stream()
                 .filter(e -> e.getCategory().equals(leaf) && e.getState().equals(s))
-                .collect(Collectors.toList()), null);
-
+                .collect(Collectors.toList());
     }
 
     /**
      * Permette all'utente di scegliere una categoria foglia da una gerarchia
-     *
-     * @param prompt prompt da fornire all'utente
      * @param app    applicazione
      * @return categoria foglia selezionata dall'utente
      */
-    private Leaf chooseLeaf(String prompt, @NotNull Application app) {
-        Controller.signalToView(prompt);
-
+    public List<Leaf> getLeafCategories(@NotNull Application app) {
         List<Leaf> choices = new LinkedList<>();
         var stack = new Stack<Category>();
         for (var gerarchia : app.getHierarchiesStore().getHierarchies().entrySet()) {
@@ -208,7 +197,7 @@ public class OffersStore implements Loadable, Saveable, Serializable, ListSelect
                     stack.addAll(((Node) c).getCategorieFiglie());
             }
         }
-        return (Leaf) choose(choices, Category::printShortDescription);
+        return choices;
     }
 
     public Offer getOffer(Offer off) {

@@ -47,15 +47,16 @@ public class Node extends Category {
     /**
      * @return stringa descrittiva della categoria nodo
      */
-    public void printCategory() {
-        super.printCategory();
+    public String getCategoryDefinition() {
+        StringBuilder string = new StringBuilder(super.getCategoryDefinition());
         if (categorieFiglie.size() != 0) {
-            Controller.signalToView("\n\nCategorie figlie di " + this.getNome() + ":");
+            string.append("\n\nCategorie figlie di ").append(this.getNome()).append(":");
             int i = 1;
             for (Category c : categorieFiglie) {
-                Controller.signalToView("\n\n" + (i++) + ")");
-                c.printCategory();
+               string.append("\n\n").append(i++).append(")");
+                c.getCategoryDefinition();
             }
         }
+        return string.toString();
     }
 }

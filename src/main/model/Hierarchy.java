@@ -22,12 +22,5 @@ public class Hierarchy implements Serializable {
         return root;
     }
 
-    /**
-     * @return stringa descrittiva della gerarchia
-     */
-    public void printHierarchy() {
-        Controller.signalToView("\nGerarchia: " + root.getNome() + "\nDescrizione: " + root.getDescrizione());
-    }
-
 
 }

@@ -65,78 +65,69 @@ public class HierarchiesStore implements Loadable, Saveable, Serializable {
     @Override
     public void loadFromFile() throws IOException {
         Hierarchy h;
-        try {
-            List<Path> paths = LocalPath.generatePathListForImportFromFile(DB_JSON_FILES);
-            Reader reader;
 
-            if (paths.isEmpty()) {
-                Controller.signalToView(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
-                return;
+        List<Path> paths = LocalPath.generatePathListForImportFromFile(DB_JSON_FILES);
+        Reader reader;
+
+        if (paths.isEmpty())
+            throw new IOException(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage()); //todo dedicated exceptions
+
+        for (Path p : paths) {
+            reader = Files.newBufferedReader(p);
+            GsonBuilder builder = new GsonBuilder();
+            JsonDeserializer<Category> categoria_deserializer = (json, typeOfT, context) -> {
+                JsonObject jsonObject = json.getAsJsonObject();
+                if (jsonObject.get("figlie") != null && jsonObject.get("figlie").isJsonArray() && jsonObject.get("figlie").getAsJsonArray().size() > 1)
+                    return context.deserialize(jsonObject, Node.class);
+                return context.deserialize(jsonObject, Leaf.class);
+            };
+
+            JsonDeserializer<Node> nodo_deserializer = (json, typeOfT, context) -> {
+                JsonObject jsonObject = json.getAsJsonObject();
+                var nodo = new Node(jsonObject.get("nome").getAsString(), jsonObject.get("descrizione").getAsString());
+                var cn = new HashMap<String, NativeField>();
+
+                var o = jsonObject.get("campiNativi").getAsJsonObject();
+                o.keySet().forEach(e -> cn.put(e, context.deserialize(o.get(e), NativeField.class)));
+                nodo.setNativeFields(cn);
+                jsonObject.get("figlie").getAsJsonArray().forEach(e -> nodo.addChild(context.deserialize(e, Category.class)));
+                return nodo;
+            };
+
+            JsonDeserializer<Leaf> foglia_deserializer = (json, typeOfT, context) -> {
+                JsonObject jsonObject = json.getAsJsonObject();
+                var f = new Leaf(jsonObject.get("nome").getAsString(), jsonObject.get("descrizione").getAsString());
+                var cn = new HashMap<String, NativeField>();
+
+                var o = jsonObject.get("campiNativi").getAsJsonObject();
+                o.keySet().forEach(e -> cn.put(e, context.deserialize(o.get(e), NativeField.class)));
+                f.setNativeFields(cn);
+                return f;
+            };
+
+            Gson gson = builder
+                    .registerTypeAdapter(Category.class, categoria_deserializer)
+                    .registerTypeAdapter(Node.class, nodo_deserializer)
+                    .registerTypeAdapter(Leaf.class, foglia_deserializer)
+                    .create();
+
+            h = gson.fromJson(reader, Hierarchy.class);
+
+            boolean valid = true;
+
+            if (h.getRoot() instanceof Node)
+                for (Category c : ((Node) h.getRoot()).getCategorieFiglie())
+                    if (!c.isNameTakenOnlyOnce(h.getRoot())) {
+                        valid = false;
+                        break;
+                    }
+
+            if (!this.isHierarchyNameTaken(h.getRoot().getNome()) && valid) {//non sovrascrive nell'applicazione gerarchie omonime già esistenti
+                this.hierarchies.put(h.getRoot().getNome(), h);
             }
 
-            for (Path p : paths) {
-                reader = Files.newBufferedReader(p);
-                GsonBuilder builder = new GsonBuilder();
-                JsonDeserializer<Category> categoria_deserializer = (json, typeOfT, context) -> {
-                    JsonObject jsonObject = json.getAsJsonObject();
-                    if (jsonObject.get("figlie") != null && jsonObject.get("figlie").isJsonArray() && jsonObject.get("figlie").getAsJsonArray().size() > 1)
-                        return context.deserialize(jsonObject, Node.class);
-                    return context.deserialize(jsonObject, Leaf.class);
-                };
-
-                JsonDeserializer<Node> nodo_deserializer = (json, typeOfT, context) -> {
-                    JsonObject jsonObject = json.getAsJsonObject();
-                    var nodo = new Node(jsonObject.get("nome").getAsString(), jsonObject.get("descrizione").getAsString());
-                    var cn = new HashMap<String, NativeField>();
-
-                    var o = jsonObject.get("campiNativi").getAsJsonObject();
-                    o.keySet().forEach(e -> cn.put(e, context.deserialize(o.get(e), NativeField.class)));
-                    nodo.setNativeFields(cn);
-                    jsonObject.get("figlie").getAsJsonArray().forEach(e -> nodo.addChild(context.deserialize(e, Category.class)));
-                    return nodo;
-                };
-
-                JsonDeserializer<Leaf> foglia_deserializer = (json, typeOfT, context) -> {
-                    JsonObject jsonObject = json.getAsJsonObject();
-                    var f = new Leaf(jsonObject.get("nome").getAsString(), jsonObject.get("descrizione").getAsString());
-                    var cn = new HashMap<String, NativeField>();
-
-                    var o = jsonObject.get("campiNativi").getAsJsonObject();
-                    o.keySet().forEach(e -> cn.put(e, context.deserialize(o.get(e), NativeField.class)));
-                    f.setNativeFields(cn);
-                    return f;
-                };
-
-                Gson gson = builder
-                        .registerTypeAdapter(Category.class, categoria_deserializer)
-                        .registerTypeAdapter(Node.class, nodo_deserializer)
-                        .registerTypeAdapter(Leaf.class, foglia_deserializer)
-                        .create();
-
-                h = gson.fromJson(reader, Hierarchy.class);
-
-                boolean valid = true;
-
-                if (h.getRoot() instanceof Node)
-                    for (Category c : ((Node) h.getRoot()).getCategorieFiglie())
-                        if (!c.isNameTakenOnlyOnce(h.getRoot())) {
-                            valid = false;
-                            break;
-                        }
-
-                if (!this.isHierarchyNameTaken(h.getRoot().getNome()) && valid) {//non sovrascrive nell'applicazione gerarchie omonime già esistenti
-                    this.hierarchies.put(h.getRoot().getNome(), h);
-                }
-
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-
-        Controller.signalToView(GenericMessage.SUCCESSFUL_HIERARCHY_IMPORT.getMessage());
         this.save();
-        return;
     }
 
     @Override

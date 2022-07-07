@@ -1,6 +1,6 @@
 package main.controller;
 
-import main.Application;
+import main.model.Application;
 import main.model.LocalPath;
 import main.view.View;
 

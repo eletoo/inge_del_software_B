@@ -1,8 +1,6 @@
 package main.model;
 
-import main.Application;
 import main.controller.Controller;
-import main.controller.Selectable;
 import main.controller.UserSelectable;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -111,13 +109,13 @@ public abstract class User implements UserAction, Serializable {
     }
 
     @Override
-    public void runUserMenu(Application app, Controller controller) throws IOException {
+    public void runUserMenu(Controller controller) throws IOException {
         controller.runSelectionMenu(this.getUserMenu(), this);
     }
 
-    public abstract User onFirstLogin(Application app, Controller controller);
+    public abstract User onFirstLogin(Controller controller);
 
-    public abstract User onLogin(Application app, Controller controller) throws IOException;
+    public abstract User onLogin(Controller controller) throws IOException;
 
     protected abstract List<UserSelectable> getUserMenu();
 }

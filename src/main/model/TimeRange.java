@@ -76,7 +76,7 @@ public class TimeRange implements Serializable {
      * @return stringa contenente la descrizione dell'intervallo orario
      */
     public String printTimeRange() {
-        return start.printTime() + "-" + end.printTime();
+        return start.getTime() + "-" + end.getTime();
     }
 
     /**

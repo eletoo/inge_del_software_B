@@ -1,9 +1,7 @@
 package main.model;
 
-import main.Application;
 import main.controller.*;
 import main.controller.configuratorActions.*;
-import main.exceptions.InvalidMethodException;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -24,28 +22,28 @@ public class Configurator extends User implements ListSelect {
     }
 
     @Override
-    public User onFirstLogin(Application app, Controller controller) {
+    public User onFirstLogin(Controller controller) {
         controller.signalToView(GenericMessage.CUSTOMIZE_CREDENTIALS.getMessage());
         boolean auth;
         String username;
         do {
             username = controller.askStringFromView(GenericMessage.CUSTOMIZE_USERNAME);
-            if(app.getUserDataStore().isUsernameTaken(username)) {
+            if(controller.getApp().getUserDataStore().isUsernameTaken(username)) {
                 Controller.signalToView(ErrorMessage.E_CREDENTIALS_ERROR.getMessage());
                 continue;
             }
 
             String password = Controller.askStringFromView(GenericMessage.CUSTOMIZE_PW);
 
-            app.getUserDataStore().updateUser(this.getUsername(), username, password);
-            app.getUserDataStore().save();
-            return app.getUserDataStore().getUser(username);
+            controller.getApp().getUserDataStore().updateUser(this.getUsername(), username, password);
+            controller.getApp().getUserDataStore().save();
+            return controller.getApp().getUserDataStore().getUser(username);
         } while (true);
     }
 
     @Override
-    public User onLogin(Application app, Controller controller) throws IOException {
-        Controller.prepareStructures(app);
+    public User onLogin(Controller controller) throws IOException {
+        Controller.prepareStructures(controller.getApp());
         return this;
     }
 

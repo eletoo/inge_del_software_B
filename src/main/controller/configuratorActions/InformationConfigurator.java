@@ -1,8 +1,7 @@
 package main.controller.configuratorActions;
 
-import main.Application;
+import main.model.Application;
 import main.controller.*;
-import main.exceptions.InvalidMethodException;
 import main.model.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,59 +11,76 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class InformationConfigurator implements UserSelectable, ListSelect {
+public class InformationConfigurator implements UserSelectable {
     @Override
-    public void runAction(@NotNull Application app, Controller controller, User user) throws IOException {
+    public void runAction(Controller controller, User user) throws IOException {
 
-        if (this.getInfo(app) == null) {
-            this.setInfo(app, new Information(Controller.askStringFromView(GenericMessage.PLACE),
-                    setupAddresses(),
-                    setupDays(),
-                    setupTimeRanges(),
-                    Controller.askIntFromView(GenericMessage.DEADLINE)));
+        if (this.getInfo(controller.getApp()) == null) {
+            writeInfos(controller, controller.askStringFromView(GenericMessage.PLACE));
 
         } else {
             Controller.signalToView(GenericMessage.CURRENT_INFO.getMessage());
-            this.getInfo(app).print();
+            this.getInfo(controller.getApp()).print();
 
-            if (Controller.askBooleanFromView(YesOrNoMessage.OVERWRITE_INFO)) {
-                this.setInfo(app, new Information(this.getInfo(app).getPlace(),
-                        setupAddresses(),
-                        setupDays(),
-                        setupTimeRanges(),
-                        Controller.askIntFromView(GenericMessage.DEADLINE)));
-            }
+            if (Controller.askBooleanFromView(YesOrNoMessage.OVERWRITE_INFO))
+                writeInfos(controller, this.getInfo(controller.getApp()).getPlace());
+
         }
 
-        app.getInformationStore().save();
+        controller.getApp().getInformationStore().save();
 
         //se non modifico le informazioni di scambio e conf.json è corrotto/incompleto qui viene
         //sovrascritto con le informazioni correnti complete e non modificate
-        Controller.signalToView(GenericMessage.SAVED_CORRECTLY.getMessage());
+        controller.signalToView(GenericMessage.SAVED_CORRECTLY.getMessage());
+    }
+
+    private void writeInfos(Controller controller, String place){
+        this.setInfo(controller.getApp(), new Information(
+                place,
+                setupAddresses(controller),
+                setupDays(controller),
+                setupTimeRanges(controller),
+                controller.askIntFromView(GenericMessage.DEADLINE)));
     }
 
     @NotNull
-    private List<TimeRange> setupTimeRanges() {
+    private List<TimeRange> setupTimeRanges(Controller controller) {
         List<TimeRange> timeRanges = new LinkedList<>();
-        while (timeRanges.isEmpty() || Controller.askBooleanFromView(YesOrNoMessage.ADD_TIMERANGE)) {
-            Controller.signalToView(GenericMessage.EXCHANGE_HOURS_EVERY_30_MINS.getMessage());
+        while (timeRanges.isEmpty() || controller.askBooleanFromView(YesOrNoMessage.ADD_TIMERANGE)) {
+            controller.signalToView(GenericMessage.EXCHANGE_HOURS_EVERY_30_MINS.getMessage());
 
-            TimeRange tr = new TimeRange(Time.askStartingTime(), Time.askEndingTime());
+            TimeRange tr = new TimeRange(
+                    this.askTime(GenericMessage.STARTING_HOUR, GenericMessage.STARTING_MINUTES, controller),
+                    this.askTime(GenericMessage.ENDING_HOUR, GenericMessage.ENDING_MINUTES, controller)
+            );
 
             if (tr.isValidRange() && tr.isNewRange(timeRanges))
                 timeRanges.add(tr);
             else
-                Controller.signalToView(ErrorMessage.E_INVALID_TIME_RANGE.getMessage());
+                controller.signalToView(ErrorMessage.E_INVALID_TIME_RANGE.getMessage());
         }
         return timeRanges;
     }
 
+    public Time askTime(Message startMessageH, Message startMessageM, Controller controller) {
+        Time hour;
+        int h;
+        int m;
+        do {
+            h = controller.askIntFromView(startMessageH);
+            m = controller.askIntFromView(startMessageM);
+            hour = new Time(h, m);
+            if (!hour.isValid(h, m))
+                controller.signalToView(ErrorMessage.E_INVALID_TIME.getMessage());
+        } while (!hour.isValid(h, m));
+        return hour;
+    }
+
     @NotNull
-    private List<Day> setupDays() {
+    private List<Day> setupDays(Controller controller) {
         List<Day> days = new LinkedList<>();
-        while (days.isEmpty() || Controller.askBooleanFromView(YesOrNoMessage.ADD_DAY)) {
-            Controller.signalToView(GenericMessage.DAY.getMessage());
-            Day g = this.choose(Arrays.stream(Day.values()).collect(Collectors.toList()), Day::getDay);
+        while (days.isEmpty() || controller.askBooleanFromView(YesOrNoMessage.ADD_DAY)) {
+            Day g = controller.getView().choose(GenericMessage.DAY, Arrays.stream(Day.values()).collect(Collectors.toList()), Day::getDay);
             if (g != null && !days.contains(g))
                 days.add(g);
         }
@@ -72,10 +88,10 @@ public class InformationConfigurator implements UserSelectable, ListSelect {
     }
 
     @NotNull
-    private List<String> setupAddresses() {
+    private List<String> setupAddresses(Controller controller) {
         List<String> addresses = new LinkedList<>();
-        while (addresses.isEmpty() || Controller.askBooleanFromView(YesOrNoMessage.ADD_ADDRESS)) {
-            addresses.add(Controller.askStringFromView(GenericMessage.ADDRESS));
+        while (addresses.isEmpty() || controller.askBooleanFromView(YesOrNoMessage.ADD_ADDRESS)) {
+            addresses.add(controller.askStringFromView(GenericMessage.ADDRESS));
         }
         return addresses;
     }

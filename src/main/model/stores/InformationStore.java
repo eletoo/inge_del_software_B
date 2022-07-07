@@ -49,63 +49,43 @@ public class InformationStore implements Loadable, Saveable, Serializable {
 
     @Override
     public void loadFromFile() throws IOException {
-        if (LocalPath.generatePathListForImportFromFile(DB_CONF_DIR).size() > 1) {
+        if (LocalPath.generatePathListForImportFromFile(DB_CONF_DIR).size() > 1)
             //se c'è un numero di file di configurazione maggiore di 1 segnala un errore
-            Controller.signalToView(ErrorMessage.E_WRONG_DIR_CONTENT.getMessage());
-            return;
-        }
+            throw new IOException(ErrorMessage.E_WRONG_DIR_CONTENT.getMessage());
 
-        if (LocalPath.generatePathListForImportFromFile(DB_CONF_DIR).size() == 0) {
+        if (LocalPath.generatePathListForImportFromFile(DB_CONF_DIR).size() == 0)
             //se non ci sono file di configurazione segnala un errore
-            Controller.signalToView(ErrorMessage.E_NO_CONF_FILE.getMessage());
-            return;
-        }
+            throw new IOException(ErrorMessage.E_NO_CONF_FILE.getMessage());
 
         Path p = Paths.get(DB_JSON_CONF_FILE);
 
-        if (!p.toFile().exists()) {
-            Controller.signalToView(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
-            return;
-        }
+        if (!p.toFile().exists())
+            throw new IOException(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
 
         Reader reader = Files.newBufferedReader(p);
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         Information info = gson.fromJson(reader, Information.class);
 
-        if (info == null) {
-            Controller.signalToView(ErrorMessage.E_NO_CONF_FILE.getMessage());
-            return;
-        }
+        if (info == null)
+            throw new IOException(ErrorMessage.E_NO_CONF_FILE.getMessage());
 
-        if (info.getPlace() == null || info.getPlace().isEmpty()) {
-            Controller.signalToView(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
-            return;
-        }
+        if (info.getPlace() == null || info.getPlace().isEmpty())
+            throw new IOException(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
 
-        if (info.getTimeIntervals().isEmpty()) {
-            Controller.signalToView(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
-            return;
-        }
+        if (info.getTimeIntervals().isEmpty())
+            throw new IOException(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
 
-        if (info.getDeadline() <= 0) {
-            Controller.signalToView(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
-            return;
-        }
+        if (info.getDeadline() <= 0)
+            throw new IOException(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
 
-        if (info.getDays().isEmpty()) {
-            Controller.signalToView(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
-            return;
-        }
+        if (info.getDays().isEmpty())
+            throw new IOException(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
 
-        if (info.getAddresses().isEmpty()) {
-            Controller.signalToView(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
-            return;
-        }
+        if (info.getAddresses().isEmpty())
+            throw new IOException(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
 
         this.setInformations(info);
-        Controller.signalToView(GenericMessage.SUCCESSFUL_IMPORT.getMessage());
-
         this.save();
     }
 

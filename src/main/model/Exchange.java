@@ -1,10 +1,8 @@
 package main.model;
 
-import main.Application;
 import main.controller.*;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.text.View;
 import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDateTime;

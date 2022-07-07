@@ -1,6 +1,6 @@
 package main.controller.structures;
 
-import main.Application;
+import main.model.Application;
 
 import java.io.IOException;
 

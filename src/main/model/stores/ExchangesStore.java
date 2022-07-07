@@ -1,6 +1,6 @@
 package main.model.stores;
 
-import main.Application;
+import main.model.Application;
 import main.exceptions.NonLoadableFromFileException;
 import main.exceptions.NonSaveableOnFileException;
 import main.model.Exchange;

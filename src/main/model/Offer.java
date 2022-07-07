@@ -74,7 +74,7 @@ public class Offer implements Serializable, ListSelect {
     /**
      * @return stringa contenente le informazioni relative a un'offerta
      */
-    public void printOfferInfo() {
+    public String getOfferInfos() {
         StringBuilder sb = new StringBuilder();
         sb.append("Offerta " + name);
         sb.append("\n\tCategoria > " + category.printShortDescription());
@@ -86,7 +86,7 @@ public class Offer implements Serializable, ListSelect {
         }
         sb.append("\n");
 
-        Controller.signalToView(sb.toString());
+        return sb.toString();
     }
 
     /**

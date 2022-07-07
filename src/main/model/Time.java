@@ -1,8 +1,5 @@
 package main.model;
 
-import main.controller.Controller;
-import main.controller.ErrorMessage;
-import main.controller.GenericMessage;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -26,7 +23,7 @@ public class Time implements Serializable {
     /**
      * @return stringa contenente la descrizione dell'orario nel formato hh:mm
      */
-    public String printTime() {//todo: rinominare!!
+    public String getTime() {//todo: rinominare!!
         String hour = this.hour == 0 ? "00" : String.valueOf(this.hour);
         String mins = this.minutes == 0 ? "00" : String.valueOf(this.minutes);
         return hour + ":" + mins;
@@ -78,39 +75,6 @@ public class Time implements Serializable {
      */
     public void setMinutes(int minutes) {
         this.minutes = minutes;
-    }
-
-    /**
-     * Chiede di inserire un orario nel formato hh:mm, verificandone la validita'.
-     *
-     * @return orario (di inizio o di fine dell'intervallo a seconda di quanto specificato nei parametri) inserito dall'utente
-     */
-    public static Time askStartingTime() {
-        Time hour;
-        int h;
-        int m;
-        do {
-            h = Controller.askIntFromView(GenericMessage.STARTING_HOUR);
-            m = Controller.askIntFromView(GenericMessage.STARTING_MINUTES);
-            hour = new Time(h, m);
-            if (!hour.isValid(h, m))
-                Controller.signalToView(ErrorMessage.E_INVALID_TIME.getMessage());
-        } while (!hour.isValid(h, m));
-        return hour;
-    }
-
-    public static Time askEndingTime() {
-        Time hour;
-        int h;
-        int m;
-        do {
-            h = Controller.askIntFromView(GenericMessage.ENDING_HOUR);
-            m = Controller.askIntFromView(GenericMessage.ENDING_MINUTES);
-            hour = new Time(h, m);
-            if (!hour.isValid(h, m))
-                Controller.signalToView(ErrorMessage.E_INVALID_TIME.getMessage());
-        } while (!hour.isValid(h, m));
-        return hour;
     }
 
     /**

@@ -1,8 +1,7 @@
 package main.controller.customerActions;
 
-import main.Application;
+import main.model.Application;
 import main.controller.*;
-import main.exceptions.InvalidMethodException;
 import main.model.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -12,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class ExchangeCreator implements UserSelectable, ListSelect {
     @Override
-    public void runAction(@NotNull Application app, Controller controller, User user) throws IOException {
+    public void runAction(Controller controller, User user) throws IOException {
 //
 //        if (app.getHierarchiesStore().getHierarchies().isEmpty()) {
 //            Controller.signalToView(ErrorMessage.E_NO_CATEGORIES.getMessage());

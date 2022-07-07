@@ -1,11 +1,9 @@
 package main.controller.customerActions;
 
-import main.Application;
+import main.model.Application;
 import main.controller.Controller;
 import main.controller.ErrorMessage;
-import main.controller.Selectable;
 import main.controller.UserSelectable;
-import main.exceptions.InvalidMethodException;
 import main.model.Hierarchy;
 import main.model.User;
 import org.jetbrains.annotations.NotNull;
@@ -15,20 +13,20 @@ import java.util.Map;
 
 public class AppContentPrinter implements UserSelectable {
     @Override
-    public void runAction(@NotNull Application app, Controller controller, User user) throws IOException {
+    public void runAction(Controller controller, User user) throws IOException {
 
-        if (this.getHierarchies(app).isEmpty()) {
-            Controller.signalToView(ErrorMessage.NO_HIERARCHIES_YET.getMessage());
+        if (this.getHierarchies(controller.getApp()).isEmpty()) {
+            controller.signalToView(ErrorMessage.NO_HIERARCHIES_YET.getMessage());
             return;
         }
-        Controller.signalToView("GERARCHIE:");
+        controller.signalToView("GERARCHIE:");
 
-        for (Hierarchy h : this.getHierarchies(app).values()) {
-            h.printHierarchy();
+        for (Hierarchy h : this.getHierarchies(controller.getApp()).values()) {
+            //h.printHierarchy();
         }
 
-        if (app.getInformationStore().getInformation() != null)
-            app.getInformationStore().getInformation().print();
+        if (controller.getApp().getInformationStore().getInformation() != null)
+            controller.getApp().getInformationStore().getInformation().print();
         else
             Controller.signalToView(ErrorMessage.NO_INFO_YET.getMessage());
     }

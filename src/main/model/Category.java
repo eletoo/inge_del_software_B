@@ -76,16 +76,16 @@ public abstract class Category implements Serializable {
      *
      * @return stringa contenente nome, descrizione, elenco dei campi e obbligatorieta' di ciascuno di essi
      */
-    public void printCategory() {
+    public String getCategoryDefinition() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\n\nNome: " + this.nome);
-        sb.append("\nDescrizione: " + this.descrizione);
+        sb.append("\n\nNome: ").append(this.nome);
+        sb.append("\nDescrizione: ").append(this.descrizione);
         sb.append("\nCampi nativi:");
         for (String n : campiNativi.keySet()) {
             sb.append("\n-> " + n);
             sb.append(campiNativi.get(n).isObbligatorio() ? " (Obbligatorio)" : " (Falcotativo)");
         }
-        Controller.signalToView(sb.toString());
+        return sb.toString();
     }
 
     /**

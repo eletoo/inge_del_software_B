@@ -1,15 +1,11 @@
 package main.model;
 
-import main.Application;
 import main.controller.Controller;
 import main.controller.ListSelect;
-import main.controller.Selectable;
 import main.controller.UserSelectable;
 import main.controller.configuratorActions.Exit;
 import main.controller.customerActions.*;
 import main.controller.customerActions.OpenOffersPrinter;
-import main.exceptions.InvalidMethodException;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -23,16 +19,17 @@ public class Customer extends User implements ListSelect {
     }
 
     @Override
-    public User onFirstLogin(Application app, Controller controller) {
+    public User onFirstLogin(Controller controller) {
         return this;
     }
 
     @Override
-    public User onLogin(Application app, Controller controller) throws IOException {
-        controller.prepareStructures(app);
+    public User onLogin(Controller controller) throws IOException {
+        controller.prepareStructures(controller.getApp());
+        //todo
         //        Exchange.manageExchanges(app, fruitore);
         //        Exchange.managePastExchanges(app, fruitore);
-        return null;
+        return this;
     }
 
     protected List<UserSelectable> getUserMenu() {

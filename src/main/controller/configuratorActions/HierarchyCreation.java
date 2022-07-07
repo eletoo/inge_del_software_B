@@ -1,8 +1,7 @@
 package main.controller.configuratorActions;
 
-import main.Application;
+import main.model.Application;
 import main.controller.*;
-import main.exceptions.InvalidMethodException;
 import main.model.*;
 import main.model.stores.HierarchiesStore;
 import org.jetbrains.annotations.Contract;
@@ -12,61 +11,72 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HierarchyCreation implements UserSelectable, ListSelect {
+public class HierarchyCreation implements UserSelectable {
+
+    public Category addChildToCategory(Controller controller, @NotNull CategoryEntry padre, Category root){
+        if (padre.getCat() == root)
+            root = padre.asNode();
+        else {
+            padre.asNode();
+        }
+
+        String name = controller.askStringFromView(GenericMessage.CATEGORY_NAME);
+        if (!root.isNameTaken(name)) {
+            String desc = controller.askStringFromView(GenericMessage.CATEGORY_DESCRIPTION);
+            var cat = new Leaf(name, desc);
+            cat.setNativeFields(cat.generateNativeFields(padre.getCat()));
+            ((Node) padre.getCat()).addChild(cat);
+        } else
+            controller.signalToView(ErrorMessage.E_EXISTING_NAME_IN_HIERARCHY.getMessage());
+
+        return root;
+    }
+
+    public Category makeCategory(@NotNull Controller controller, String rootname){
+        Category root = new Leaf(rootname, controller.askPotentiallyEmptyStringFromView(GenericMessage.CATEGORY_DESCRIPTION));
+        root.setNativeFields(root.generateNativeFields(null));
+
+        //Se la struttura non è valida l'utente dovrà proseguire nell'aggiunta al fine di renderla tale (oppure se ha sbagliato ricomincia)
+        //altrimenti chiediamo se vuole aggiungere una categoria
+        while (!root.isStructureValid() || controller.askBooleanFromView(YesOrNoMessage.ADD_CATEGORY)) {
+            CategoryEntry padre = controller.getView().choose(
+                    GenericMessage.AT_LEAST_TWO_CHILDREN,
+                    getCategoriesAsList(root),
+                    CategoryEntry::getDisplayName
+            );
+
+            root = this.addChildToCategory(controller, padre, root);
+        }
+        return root;
+    }
+
     @Override
-    public void runAction(@NotNull Application app, Controller controller, User user) throws IOException {
-        createNewHierarchy(app);
+    public void runAction(@NotNull Controller controller, User user) throws IOException {
+        Application app = controller.getApp();
+        String rootname = controller.askStringFromView(GenericMessage.CATEGORY_NAME);
+
+        if (this.getHierarchies(app).isHierarchyNameTaken(rootname)) {
+            controller.signalToView(ErrorMessage.E_EXISTING_ROOT_CATEGORY.getMessage());
+            return;
+        }
+
+        Category root = makeCategory(controller, rootname);
+
+        Hierarchy h = new Hierarchy(root);
+        this.getHierarchies(app).addHierarchy(h);
+
+        if (controller.askBooleanFromView(YesOrNoMessage.SAVE_HIERARCHY)) {
+            this.getHierarchies(app).save();
+            controller.signalToView(GenericMessage.SAVED_CORRECTLY.getMessage());
+            return;
+        }
+
+        this.getHierarchies(app).removeHierarchy(h);
     }
 
     @Override
     public String getActionName() {
         return "Crea una nuova gerarchia";
-    }
-
-    private void createNewHierarchy(Application app) throws IOException {
-        String rootname = Controller.askStringFromView(GenericMessage.CATEGORY_NAME);
-        if (this.getHierarchies(app).isHierarchyNameTaken(rootname)) {
-            Controller.signalToView(ErrorMessage.E_EXISTING_ROOT_CATEGORY.getMessage());
-            return;
-        }
-
-        Category root = new Leaf(rootname, Controller.askPotentiallyEmptyStringFromView(GenericMessage.CATEGORY_DESCRIPTION));
-        root.setNativeFields(root.generateNativeFields(null));
-
-        //Se la struttura non è valida l'utente dovrà proseguire nell'aggiunta al fine di renderla tale (oppure se ha sbagliato ricomincia)
-        //altrimenti chiediamo se vuole aggiungere una categoria
-        while (!root.isStructureValid() || Controller.askBooleanFromView(YesOrNoMessage.ADD_CATEGORY)) {
-            Controller.signalToView(GenericMessage.AT_LEAST_TWO_CHILDREN.getMessage());
-
-            CategoryEntry padre = choose(getCategoriesAsList(root), CategoryEntry::getDisplayName);
-
-            if (padre.getCat() == root)
-                root = padre.asNode();
-            else {
-                padre.asNode();
-            }
-
-            String name = Controller.askStringFromView(GenericMessage.CATEGORY_NAME);
-            if (!root.isNameTaken(name)) {
-                String desc = Controller.askStringFromView(GenericMessage.CATEGORY_DESCRIPTION);
-                var cat = new Leaf(name, desc);
-                cat.setNativeFields(cat.generateNativeFields(padre.getCat()));
-                ((Node) padre.getCat()).addChild(cat);
-            } else
-                Controller.signalToView(ErrorMessage.E_EXISTING_NAME_IN_HIERARCHY.getMessage());
-
-        }
-
-        Hierarchy h = new Hierarchy(root);
-        this.getHierarchies(app).addHierarchy(h);
-
-        if (Controller.askBooleanFromView(YesOrNoMessage.SAVE_HIERARCHY)) {
-            this.getHierarchies(app).save();
-            Controller.signalToView(GenericMessage.SAVED_CORRECTLY.getMessage());
-            return;
-        }
-
-        this.getHierarchies(app).removeHierarchy(h);
     }
 
     @Contract("_ -> new")
