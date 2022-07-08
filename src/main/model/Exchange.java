@@ -25,9 +25,6 @@ public class Exchange implements Serializable {
         this.ownOffer = own;
         this.selectedOffer = selected;
 
-        //todo will it work?
-//        app.getOffersStore().getOffer(this.ownOffer).setState(OfferState.ACCOPPIATA);
-//        app.getOffersStore().getOffer(this.selectedOffer).setState(OfferState.SELEZIONATA);
         this.ownOffer.setState(OfferState.ACCOPPIATA);
         this.selectedOffer.setState(OfferState.SELEZIONATA);
 
@@ -72,6 +69,7 @@ public class Exchange implements Serializable {
     public void suggestMeeting(@NotNull Controller controller, @NotNull Application app, Customer f) {
         StringBuilder sb = new StringBuilder();
         sb.append("\n\nInformazioni appuntamento per lo scambio:");
+        controller.signalToView("--Proponi un appuntamento--\n");
         sb.append("\nPiazza: " + app.getInformationStore().getInformation().getPlace());
         sb.append("\nLuogo: " + controller.getView().choose(GenericMessage.ADDRESS, this.getInformation(app).getAddresses(), null));
         sb.append("\nGiorno: " + controller.getView().choose(GenericMessage.DAY, this.getInformation(app).getDays(), Day::getDay).getDay());
@@ -124,7 +122,7 @@ public class Exchange implements Serializable {
     private @NotNull ExchangeMessage getLastMsg(User f) {
         if (this.counterMessage.getAuthor().equals(f))
             return this.ownerMessage;
-//todo: se ci sono errori scambiare i due return
+
         return this.counterMessage;
     }
 

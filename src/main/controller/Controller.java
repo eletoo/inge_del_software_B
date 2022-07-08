@@ -12,6 +12,11 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * controller
+ *
+ * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
+ */
 public class Controller {
 
     //parla con la view
@@ -31,6 +36,11 @@ public class Controller {
         this.rh = new RegistrationHandler(app);
     }
 
+    /**
+     * fa selezionare un'azione del menu principale da eseguire
+     *
+     * @throws IOException eccezione I/O
+     */
     public void run() throws IOException {
         ActionSelection sel = new ActionSelection();
         List<Selectable> selectable = Context.initiateSelectableList();
@@ -41,31 +51,73 @@ public class Controller {
         } while (!(selected instanceof Exit));
     }
 
+    /**
+     * segnala un messaggio alla view
+     *
+     * @param message messaggio
+     */
     public void signalToView(String message) {
         // this.view.notify(message);
         MessagePrinter.printText(message);
     }
 
+    /**
+     * segnala una lista alla view
+     *
+     * @param toPrint lista da stampare
+     * @param toApply funzione da applicare alla lista
+     * @param <T>     tipo della lista
+     */
     public <T> void signalListToView(@NotNull List<T> toPrint, Function<T, String> toApply) {
         toPrint.forEach(e -> signalToView(toApply == null ? e.toString() : toApply.apply(e)));
     }
 
+    /**
+     * richiede una stringa alla view
+     *
+     * @param message messaggio
+     * @return stringa
+     */
     public String askStringFromView(Message message) {
         return (new StringReaderClass()).in(message);
     }
 
+    /**
+     * richiede una riga di input alla view
+     *
+     * @param message messaggio
+     * @return riga
+     */
     public String askLineFromView(Message message) {
         return (new StringReaderClass()).inLine(message);
     }
 
+    /**
+     * richiede una riga potenzialmente vuota alla view
+     *
+     * @param message messaggio
+     * @return riga
+     */
     public String askPotentiallyEmptyStringFromView(Message message) {
-        return (new StringReaderClass()).inPotentiallyEmptyLine(message); //todo check
+        return (new StringReaderClass()).inPotentiallyEmptyLine(message);
     }
 
+    /**
+     * richiede un intero alla view
+     *
+     * @param message messaggio
+     * @return intero
+     */
     public int askIntFromView(Message message) {
         return (new IntegerReader().in(message));
     }
 
+    /**
+     * richiede un valore booleano alla view
+     *
+     * @param message messaggio
+     * @return booleano
+     */
     public boolean askBooleanFromView(Message message) {
         String ans;
         do {
@@ -75,6 +127,12 @@ public class Controller {
         return ans.equalsIgnoreCase("y");
     }
 
+    /**
+     * prepara le strutture dati
+     *
+     * @param app applicazione
+     * @throws IOException eccezione I/O
+     */
     public static void prepareStructures(Application app) throws IOException {
         StructureLoader s = new DirectoryStructure();
         s.prepareStructure(app);
@@ -86,6 +144,12 @@ public class Controller {
         s.prepareStructure(app);
     }
 
+    /**
+     * se e' il primo accesso all'applicazione registra l'utente come configuratore ed esegue il suo menu
+     *
+     * @return true se non c'e' ancora nessun utente registrato
+     * @throws IOException eccezione I/O
+     */
     public boolean isFirstAccess() throws IOException {
         app.getUserDataStore().load();
         if (app.getUserDataStore().isEmpty()) {
@@ -95,6 +159,12 @@ public class Controller {
         return false;
     }
 
+    /**
+     * registra un utente in funzione del tipo specificato
+     *
+     * @param type tipo di profilo utente
+     * @return utente
+     */
     public User registerUser(UserType type) {
         String username;
         do {
@@ -113,7 +183,13 @@ public class Controller {
         return user;
     }
 
-
+    /**
+     * chiede all'utente di selezionare una voce dal menu utente
+     *
+     * @param userMenu menu utente
+     * @param u        utente
+     * @throws IOException eccezione I/O
+     */
     public void runSelectionMenu(List<UserSelectable> userMenu, User u) throws IOException {
         UserSelectable chosen;
         do {
@@ -126,6 +202,12 @@ public class Controller {
         return this.app;
     }
 
+    /**
+     * esegue il cambio delle credenziali temporanee dell'utente configuratore
+     *
+     * @param u configuratore
+     * @return utente configuratore
+     */
     public User onConfiguratorFirstLogin(Configurator u) {
         this.signalToView(GenericMessage.CUSTOMIZE_CREDENTIALS.getMessage());
 
@@ -145,19 +227,27 @@ public class Controller {
         } while (true);
     }
 
+    /**
+     * permette di gestire una proposta di scambio dell'utente
+     *
+     * @param e scambio
+     * @param c utente fruitore
+     * @throws IOException eccezione I/O
+     */
     private void manageExchange(@NotNull Exchange e, Customer c) throws IOException {
-        if (e.getOwnerMessage().getMessage() == null && e.getCounterMessage() == null) {//A propone lo scambio, B lo riceve per la prima volta, messageA è ancora null
-            e.suggestMeeting(this, this.app, c);//todo: potrebbe essere da rimuovere la seconda condizione in AND
+        //A propone lo scambio, B lo riceve per la prima volta, le stringhe di messageA e messageB sono ancora null
+        if (e.getOwnerMessage().getMessage() == null && e.getCounterMessage().getMessage() == null) {
+            e.suggestMeeting(this, this.app, c);
             app.getOffersStore().getOffer(e.getSelectedOffer()).setState(OfferState.IN_SCAMBIO);
             app.getOffersStore().getOffer(e.getOwnOffer()).setState(OfferState.IN_SCAMBIO);
             app.save();
             return;
         }
 
-        //altrimenti è già stato proposto almeno uno scambio
-        this.signalToView(e.getLastMessageByCounterpart(c).getMessage());//todo: potenziale errore in getLastMessageByCounterpart
+        //altrimenti è già stato proposto almeno un appuntamento
+        this.signalToView(e.getLastMessageByCounterpart(c).getMessage() != null ? e.getLastMessageByCounterpart(c).getMessage() : "");
 
-        if (this.askBooleanFromView(YesOrNoMessage.ACCEPT_MEETING)) {
+        if (e.getLastMessageByCounterpart(c).getMessage() != null && this.askBooleanFromView(YesOrNoMessage.ACCEPT_MEETING)) {
             app.getOffersStore().getOffer(e.getSelectedOffer()).setState(OfferState.CHIUSA);
             app.getOffersStore().getOffer(e.getOwnOffer()).setState(OfferState.CHIUSA);
             this.signalToView(GenericMessage.CLOSED_OFFER.getMessage());
@@ -172,6 +262,16 @@ public class Controller {
         app.save();
     }
 
+    /**
+     * gestisce gli scambi dell'utente facendogli selezionare quale gestire tra quelli disponibili
+     *
+     * @param c                 utente
+     * @param noExchanges       messaggio non ci sono scambi disponibili
+     * @param existingExchanges messaggio ci sono scambi disponibili
+     * @param selectExchange    messaggio seleziona scambio
+     * @param userExchanges     scambi dell'utente
+     * @throws IOException eccezione I/O
+     */
     private void manageExchange(Customer c, String noExchanges, String existingExchanges, Message selectExchange, @NotNull List<Exchange> userExchanges) throws IOException {
         while (!userExchanges.isEmpty()) {
             Exchange toAccept;
@@ -192,6 +292,14 @@ public class Controller {
         this.signalToView(noExchanges);
     }
 
+    /**
+     * azioni da compiere all'accesso dell'utente: selezionare eventuali scambi e farglieli gestire, rimuovendo
+     * scambi scaduti dall'applicazione
+     *
+     * @param customer utente
+     * @return utente
+     * @throws IOException eccezione I/O
+     */
     public User onUserLogin(Customer customer) throws IOException {
 
         var valid_exchanges = this.app.getExchangesStore().getExchanges().stream()
@@ -228,7 +336,7 @@ public class Controller {
             this.app.getExchangesStore().removeExchange(s);
         }
 
-        this.app.getExchangesStore().save();
+        this.app.save();
         return customer;
     }
 }

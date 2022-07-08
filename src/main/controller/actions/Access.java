@@ -8,6 +8,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
+/**
+ * Gestisce l'accesso all'applicazione
+ * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
+ */
 public class Access implements Selectable {
     private String actionName;
 
@@ -15,6 +19,12 @@ public class Access implements Selectable {
         this.actionName = "Accedi";
     }
 
+    /**
+     * se è il primo accesso richiama il metodo del controller opportuno, altrimenti chiede le credenziali e autentica
+     * l'utente
+     * @param controller controller
+     * @throws IOException eccezione I/O
+     */
     @Override
     public void runAction(@NotNull Controller controller) throws IOException {
 
@@ -36,6 +46,10 @@ public class Access implements Selectable {
         controller.signalToView(ErrorMessage.E_UNREGISTERED_USER.getMessage());
 
     }
+
+    /**
+     * @return descizione dell'azione
+     */
     @Override
     public String getActionName() {
         return this.actionName;

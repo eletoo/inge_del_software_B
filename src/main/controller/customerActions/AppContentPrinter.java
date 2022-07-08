@@ -12,7 +12,19 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Map;
 
+/**
+ * stampa il contenuto dell'applicazione
+ *
+ * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
+ */
 public class AppContentPrinter implements UserSelectable {
+    /**
+     * stampa il contenuto delle gerarchie e le informazioni di scambio
+     *
+     * @param controller controller
+     * @param user       utente
+     * @throws IOException eccezione I/O
+     */
     @Override
     public void runAction(@NotNull Controller controller, User user) throws IOException {
 
@@ -34,10 +46,17 @@ public class AppContentPrinter implements UserSelectable {
             controller.signalToView(ErrorMessage.NO_INFO_YET.getMessage());
     }
 
+    /**
+     * @param app applicazione
+     * @return insieme delle gerarchie
+     */
     private Map<String, Hierarchy> getHierarchies(@NotNull Application app) {
         return app.getHierarchiesStore().getHierarchies();
     }
 
+    /**
+     * @return descrizione dell'azione
+     */
     @Override
     public String getActionName() {
         return "Visualizza il contenuto dell'applicazione e le informazioni di scambio";

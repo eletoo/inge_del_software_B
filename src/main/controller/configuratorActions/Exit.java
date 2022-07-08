@@ -8,13 +8,25 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
+/**
+ * esce dal menù utente
+ * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
+ */
 public class Exit implements UserSelectable {
-
+    /**
+     * esce dal menù utente
+     * @param controller controller
+     * @param user utente
+     * @throws IOException eccezione I/O
+     */
     @Override
     public void runAction(@NotNull Controller controller, User user) throws IOException {
         controller.signalToView(GenericMessage.EXIT_MESSAGE.getMessage());
     }
 
+    /**
+     * @return descrizione dell'azione
+     */
     @Override
     public String getActionName() {
         return "Logout";

@@ -11,6 +11,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Gestisce la registrazione degli utenti
+ * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
+ */
 public class Register implements Selectable {
     private String actionName;
 
@@ -18,6 +22,11 @@ public class Register implements Selectable {
         this.actionName = "Registrati";
     }
 
+    /**
+     * esegue la registrazione dell'utente facendogli selezionare il tipo di profilo da creare
+     * @param controller controller
+     * @throws IOException eccezione I/O
+     */
     @Override
     public void runAction(@NotNull Controller controller) throws IOException {
 
@@ -32,6 +41,9 @@ public class Register implements Selectable {
         user.onLogin(controller).runUserMenu(controller);
     }
 
+    /**
+     * @return descrizione dell'azione
+     */
     @Override
     public String getActionName() {
         return this.actionName;

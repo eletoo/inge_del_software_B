@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Context del pattern Strategy: aggrega oggetti Selectable (le singole strategy)
- * Si tratta dell'unica classe da modificare quando voglio aggiungere una strategy di accesso
+ * Si tratta dell'unica classe da modificare quando voglio aggiungere una strategy di accesso alla app
  */
 public class Context {
 

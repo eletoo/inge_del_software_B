@@ -2,6 +2,11 @@ package main.controller;
 
 import org.jetbrains.annotations.Contract;
 
+/**
+ * contiene generici messaggi da passare alla view
+ *
+ * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
+ */
 public enum GenericMessage implements Message {
     SELECT_INDEX("\nSelezionare un indice."),
     USERNAME_REQUEST("Inserisci il tuo username: "),

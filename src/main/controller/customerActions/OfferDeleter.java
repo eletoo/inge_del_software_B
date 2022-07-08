@@ -12,7 +12,19 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+/**
+ * elimina un'offerta
+ *
+ * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
+ */
 public class OfferDeleter implements UserSelectable {
+    /**
+     * elimina un'offerta tra quelle con stato aperta
+     *
+     * @param controller controller
+     * @param user       utente
+     * @throws IOException eccezione I/O
+     */
     @Override
     public void runAction(@NotNull Controller controller, User user) throws IOException {
         var user_offers = controller.getApp().getOffersStore().getOffers(user)
@@ -29,6 +41,9 @@ public class OfferDeleter implements UserSelectable {
         }
     }
 
+    /**
+     * @return descrizione dell'azione
+     */
     @Override
     public String getActionName() {
         return "Ritira offerta";

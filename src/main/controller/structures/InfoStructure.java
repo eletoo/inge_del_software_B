@@ -5,6 +5,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
+/**
+ * carica le informazioni di scambio salvate
+ *
+ * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
+ */
 public class InfoStructure implements StructureLoader {
 
     @Override

@@ -2,6 +2,11 @@ package main.controller;
 
 import org.jetbrains.annotations.Contract;
 
+/**
+ * messaggi che richiedono una risposta si/no dall'utente
+ *
+ * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
+ */
 public enum YesOrNoMessage implements Message {
     ADD_ADDRESS("Inserire un altro luogo per lo scambio? [Y/N]"),
     ADD_DAY("Inserire un altro giorno per lo scambio? [Y/N]"),

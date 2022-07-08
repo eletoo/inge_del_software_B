@@ -10,6 +10,10 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+/**
+ * Gestisce la stampa delle offerte
+ * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
+ */
 public abstract class AbstractOffersPrinter implements UserSelectable {
     private OfferState requiredState;
 
@@ -18,10 +22,10 @@ public abstract class AbstractOffersPrinter implements UserSelectable {
     }
 
     /**
-     * Stampa tutte le offerte di tutti gli utenti con stato chiuso
-     * @param controller .
-     * @param user .
-     * @throws IOException
+     * Stampa tutte le offerte di tutti gli utenti con stato selezionato
+     * @param controller controller
+     * @param user utente
+     * @throws IOException eccezione I/O
      */
     @Override
     public void runAction(@NotNull Controller controller, User user) throws IOException {

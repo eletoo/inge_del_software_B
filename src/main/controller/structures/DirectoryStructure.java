@@ -5,6 +5,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 
+/**
+ * carica le gerarchie salvate
+ *
+ * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
+ */
 public class DirectoryStructure implements StructureLoader {
 
     @Override

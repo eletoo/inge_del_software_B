@@ -13,10 +13,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * crea una gerarchia
+ * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
+ */
 public class HierarchyCreation implements UserSelectable {
 
     /**
-     * Genera i campi nativi (chiedendone nome e obbligatorieta') da aggiungere alla categoria c e aggiunge quelli che
+     * Genera i campi nativi (chiedendone nome e obbligatorieta') da aggiungere alla categoria e aggiunge quelli che
      * essa eredita dalla categoria parent
      *
      * @param parent categoria parent da cui ereditare i campi
@@ -52,6 +56,13 @@ public class HierarchyCreation implements UserSelectable {
         return campi;
     }
 
+    /**
+     * aggiunge una categoria figlia a una categoria padre
+     * @param controller controller
+     * @param padre categoria padre
+     * @param root categoria radice della gerarchia
+     * @return categoria radice
+     */
     public Category addChildToCategory(Controller controller, @NotNull CategoryEntry padre, Category root){
         if (padre.getCat() == root)
             root = padre.asNode();
@@ -71,12 +82,16 @@ public class HierarchyCreation implements UserSelectable {
         return root;
     }
 
+    /**
+     * crea una categoria
+     * @param controller controller
+     * @param rootname nome della radice della gerarchia
+     * @return categoria radice
+     */
     public Category makeCategory(@NotNull Controller controller, String rootname){
         Category root = new Leaf(rootname, controller.askPotentiallyEmptyStringFromView(GenericMessage.CATEGORY_DESCRIPTION));
         root.setNativeFields(this.generateNativeFields(null, controller));
 
-        //Se la struttura non è valida l'utente dovrà proseguire nell'aggiunta al fine di renderla tale (oppure se ha sbagliato ricomincia)
-        //altrimenti chiediamo se vuole aggiungere una categoria
         while (!root.isStructureValid() || controller.askBooleanFromView(YesOrNoMessage.ADD_CATEGORY)) {
             CategoryEntry padre = controller.getView().choose(
                     GenericMessage.AT_LEAST_TWO_CHILDREN,
@@ -89,6 +104,12 @@ public class HierarchyCreation implements UserSelectable {
         return root;
     }
 
+    /**
+     * crea la gerarchia
+     * @param controller controller
+     * @param user utente
+     * @throws IOException eccezione I/O
+     */
     @Override
     public void runAction(@NotNull Controller controller, User user) throws IOException {
         Application app = controller.getApp();
@@ -113,11 +134,19 @@ public class HierarchyCreation implements UserSelectable {
         this.getHierarchies(app).removeHierarchy(h);
     }
 
+    /**
+     * @return descrizione dell'azione
+     */
     @Override
     public String getActionName() {
         return "Crea una nuova gerarchia";
     }
 
+    /**
+     * ottiene le categorie di una gerarchia in forma di lista
+     * @param root radice della gerarchia
+     * @return lista di categorie
+     */
     @Contract("_ -> new")
     private @NotNull List<CategoryEntry> getCategoriesAsList(Category root) {
         return getCategoriesAsList(root, null, new ArrayList<>(), "");
@@ -140,6 +169,10 @@ public class HierarchyCreation implements UserSelectable {
         return choices;
     }
 
+    /**
+     * @param app applicazione
+     * @return insieme delle gerarchie
+     */
     private HierarchiesStore getHierarchies(@NotNull Application app) {
         return app.getHierarchiesStore();
     }

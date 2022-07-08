@@ -8,7 +8,17 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
+/**
+ * configura le gerarchie da file
+ * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
+ */
 public class HierarchyFromFileConfigurator implements UserSelectable {
+    /**
+     * configura le gerarchie da file
+     * @param controller controller
+     * @param user utente
+     * @throws IOException eccezione I/O
+     */
     @Override
     public void runAction(@NotNull Controller controller, User user) throws IOException {
         try {
@@ -19,6 +29,9 @@ public class HierarchyFromFileConfigurator implements UserSelectable {
         }
     }
 
+    /**
+     * @return descrizione dell'azione
+     */
     @Override
     public String getActionName() {
         return "Importa gerarchie da file";

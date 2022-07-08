@@ -2,7 +2,12 @@ package main.controller;
 
 import org.jetbrains.annotations.Contract;
 
-public enum ErrorMessage implements Message{
+/**
+ * contiene messaggi di errore da passare alla View
+ *
+ * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
+ */
+public enum ErrorMessage implements Message {
     E_CREDENTIALS_ERROR("Errore nell'inserimento delle credenziali"),
     E_UNREGISTERED_USER("Utente non registrato: username inesistente"),
     E_WRONG_PASSWORD("Password errata"),

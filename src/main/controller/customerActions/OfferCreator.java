@@ -11,7 +11,18 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.Map;
 
+/**
+ * crea un'offerta
+ *
+ * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
+ */
 public class OfferCreator implements UserSelectable {
+    /**
+     * crea un'offerta chiedendo all'utente di compilare i campi necessari
+     * @param controller controller
+     * @param user utente
+     * @throws IOException eccezione I/O
+     */
     @Override
     public void runAction(@NotNull Controller controller, User user) throws IOException {
         if (controller.getApp().getHierarchiesStore().getHierarchies().isEmpty()) {
@@ -61,6 +72,9 @@ public class OfferCreator implements UserSelectable {
                 );
     }
 
+    /**
+     * @return descrizione dell'azione
+     */
     @Override
     public String getActionName() {
         return "Crea offerta";

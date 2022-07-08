@@ -5,6 +5,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
+/**
+ * carica gli scambi salvati
+ *
+ * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
+ */
 public class ExchangeStructure implements StructureLoader {
 
     @Override

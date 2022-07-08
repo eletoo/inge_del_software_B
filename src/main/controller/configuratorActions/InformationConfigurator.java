@@ -11,7 +11,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * configura le informazioni di scambio
+ * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
+ */
 public class InformationConfigurator implements UserSelectable {
+    /**
+     * configura le informazioni di scambio
+     * @param controller controller
+     * @param user utente
+     * @throws IOException eccezione I/O
+     */
     @Override
     public void runAction(@NotNull Controller controller, User user) throws IOException {
 
@@ -34,6 +44,11 @@ public class InformationConfigurator implements UserSelectable {
         controller.signalToView(GenericMessage.SAVED_CORRECTLY.getMessage());
     }
 
+    /**
+     * sovrascrive le informazioni di scambio
+     * @param controller controller
+     * @param place piazza
+     */
     private void writeInfos(@NotNull Controller controller, String place){
         this.setInfo(controller.getApp(), new Information(
                 place,
@@ -43,6 +58,11 @@ public class InformationConfigurator implements UserSelectable {
                 controller.askIntFromView(GenericMessage.DEADLINE)));
     }
 
+    /**
+     * imposta gli intervalli orari
+     * @param controller controller
+     * @return intervalli orari
+     */
     @NotNull
     private List<TimeRange> setupTimeRanges(Controller controller) {
         List<TimeRange> timeRanges = new LinkedList<>();
@@ -62,6 +82,13 @@ public class InformationConfigurator implements UserSelectable {
         return timeRanges;
     }
 
+    /**
+     * chiede il singolo orario
+     * @param startMessageH ora
+     * @param startMessageM minuti
+     * @param controller controller
+     * @return orario
+     */
     public Time askTime(Message startMessageH, Message startMessageM, @NotNull Controller controller) {
         Time hour;
         int h;
@@ -76,6 +103,11 @@ public class InformationConfigurator implements UserSelectable {
         return hour;
     }
 
+    /**
+     * chiede i giorni della settimana
+     * @param controller controller
+     * @return giorni per lo scambio
+     */
     @NotNull
     private List<Day> setupDays(Controller controller) {
         List<Day> days = new LinkedList<>();
@@ -87,6 +119,11 @@ public class InformationConfigurator implements UserSelectable {
         return days;
     }
 
+    /**
+     * chiede i luoghi per lo scambio
+     * @param controller controller
+     * @return luoghi
+     */
     @NotNull
     private List<String> setupAddresses(Controller controller) {
         List<String> addresses = new LinkedList<>();
@@ -96,6 +133,9 @@ public class InformationConfigurator implements UserSelectable {
         return addresses;
     }
 
+    /**
+     * @return descrizione dell'azione
+     */
     @Override
     public String getActionName() {
         return "Configura informazioni di scambio";
