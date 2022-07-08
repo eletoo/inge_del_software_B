@@ -1,6 +1,6 @@
 package main.controller;
 
-public class CustomMessage implements Message {
+public class CustomMessage implements PrintableMessage {
 
     private String message;
 

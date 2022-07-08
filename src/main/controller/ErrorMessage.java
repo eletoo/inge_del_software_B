@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Contract;
  *
  * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
  */
-public enum ErrorMessage implements Message {
+public enum ErrorMessage implements PrintableMessage {
     E_CREDENTIALS_ERROR("Errore nell'inserimento delle credenziali"),
     E_UNREGISTERED_USER("Utente non registrato: username inesistente"),
     E_WRONG_PASSWORD("Password errata"),

@@ -1,9 +1,9 @@
 package main.view;
 
-import main.controller.Message;
+import main.controller.PrintableMessage;
 
 public interface IntReader {
 
-    int in(Message message);
+    int in(PrintableMessage message);
 
 }

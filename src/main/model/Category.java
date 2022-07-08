@@ -1,7 +1,6 @@
 package main.model;
 
-import main.controller.CustomMessage;
-import main.controller.Message;
+import main.controller.*;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -77,15 +76,7 @@ public abstract class Category implements Serializable {
      * @return stringa contenente nome, descrizione, elenco dei campi e obbligatorieta' di ciascuno di essi
      */
     public Message getCategoryDefinition() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Nome: ").append(this.nome);
-        sb.append("\nDescrizione: ").append(this.descrizione);
-        sb.append("\nCampi nativi:");
-        for (String n : campiNativi.keySet()) {
-            sb.append("\n-> " + n);
-            sb.append(campiNativi.get(n).isObbligatorio() ? " (Obbligatorio)" : " (Falcotativo)");
-        }
-        return new CustomMessage(sb.toString());
+        return new CategoryLongMessageForView(this.nome, this.descrizione, this.campiNativi);
     }
 
     /**
@@ -214,8 +205,8 @@ public abstract class Category implements Serializable {
     /**
      * @return stringa contenente una breve descrizione della categoria (solo nome)
      */
-    public Message printShortDescription() {
-        return new CustomMessage("Categoria " + this.nome);
+    public CategoryShortMessageForView getShortDescription() {
+        return new CategoryShortMessageForView(this.nome);
     }
 }
 

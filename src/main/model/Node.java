@@ -1,7 +1,6 @@
 package main.model;
 
-import main.controller.CustomMessage;
-import main.controller.Message;
+import main.controller.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,15 +48,7 @@ public class Node extends Category {
      * @return stringa descrittiva della categoria nodo
      */
     public Message getCategoryDefinition() {
-        StringBuilder string = new StringBuilder(super.getCategoryDefinition().getMessage());
-        if (categorieFiglie.size() != 0) {
-            string.append("\n\nCategorie figlie di ").append(this.getNome()).append(":");
-            int i = 1;
-            for (Category c : categorieFiglie) {
-               string.append("\n\n").append(i++).append(") ").append(c.getCategoryDefinition());
-            }
-        }
-        return new CustomMessage(string.toString());
+        return new NodeMessageForView((CategoryLongMessageForView) super.getCategoryDefinition(), this.categorieFiglie, this.getNome());
     }
 
 }

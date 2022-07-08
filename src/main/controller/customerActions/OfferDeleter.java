@@ -35,7 +35,7 @@ public class OfferDeleter implements UserSelectable {
         if (user_offers.isEmpty()) {
             controller.signalToView(ErrorMessage.E_NO_OFFERS);
         } else {
-            var to_edit = (Offer) controller.getView().choose(user_offers, Offer::getOfferInfos);
+            var to_edit = (Offer) controller.getView().choose(user_offers, o -> controller.getView().getOfferInfo(o.getOfferInfos()));
             to_edit.setState(OfferState.RITIRATA);
             controller.getApp().getOffersStore().save();
         }

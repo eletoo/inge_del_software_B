@@ -30,7 +30,7 @@ public class OfferCreator implements UserSelectable {
 
         var cat = controller.getView().choose(GenericMessage.CHOOSE_CATEGORY_TO_PUBLISH,
                 controller.getApp().getOffersStore().getLeafCategories(controller.getApp()),
-                ce -> new CustomMessage(ce.getDisplayName())
+                CategoryEntry::getDisplayName
         );
 
         var offer = new Offer(

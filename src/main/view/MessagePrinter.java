@@ -1,10 +1,11 @@
 package main.view;
 
 import main.controller.Message;
+import main.controller.PrintableMessage;
 import org.jetbrains.annotations.NotNull;
 
 public class MessagePrinter {
-    public static void printText(@NotNull Message text) {
+    public static void printText(@NotNull PrintableMessage text) {
         System.out.println(text.getMessage());
     }
 

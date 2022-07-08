@@ -1,7 +1,7 @@
 package main.view;
 
 import main.controller.ErrorMessage;
-import main.controller.Message;
+import main.controller.PrintableMessage;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.InputMismatchException;
@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class IntegerReader implements IntReader{
 
     @Override
-    public int in(@NotNull Message message) {
+    public int in(@NotNull PrintableMessage message) {
         while (true) {
             try {
                 MessagePrinter.printText(message);

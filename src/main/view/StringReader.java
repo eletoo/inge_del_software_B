@@ -1,7 +1,7 @@
 package main.view;
 
-import main.controller.Message;
+import main.controller.PrintableMessage;
 
 public interface StringReader {
-    String in(Message prompt);
+    String in(PrintableMessage prompt);
 }

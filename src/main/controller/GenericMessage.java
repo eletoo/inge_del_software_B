@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Contract;
  *
  * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
  */
-public enum GenericMessage implements Message {
+public enum GenericMessage implements PrintableMessage {
     SELECT_INDEX("\nSelezionare un indice."),
     USERNAME_REQUEST("Inserisci il tuo username: "),
     PASSWORD_REQUEST("Inserisci la tua password: "),
@@ -43,9 +43,10 @@ public enum GenericMessage implements Message {
     PAST_OFFERS("\nLe tue proposte di scambio arretrate:"),
     NO_NEW_OFFERS("\nNon hai nessuna nuova proposta di scambio"),
     NEW_OFFERS("\nLe tue nuove proposte di scambio:"),
-    CLOSED_OFFER("\n\nOfferta chiusa\n"),
+    CLOSED_OFFER("\nOfferta chiusa\n"),
     OPTIONAL_FIELD("-- SOLO per campi opzionali: Enter per saltare --"),
-    HIERARCHIES("GERARCHIE:");
+    HIERARCHIES("GERARCHIE:"),
+    SUGGEST_MEETING("--Proponi un appuntamento--");
 
     private String message;
 

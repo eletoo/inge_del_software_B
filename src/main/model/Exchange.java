@@ -67,21 +67,21 @@ public class Exchange implements Serializable {
      * @param f   autore della proposta di appuntamento
      */
     public void suggestMeeting(@NotNull Controller controller, @NotNull Application app, Customer f) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("\n\nInformazioni appuntamento per lo scambio:");
-        controller.signalToView(new CustomMessage("--Proponi un appuntamento--\n"));
-        sb.append("\nPiazza: " + app.getInformationStore().getInformation().getPlace());
-        sb.append("\nLuogo: " + controller.getView().choose(GenericMessage.ADDRESS, this.getInformation(app).getAddresses(), null));
-        sb.append("\nGiorno: " + controller.getView().choose(GenericMessage.DAY, this.getInformation(app).getDays(), d -> new CustomMessage(d.getDay())).getDay());
-
         List<Time> orari = new LinkedList<>();
         this.getInformation(app).getTimeIntervals().stream().forEach(e -> orari.addAll(e.getSingoliOrari()));
-        sb.append("\nOrario: " + controller.getView().choose(GenericMessage.TIME_RANGE, orari, Time::getTime).getTime());
+        controller.signalToView(GenericMessage.SUGGEST_MEETING);
+
+        ExchangeMessageForView em = new ExchangeMessageForView(
+                app.getInformationStore().getInformation().getPlace(),
+                controller.getView().choose(GenericMessage.ADDRESS, this.getInformation(app).getAddresses(), null),
+                controller.getView().choose(GenericMessage.DAY, this.getInformation(app).getDays(), e -> controller.getView().getDay(new DayMessageForView(e.getDay()))),
+                controller.getView().choose(GenericMessage.TIME_RANGE, orari, e -> controller.getView().getTimeDescription(e.getTimeDescription()))
+        );
 
         if (this.selectedOffer.getOwner().equals(f))//se l'offerta selezionata è la mia
-            this.counterMessage.setMessage(sb.toString());//imposto il messaggio B con il mio messaggio
+            this.counterMessage.setMessage(em);//imposto il messaggio B con il mio messaggio
         else
-            this.ownerMessage.setMessage(sb.toString());//altrimenti io sono il proprietario dell'offerta e imposto il mio msg
+            this.ownerMessage.setMessage(em);//altrimenti io sono il proprietario dell'offerta e imposto il mio msg
 
         this.dateTime = LocalDateTime.now();
     }
@@ -109,14 +109,14 @@ public class Exchange implements Serializable {
     }
 
     /**
-     * @return stringa contenente una breve descrizione dello scambio da effettuare
+     * @return oggetto contenente una breve descrizione dello scambio da effettuare
      */
-    public Message getExchangeDescription() {
-        return new CustomMessage(this.selectedOffer.getName() + " <--> " + this.ownOffer.getName());
+    public ExchangedOffersMessageForView getExchangeDescription() {
+        return new ExchangedOffersMessageForView(ownOffer, selectedOffer);
     }
 
     /**
-     * @return stringa contenente una breve descrizione dello scambio e l'ultimo messaggio a esso relativo introdotto
+     * @return oggetto contenente una breve descrizione dello scambio e l'ultimo messaggio a esso relativo introdotto
      * dall'utente controparte nello scambio
      */
     private @NotNull ExchangeMessage getLastMsg(User f) {

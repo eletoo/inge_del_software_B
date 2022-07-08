@@ -1,13 +1,13 @@
 package main.view;
 
-import main.controller.Message;
+import main.controller.PrintableMessage;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Scanner;
 
 public class StringReaderClass implements StringReader {
 
-    public String in(Message prompt) {
+    public String in(PrintableMessage prompt) {
         String s = null;
         while (s == null || s.equalsIgnoreCase("")) {
             MessagePrinter.printText(prompt);
@@ -16,7 +16,7 @@ public class StringReaderClass implements StringReader {
         return s;
     }
 
-    public String inLine(Message prompt) {
+    public String inLine(PrintableMessage prompt) {
         String s = null;
         while (s == null || s.equalsIgnoreCase("")) {
             MessagePrinter.printText(prompt);
@@ -25,7 +25,7 @@ public class StringReaderClass implements StringReader {
         return s;
     }
 
-    public String inPotentiallyEmptyLine(@NotNull Message prompt) {
+    public String inPotentiallyEmptyLine(@NotNull PrintableMessage prompt) {
         MessagePrinter.printText(prompt);
         return new Scanner(System.in).nextLine();
     }

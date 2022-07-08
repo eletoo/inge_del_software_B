@@ -1,7 +1,7 @@
 package main.model;
 
 import main.controller.CustomMessage;
-import main.controller.Message;
+import main.controller.PrintableMessage;
 
 import java.io.Serializable;
 import java.util.List;
@@ -61,7 +61,7 @@ public class Information implements Serializable {
         this.timeIntervals = timeIntervals;
     }
 
-    public Message getInformations(){
+    public PrintableMessage getInformations(){
         StringBuilder sb = new StringBuilder();
         sb.append("INFORMAZIONI SCAMBI:");
         sb.append("\nPiazza: ");

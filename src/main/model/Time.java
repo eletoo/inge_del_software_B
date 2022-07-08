@@ -1,7 +1,7 @@
 package main.model;
 
-import main.controller.CustomMessage;
 import main.controller.Message;
+import main.controller.TimeMessageForView;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -25,17 +25,13 @@ public class Time implements Serializable {
     /**
      * @return stringa contenente la descrizione dell'orario nel formato hh:mm
      */
-    public Message getTime() {
-        String hour = this.hour == 0 ? "00" : String.valueOf(this.hour);
-        String mins = this.minutes == 0 ? "00" : String.valueOf(this.minutes);
-        return new CustomMessage(hour + ":" + mins);
+    public TimeMessageForView getTimeDescription() {
+        return new TimeMessageForView(this.hour, this.minutes);
     }
 
     /**
      * Verifica la validita' di un orario (i.e. se l'ora e' compresa tra 0 e 23 e se i minuti sono 00 o 30 oppure se sono le 24:00)
      *
-     * @param h ora
-     * @param m minuti
      * @return true se l'orario e' nel formato richiesto
      */
     public boolean isValid() {

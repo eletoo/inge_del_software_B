@@ -66,7 +66,7 @@ public class ExchangeCreator implements UserSelectable {
                         .stream()
                         .filter(Offer::isAvailableOffer)
                         .collect(Collectors.toList()),
-                o -> new CustomMessage(o.getName()));
+                Offer::getName);
 
         var possible_offers = controller.getApp().getOffersStore().getOffers(ownOffer.getCategory())
                 .stream()
@@ -79,7 +79,7 @@ public class ExchangeCreator implements UserSelectable {
             return null;
         }
 
-        var selectedOffer = controller.getView().choose(GenericMessage.CHOOSE_OTHER_OFFER, possible_offers, o -> new CustomMessage(o.getName()));
+        var selectedOffer = controller.getView().choose(GenericMessage.CHOOSE_OTHER_OFFER, possible_offers, Offer::getName);
 
         return new Exchange(ownOffer, selectedOffer);
     }

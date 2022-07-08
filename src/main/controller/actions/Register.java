@@ -40,7 +40,7 @@ public class Register implements Selectable {
 
         List<UserType> users = Arrays.stream(UserType.values()).collect(Collectors.toList());
 
-        User user = controller.registerUser(controller.getView().choose(GenericMessage.SELECT_PROFILE_TYPE, users, u -> new CustomMessage(u.getUserType())));
+        User user = controller.registerUser(controller.getView().choose(GenericMessage.SELECT_PROFILE_TYPE, users, UserType::getUserType));
         user.onLogin(controller).runUserMenu(controller);
     }
 

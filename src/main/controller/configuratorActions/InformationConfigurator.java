@@ -94,7 +94,7 @@ public class InformationConfigurator implements UserSelectable {
      * @param controller    controller
      * @return orario
      */
-    public Time askTime(Message startMessageH, Message startMessageM, @NotNull Controller controller) {
+    public Time askTime(PrintableMessage startMessageH, PrintableMessage startMessageM, @NotNull Controller controller) {
         Time hour;
         int h;
         int m;
@@ -118,7 +118,7 @@ public class InformationConfigurator implements UserSelectable {
     private List<Day> setupDays(Controller controller) {
         List<Day> days = new LinkedList<>();
         while (days.isEmpty() || controller.askBooleanFromView(YesOrNoMessage.ADD_DAY)) {
-            Day g = controller.getView().choose(GenericMessage.DAY, Arrays.stream(Day.values()).collect(Collectors.toList()), d -> new CustomMessage(d.getDay()));
+            Day g = controller.getView().choose(GenericMessage.DAY, Arrays.stream(Day.values()).collect(Collectors.toList()), Day::getDay);
             if (g != null && !days.contains(g))
                 days.add(g);
         }

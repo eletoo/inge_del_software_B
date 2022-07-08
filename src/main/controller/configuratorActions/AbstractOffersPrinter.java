@@ -39,11 +39,14 @@ public abstract class AbstractOffersPrinter implements UserSelectable {
         Leaf leaf = controller.getView().choose(
                 GenericMessage.SELECT_CATEGORY,
                 controller.getApp().getOffersStore().getLeafCategories(controller.getApp()).stream().map(e -> (Leaf) e.getCat()).collect(Collectors.toList()),
-                Category::printShortDescription
+                e -> controller.getView().getCategoryShortDescription(e.getShortDescription())
         );
 
         var offers = controller.getApp().getOffersStore().getOffers(leaf, this.requiredState);
-        controller.signalListToView(offers, Offer::getOfferInfos);
+
+        for (Offer o : offers) {
+            controller.getView().printOfferInfo(o.getOfferInfos());
+        }
 
     }
 

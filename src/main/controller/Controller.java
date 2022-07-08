@@ -46,7 +46,7 @@ public class Controller {
         List<Selectable> selectable = Context.initiateSelectableList();
         Selectable selected;
         do {
-            selected = sel.selectAction(this.view, selectable, s -> new CustomMessage(s.getActionName()));
+            selected = sel.selectAction(this.view, selectable, Selectable::getActionName);
             selected.runAction(this);
         } while (!(selected instanceof Exit));
     }
@@ -57,8 +57,7 @@ public class Controller {
      * @param message messaggio
      */
     public void signalToView(Message message) {
-        // this.view.notify(message);
-        MessagePrinter.printText(message);
+        this.view.notify(message);
     }
 
     /**
@@ -70,7 +69,6 @@ public class Controller {
      */
     public <T> void signalListToView(@NotNull List<T> toPrint, Function<T, Message> toApply) {
         this.view.showList(toPrint, toApply);
-        // toPrint.forEach(e -> signalToView(toApply == null ? e.toString() : toApply.apply(e)));
     }
 
     /**
@@ -79,7 +77,7 @@ public class Controller {
      * @param message messaggio
      * @return stringa
      */
-    public String askStringFromView(Message message) {
+    public String askStringFromView(PrintableMessage message) {
         return (new StringReaderClass()).in(message);
     }
 
@@ -89,7 +87,7 @@ public class Controller {
      * @param message messaggio
      * @return riga
      */
-    public String askLineFromView(Message message) {
+    public String askLineFromView(PrintableMessage message) {
         return (new StringReaderClass()).inLine(message);
     }
 
@@ -99,7 +97,7 @@ public class Controller {
      * @param message messaggio
      * @return riga
      */
-    public String askPotentiallyEmptyStringFromView(Message message) {
+    public String askPotentiallyEmptyStringFromView(PrintableMessage message) {
         return (new StringReaderClass()).inPotentiallyEmptyLine(message);
     }
 
@@ -109,7 +107,7 @@ public class Controller {
      * @param message messaggio
      * @return intero
      */
-    public int askIntFromView(Message message) {
+    public int askIntFromView(PrintableMessage message) {
         return (new IntegerReader().in(message));
     }
 
@@ -119,7 +117,7 @@ public class Controller {
      * @param message messaggio
      * @return booleano
      */
-    public boolean askBooleanFromView(Message message) {
+    public boolean askBooleanFromView(PrintableMessage message) {
         String ans;
         do {
             ans = askStringFromView(message);
@@ -194,7 +192,7 @@ public class Controller {
     public void runSelectionMenu(List<UserSelectable> userMenu, User u) throws IOException {
         UserSelectable chosen;
         do {
-            chosen = this.view.choose(userMenu, userSelectable -> new CustomMessage(userSelectable.getActionName()));
+            chosen = this.view.choose(userMenu, UserSelectable::getActionName);
             chosen.runAction(this, u);
         } while (!(chosen instanceof main.controller.configuratorActions.Exit));
     }
@@ -246,9 +244,7 @@ public class Controller {
         }
 
         //altrimenti è già stato proposto almeno un appuntamento
-        this.signalToView(e.getLastMessageByCounterpart(c).getMessage() != null
-                ? new CustomMessage(e.getLastMessageByCounterpart(c).getMessage())
-                : new CustomMessage(""));
+        this.view.printExchangeInfo(e.getLastMessageByCounterpart(c).getMessage());
 
         if (e.getLastMessageByCounterpart(c).getMessage() != null && this.askBooleanFromView(YesOrNoMessage.ACCEPT_MEETING)) {
             app.getOffersStore().getOffer(e.getSelectedOffer()).setState(OfferState.CHIUSA);
@@ -275,14 +271,14 @@ public class Controller {
      * @param userExchanges     scambi dell'utente
      * @throws IOException eccezione I/O
      */
-    private void manageExchange(Customer c, Message noExchanges, Message existingExchanges, Message selectExchange, @NotNull List<Exchange> userExchanges) throws IOException {
+    private void manageExchange(Customer c, PrintableMessage noExchanges, PrintableMessage existingExchanges, PrintableMessage selectExchange, @NotNull List<Exchange> userExchanges) throws IOException {
         while (!userExchanges.isEmpty()) {
             Exchange toAccept;
             this.signalToView(existingExchanges);
-            this.signalListToView(userExchanges, Exchange::getExchangeDescription);
+            userExchanges.stream().forEach(e -> this.view.printExchangedOffersDescription(e.getExchangeDescription()));
 
             if (this.askBooleanFromView(selectExchange)) {
-                toAccept = this.view.choose(userExchanges, Exchange::getExchangeDescription);
+                toAccept = this.view.choose(userExchanges, e -> this.view.getExchangedOffersDescription(e.getExchangeDescription()));
 
                 manageExchange(toAccept, c);
 

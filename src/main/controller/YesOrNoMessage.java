@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Contract;
  *
  * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
  */
-public enum YesOrNoMessage implements Message {
+public enum YesOrNoMessage implements PrintableMessage {
     ADD_ADDRESS("Inserire un altro luogo per lo scambio? [Y/N]"),
     ADD_DAY("Inserire un altro giorno per lo scambio? [Y/N]"),
     ADD_TIMERANGE("Inserire un altra fascia oraria per lo scambio? [Y/N]"),

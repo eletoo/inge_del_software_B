@@ -2,6 +2,8 @@ package main.model;
 
 import main.controller.CustomMessage;
 import main.controller.Message;
+import main.controller.OfferMessageForView;
+import main.controller.PrintableMessage;
 
 import java.io.Serializable;
 import java.util.*;
@@ -73,19 +75,8 @@ public class Offer implements Serializable {
     /**
      * @return stringa contenente le informazioni relative a un'offerta
      */
-    public Message getOfferInfos() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Offerta " + name);
-        sb.append("\n\tCategoria > " + category.printShortDescription());
-        sb.append("\n\tProprietario > " + owner.getUsername());
-        sb.append("\n\tStato > " + state.getState());
-        sb.append("\n\tCampi > ");
-        for (var valCampo : fieldsValues.entrySet()) {
-            sb.append("\n\t\t").append(valCampo.getKey()).append("> ").append(valCampo.getValue());
-        }
-        sb.append("\n");
-
-        return new CustomMessage(sb.toString());
+    public OfferMessageForView getOfferInfos() {
+        return new OfferMessageForView(this.name, this.category, this.owner, this.state, this.fieldsValues);
     }
 
     /**

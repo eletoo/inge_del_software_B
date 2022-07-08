@@ -95,7 +95,7 @@ public class HierarchyCreation implements UserSelectable {
             CategoryEntry padre = controller.getView().choose(
                     GenericMessage.AT_LEAST_TWO_CHILDREN,
                     getCategoriesAsList(root),
-                    ce -> new CustomMessage(ce.getDisplayName())
+                    CategoryEntry::getDisplayName
             );
 
             root = this.addChildToCategory(controller, padre, root);

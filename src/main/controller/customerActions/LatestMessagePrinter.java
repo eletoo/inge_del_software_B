@@ -31,7 +31,7 @@ public class LatestMessagePrinter implements UserSelectable {
         var exc = controller.getView().choose(
                 controller.getApp().getExchangesStore().getExchanges().stream()
                         .filter(e -> e.getAuthor().equals(user) || e.getDest().equals(user))
-                        .collect(Collectors.toList()), Exchange::getExchangeDescription
+                        .collect(Collectors.toList()), e -> controller.getView().getExchangedOffersDescription(e.getExchangeDescription())
         );
         var msg = exc.getLastMessageByCounterpart(user);
 
