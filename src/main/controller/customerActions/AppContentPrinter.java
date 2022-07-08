@@ -1,10 +1,7 @@
 package main.controller.customerActions;
 
-import main.controller.GenericMessage;
+import main.controller.*;
 import main.model.Application;
-import main.controller.Controller;
-import main.controller.ErrorMessage;
-import main.controller.UserSelectable;
 import main.model.Hierarchy;
 import main.model.User;
 import org.jetbrains.annotations.NotNull;
@@ -42,7 +39,7 @@ public class AppContentPrinter implements UserSelectable {
         );
 
         if (controller.getApp().getInformationStore().getInformation() != null)
-            controller.signalToView(controller.getApp().getInformationStore().getInformation().getInformations());
+            controller.getView().printInfo(controller.getApp().getInformationStore().getInformation().getInformations());
         else
             controller.signalToView(ErrorMessage.NO_INFO_YET);
     }

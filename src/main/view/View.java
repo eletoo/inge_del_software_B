@@ -13,19 +13,20 @@ public class View {
 
     private Map<Class<? extends Message>, Function<Message, String>> convertionMap = new HashMap<>();
 
-    public View(){
-        convertionMap.put(CategoryLongMessageForView.class, (e)-> this.getCategoryLongDescription((CategoryLongMessageForView) e));
-        convertionMap.put(CategoryShortMessageForView.class, (e)-> this.getCategoryShortDescription((CategoryShortMessageForView) e));
-        convertionMap.put(DayMessageForView.class, (e)->this.getDay((DayMessageForView) e));
-        convertionMap.put(ExchangedOffersMessageForView.class, (e)->this.getExchangedOffersDescription((ExchangedOffersMessageForView) e));
-        convertionMap.put(ExchangeMessageForView.class, (e)-> this.getExchangeInfo((ExchangeMessageForView) e));
-        convertionMap.put(NodeMessageForView.class, (e)->this.getNodeDescription((NodeMessageForView) e));
-        convertionMap.put(OfferMessageForView.class, (e)->this.getOfferInfo((OfferMessageForView) e));
-        convertionMap.put(TimeMessageForView.class, (e)->this.getTimeDescription((TimeMessageForView) e));
-        convertionMap.put(ErrorMessage.class, (e)->((ErrorMessage)e).getMessage());
-        convertionMap.put(GenericMessage.class, (e)->((GenericMessage)e).getMessage());
-        convertionMap.put(YesOrNoMessage.class, (e)->((YesOrNoMessage)e).getMessage());
-        convertionMap.put(CustomMessage.class, (e)->((CustomMessage)e).getMessage());
+    public View() {
+        convertionMap.put(CategoryLongMessageForView.class, (e) -> this.getCategoryLongDescription((CategoryLongMessageForView) e));
+        convertionMap.put(CategoryShortMessageForView.class, (e) -> this.getCategoryShortDescription((CategoryShortMessageForView) e));
+        convertionMap.put(DayMessageForView.class, (e) -> this.getDay((DayMessageForView) e));
+        convertionMap.put(ExchangedOffersMessageForView.class, (e) -> this.getExchangedOffersDescription((ExchangedOffersMessageForView) e));
+        convertionMap.put(ExchangeMessageForView.class, (e) -> this.getExchangeInfo((ExchangeMessageForView) e));
+        convertionMap.put(NodeMessageForView.class, (e) -> this.getNodeDescription((NodeMessageForView) e));
+        convertionMap.put(OfferMessageForView.class, (e) -> this.getOfferInfo((OfferMessageForView) e));
+        convertionMap.put(TimeMessageForView.class, (e) -> this.getTimeDescription((TimeMessageForView) e));
+        convertionMap.put(ErrorMessage.class, (e) -> ((ErrorMessage) e).getMessage());
+        convertionMap.put(GenericMessage.class, (e) -> ((GenericMessage) e).getMessage());
+        convertionMap.put(YesOrNoMessage.class, (e) -> ((YesOrNoMessage) e).getMessage());
+        convertionMap.put(CustomMessage.class, (e) -> ((CustomMessage) e).getMessage());
+        convertionMap.put(InformationMessageForView.class, (e) -> this.getInfo((InformationMessageForView) e));
     }
 
     public <T> void showList(@NotNull List<T> list, Function<T, Message> function) {
@@ -69,7 +70,39 @@ public class View {
         this.notify(this.getDay(msg));
     }
 
-    public String getExchangeInfo(ExchangeMessageForView msg){
+    public String getInfo(InformationMessageForView msg) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("INFORMAZIONI SCAMBI:");
+        sb.append("\nPiazza: ");
+        sb.append(msg.getPlace());
+        sb.append("\nLuoghi: ");
+        for (int i = 0; i < msg.getAddresses().size(); i++) {
+            sb.append("\n -> ");
+            sb.append(msg.getAddresses().get(i));
+        }
+        sb.append("\nGiorni: ");
+        for (int i = 0; i < msg.getDays().size(); i++) {
+            sb.append(msg.getDays().get(i).getDay());
+            if (i < msg.getDays().size() - 1)
+                sb.append(", ");
+        }
+        sb.append("\nIntervalli Orari: ");
+        for (int i = 0; i < msg.getTime().size(); i++) {
+            sb.append(this.getTimeDescription(msg.getTime().get(i).getStart().getTimeDescription()));
+            sb.append("-");
+            sb.append(this.getTimeDescription(msg.getTime().get(i).getEnd().getTimeDescription()));
+            if (i < msg.getTime().size() - 1)
+                sb.append(", ");
+        }
+        sb.append("\nScadenza offerte dopo " + msg.getDeadline() + " giorni");
+        return (sb.toString());
+    }
+
+    public void printInfo(InformationMessageForView msg) {
+        this.notify(this.getInfo(msg));
+    }
+
+    public String getExchangeInfo(ExchangeMessageForView msg) {
         if (msg == null) {
             return "";
         }
@@ -98,7 +131,7 @@ public class View {
     public String getOfferInfo(OfferMessageForView msg) {
         StringBuilder sb = new StringBuilder();
         sb.append("Offerta " + msg.getName());
-        sb.append("\n\tCategoria > " + msg.getCategory().getShortDescription());
+        sb.append("\n\tCategoria > " + msg.getCategory().getShortDescription().getNome());
         sb.append("\n\tProprietario > " + msg.getOwner().getUsername());
         sb.append("\n\tStato > " + msg.getState().getState());
         sb.append("\n\tCampi > ");

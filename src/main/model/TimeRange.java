@@ -52,6 +52,10 @@ public class TimeRange implements Serializable {
         return true;
     }
 
+    public Time getEnd() {
+        return end;
+    }
+
     /**
      * @return orario di inizio di un intervallo
      */
