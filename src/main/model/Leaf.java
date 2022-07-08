@@ -8,4 +8,5 @@ public class Leaf extends Category {
     public Leaf(String _nome, String _descrizione) {
         super(_nome, _descrizione);
     }
+    
 }

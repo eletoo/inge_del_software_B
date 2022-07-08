@@ -7,12 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.function.Function;
 
-public class View
-{
-
-    public <T> void showList(@NotNull List<T> list) {
-        this.showList(list, null);
-    }
+public class View {
 
     public <T> void showList(@NotNull List<T> list, Function<T, String> function) {
         list.forEach(e -> MessagePrinter.printText(function == null ? e.toString() : function.apply(e)));
@@ -40,11 +35,11 @@ public class View
         System.out.println(text);
     }
 
-    public void notify(String text){
+    public void notify(String text) {
         this.printText(text);
     }
 
-    public void notify(@NotNull Message m){
+    public void notify(@NotNull Message m) {
         this.notify(m.getMessage());
     }
 

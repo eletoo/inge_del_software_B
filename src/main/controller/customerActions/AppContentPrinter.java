@@ -1,5 +1,6 @@
 package main.controller.customerActions;
 
+import main.controller.GenericMessage;
 import main.model.Application;
 import main.controller.Controller;
 import main.controller.ErrorMessage;
@@ -33,7 +34,7 @@ public class AppContentPrinter implements UserSelectable {
             return;
         }
 
-        controller.signalToView("GERARCHIE:");
+        controller.signalToView(GenericMessage.HIERARCHIES.getMessage());
 
         controller.signalListToView(
                 new LinkedList<>(this.getHierarchies(controller.getApp()).values()),

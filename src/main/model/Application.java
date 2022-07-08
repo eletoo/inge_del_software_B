@@ -24,7 +24,7 @@ public class Application implements Saveable, Loadable {
         return this.infoStore;
     }
 
-    public OffersStore getOffersStore(){
+    public OffersStore getOffersStore() {
         return this.offersStore;
     }
 
@@ -59,6 +59,9 @@ public class Application implements Saveable, Loadable {
     @Override
     public void saveOnFile(Serializable s) {
         this.infoStore.saveOnFile(s);
-        this.hierarchiesStore.saveOnFile(s);
+        for (Hierarchy h : hierarchiesStore.getHierarchies().values()) {
+            this.hierarchiesStore.saveOnFile(h);
+        }
+
     }
 }

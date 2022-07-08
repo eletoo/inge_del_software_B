@@ -69,7 +69,8 @@ public class Controller {
      * @param <T>     tipo della lista
      */
     public <T> void signalListToView(@NotNull List<T> toPrint, Function<T, String> toApply) {
-        toPrint.forEach(e -> signalToView(toApply == null ? e.toString() : toApply.apply(e)));
+        this.view.showList(toPrint, toApply);
+       // toPrint.forEach(e -> signalToView(toApply == null ? e.toString() : toApply.apply(e)));
     }
 
     /**

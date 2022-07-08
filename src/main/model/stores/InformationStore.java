@@ -2,6 +2,9 @@ package main.model.stores;
 
 import com.google.gson.*;
 import main.controller.*;
+import main.exceptions.InvalidFileContentException;
+import main.exceptions.NoConfigurationFileException;
+import main.exceptions.WrongDirectoryContentException;
 import main.model.Information;
 import main.model.Loadable;
 import main.model.LocalPath;
@@ -51,16 +54,16 @@ public class InformationStore implements Loadable, Saveable, Serializable {
     public void loadFromFile() throws IOException {
         if (LocalPath.generatePathListForImportFromFile(DB_CONF_DIR).size() > 1)
             //se c'è un numero di file di configurazione maggiore di 1 segnala un errore
-            throw new IOException(ErrorMessage.E_WRONG_DIR_CONTENT.getMessage());
+            throw new WrongDirectoryContentException(ErrorMessage.E_WRONG_DIR_CONTENT.getMessage());
 
         if (LocalPath.generatePathListForImportFromFile(DB_CONF_DIR).size() == 0)
             //se non ci sono file di configurazione segnala un errore
-            throw new IOException(ErrorMessage.E_NO_CONF_FILE.getMessage());
+            throw new NoConfigurationFileException(ErrorMessage.E_NO_CONF_FILE.getMessage());
 
         Path p = Paths.get(DB_JSON_CONF_FILE);
 
         if (!p.toFile().exists())
-            throw new IOException(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
+            throw new InvalidFileContentException(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
 
         Reader reader = Files.newBufferedReader(p);
         GsonBuilder builder = new GsonBuilder();
@@ -68,22 +71,22 @@ public class InformationStore implements Loadable, Saveable, Serializable {
         Information info = gson.fromJson(reader, Information.class);
 
         if (info == null)
-            throw new IOException(ErrorMessage.E_NO_CONF_FILE.getMessage());
+            throw new NoConfigurationFileException(ErrorMessage.E_NO_CONF_FILE.getMessage());
 
         if (info.getPlace() == null || info.getPlace().isEmpty())
-            throw new IOException(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
+            throw new InvalidFileContentException(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
 
         if (info.getTimeIntervals().isEmpty())
-            throw new IOException(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
+            throw new InvalidFileContentException(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
 
         if (info.getDeadline() <= 0)
-            throw new IOException(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
+            throw new InvalidFileContentException(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
 
         if (info.getDays().isEmpty())
-            throw new IOException(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
+            throw new InvalidFileContentException(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
 
         if (info.getAddresses().isEmpty())
-            throw new IOException(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
+            throw new InvalidFileContentException(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
 
         this.setInformations(info);
         this.save();

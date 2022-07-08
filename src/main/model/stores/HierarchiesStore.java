@@ -4,6 +4,7 @@ import com.google.gson.*;
 import main.controller.Controller;
 import main.controller.ErrorMessage;
 import main.controller.GenericMessage;
+import main.exceptions.InvalidFileContentException;
 import main.model.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,6 +15,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * contiene le gerarchie
+ *
+ * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
+ */
 public class HierarchiesStore implements Loadable, Saveable, Serializable {
     private static final String DB_JSON_FILES = System.getProperty("user.dir") + "/db/jsonFiles/";
 
@@ -31,18 +37,33 @@ public class HierarchiesStore implements Loadable, Saveable, Serializable {
         this.hierarchies = hierarchies;
     }
 
+    /**
+     * @param name nome della gerarchia
+     * @return true se il nome e' gia' usato da un'altra gerarchia
+     */
     public boolean isHierarchyNameTaken(String name) {
         return hierarchies.containsKey(name);
     }
 
-    public void addHierarchy(Hierarchy h){
+    /**
+     * @param h gerarchia da aggiungere
+     */
+    public void addHierarchy(Hierarchy h) {
         this.hierarchies.put(h.getRoot().getNome(), h);
     }
 
-    public void removeHierarchy(@NotNull Hierarchy h){
+    /**
+     * @param h gerarchia da rimuovere
+     */
+    public void removeHierarchy(@NotNull Hierarchy h) {
         this.hierarchies.remove(h.getRoot().getNome());
     }
 
+    /**
+     * carica gerarchie salvate
+     *
+     * @throws IOException eccezione
+     */
     @Override
     public void load() throws IOException {
         var db = new File(System.getProperty("user.dir") + "/db");
@@ -62,6 +83,11 @@ public class HierarchiesStore implements Loadable, Saveable, Serializable {
         }
     }
 
+    /**
+     * carica gerarchie da file
+     *
+     * @throws IOException eccezione
+     */
     @Override
     public void loadFromFile() throws IOException {
         Hierarchy h;
@@ -70,7 +96,7 @@ public class HierarchiesStore implements Loadable, Saveable, Serializable {
         Reader reader;
 
         if (paths.isEmpty())
-            throw new IOException(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage()); //todo dedicated exceptions
+            throw new InvalidFileContentException(ErrorMessage.E_INVALID_FILE_CONTENT.getMessage());
 
         for (Path p : paths) {
             reader = Files.newBufferedReader(p);
@@ -130,6 +156,11 @@ public class HierarchiesStore implements Loadable, Saveable, Serializable {
         this.save();
     }
 
+    /**
+     * salva gerarchie
+     *
+     * @throws IOException eccezione
+     */
     @Override
     public void save() throws IOException {
         FileOutputStream fileOutputStream = new FileOutputStream(System.getProperty("user.dir") + "/db/gerarchie.dat");
@@ -142,6 +173,11 @@ public class HierarchiesStore implements Loadable, Saveable, Serializable {
         }
     }
 
+    /**
+     * salva gerarchie su file
+     *
+     * @param hierarchy gerarchia da salvare su file
+     */
     @Override
     public void saveOnFile(Serializable hierarchy) {
         GsonBuilder builder = new GsonBuilder();

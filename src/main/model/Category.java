@@ -1,8 +1,5 @@
 package main.model;
 
-import main.controller.Controller;
-import main.controller.GenericMessage;
-import main.controller.YesOrNoMessage;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 

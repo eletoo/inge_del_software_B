@@ -44,7 +44,8 @@ public enum GenericMessage implements Message {
     NO_NEW_OFFERS("\nNon hai nessuna nuova proposta di scambio"),
     NEW_OFFERS("\nLe tue nuove proposte di scambio:"),
     CLOSED_OFFER("\n\nOfferta chiusa\n"),
-    OPTIONAL_FIELD("-- SOLO per campi opzionali: Enter per saltare --");
+    OPTIONAL_FIELD("-- SOLO per campi opzionali: Enter per saltare --"),
+    HIERARCHIES("GERARCHIE:");
 
     private String message;
 
