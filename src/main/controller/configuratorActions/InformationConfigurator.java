@@ -13,15 +13,13 @@ import java.util.stream.Collectors;
 
 /**
  * configura le informazioni di scambio
- *
  * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
  */
 public class InformationConfigurator implements UserSelectable {
     /**
      * configura le informazioni di scambio
-     *
      * @param controller controller
-     * @param user       utente
+     * @param user utente
      * @throws IOException eccezione I/O
      */
     @Override
@@ -31,7 +29,7 @@ public class InformationConfigurator implements UserSelectable {
             writeInfos(controller, controller.askLineFromView(GenericMessage.PLACE));
 
         } else {
-            controller.signalToView(GenericMessage.CURRENT_INFO);
+            controller.signalToView(GenericMessage.CURRENT_INFO.getMessage());
             controller.signalToView(this.getInfo(controller.getApp()).getInformations());
 
             if (controller.askBooleanFromView(YesOrNoMessage.OVERWRITE_INFO))
@@ -43,16 +41,15 @@ public class InformationConfigurator implements UserSelectable {
 
         //se non modifico le informazioni di scambio e conf.json è corrotto/incompleto qui viene
         //sovrascritto con le informazioni correnti complete e non modificate
-        controller.signalToView(GenericMessage.SAVED_CORRECTLY);
+        controller.signalToView(GenericMessage.SAVED_CORRECTLY.getMessage());
     }
 
     /**
      * sovrascrive le informazioni di scambio
-     *
      * @param controller controller
-     * @param place      piazza
+     * @param place piazza
      */
-    private void writeInfos(@NotNull Controller controller, String place) {
+    private void writeInfos(@NotNull Controller controller, String place){
         this.setInfo(controller.getApp(), new Information(
                 place,
                 setupAddresses(controller),
@@ -63,7 +60,6 @@ public class InformationConfigurator implements UserSelectable {
 
     /**
      * imposta gli intervalli orari
-     *
      * @param controller controller
      * @return intervalli orari
      */
@@ -71,7 +67,7 @@ public class InformationConfigurator implements UserSelectable {
     private List<TimeRange> setupTimeRanges(Controller controller) {
         List<TimeRange> timeRanges = new LinkedList<>();
         while (timeRanges.isEmpty() || controller.askBooleanFromView(YesOrNoMessage.ADD_TIMERANGE)) {
-            controller.signalToView(GenericMessage.EXCHANGE_HOURS_EVERY_30_MINS);
+            controller.signalToView(GenericMessage.EXCHANGE_HOURS_EVERY_30_MINS.getMessage());
 
             TimeRange tr = new TimeRange(
                     this.askTime(GenericMessage.STARTING_HOUR, GenericMessage.STARTING_MINUTES, controller),
@@ -81,17 +77,16 @@ public class InformationConfigurator implements UserSelectable {
             if (tr.isValidRange() && tr.isNewRange(timeRanges))
                 timeRanges.add(tr);
             else
-                controller.signalToView(ErrorMessage.E_INVALID_TIME_RANGE);
+                controller.signalToView(ErrorMessage.E_INVALID_TIME_RANGE.getMessage());
         }
         return timeRanges;
     }
 
     /**
      * chiede il singolo orario
-     *
      * @param startMessageH ora
      * @param startMessageM minuti
-     * @param controller    controller
+     * @param controller controller
      * @return orario
      */
     public Time askTime(Message startMessageH, Message startMessageM, @NotNull Controller controller) {
@@ -102,15 +97,14 @@ public class InformationConfigurator implements UserSelectable {
             h = controller.askIntFromView(startMessageH);
             m = controller.askIntFromView(startMessageM);
             hour = new Time(h, m);
-            if (!hour.isValid())
-                controller.signalToView(ErrorMessage.E_INVALID_TIME);
-        } while (!hour.isValid());
+            if (!hour.isValid(h, m))
+                controller.signalToView(ErrorMessage.E_INVALID_TIME.getMessage());
+        } while (!hour.isValid(h, m));
         return hour;
     }
 
     /**
      * chiede i giorni della settimana
-     *
      * @param controller controller
      * @return giorni per lo scambio
      */
@@ -118,11 +112,7 @@ public class InformationConfigurator implements UserSelectable {
     private List<Day> setupDays(Controller controller) {
         List<Day> days = new LinkedList<>();
         while (days.isEmpty() || controller.askBooleanFromView(YesOrNoMessage.ADD_DAY)) {
-            Day g = controller.getView().choose(
-                    GenericMessage.DAY,
-                    Arrays.stream(Day.values()).collect(Collectors.toList()),
-                    d -> new CustomMessage(d.getDay())
-            );
+            Day g = controller.getView().choose(GenericMessage.DAY, Arrays.stream(Day.values()).collect(Collectors.toList()), Day::getDay);
             if (g != null && !days.contains(g))
                 days.add(g);
         }
@@ -131,7 +121,6 @@ public class InformationConfigurator implements UserSelectable {
 
     /**
      * chiede i luoghi per lo scambio
-     *
      * @param controller controller
      * @return luoghi
      */
