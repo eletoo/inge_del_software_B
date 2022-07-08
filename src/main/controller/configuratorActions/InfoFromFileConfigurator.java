@@ -1,5 +1,6 @@
 package main.controller.configuratorActions;
 
+import main.controller.CustomMessage;
 import main.controller.GenericMessage;
 import main.controller.Controller;
 import main.controller.UserSelectable;
@@ -20,12 +21,12 @@ public class InfoFromFileConfigurator implements UserSelectable {
      * @throws IOException eccezione I/O
      */
     @Override
-    public void runAction(@NotNull Controller controller, User user) throws IOException {
+    public void runAction(@NotNull Controller controller, User user) {
         try {
             controller.getApp().getInformationStore().loadFromFile();
-            controller.signalToView(GenericMessage.SUCCESSFUL_IMPORT.getMessage());
+            controller.signalToView(GenericMessage.SUCCESSFUL_IMPORT);
         } catch (IOException e){
-            controller.signalToView(e.getMessage());
+            controller.signalToView(new CustomMessage(e.getMessage()));
         }
     }
 

@@ -69,10 +69,10 @@ public class Exchange implements Serializable {
     public void suggestMeeting(@NotNull Controller controller, @NotNull Application app, Customer f) {
         StringBuilder sb = new StringBuilder();
         sb.append("\n\nInformazioni appuntamento per lo scambio:");
-        controller.signalToView("--Proponi un appuntamento--\n");
+        controller.signalToView(new CustomMessage("--Proponi un appuntamento--\n"));
         sb.append("\nPiazza: " + app.getInformationStore().getInformation().getPlace());
         sb.append("\nLuogo: " + controller.getView().choose(GenericMessage.ADDRESS, this.getInformation(app).getAddresses(), null));
-        sb.append("\nGiorno: " + controller.getView().choose(GenericMessage.DAY, this.getInformation(app).getDays(), Day::getDay).getDay());
+        sb.append("\nGiorno: " + controller.getView().choose(GenericMessage.DAY, this.getInformation(app).getDays(), d -> new CustomMessage(d.getDay())).getDay());
 
         List<Time> orari = new LinkedList<>();
         this.getInformation(app).getTimeIntervals().stream().forEach(e -> orari.addAll(e.getSingoliOrari()));
@@ -111,8 +111,8 @@ public class Exchange implements Serializable {
     /**
      * @return stringa contenente una breve descrizione dello scambio da effettuare
      */
-    public String getExchangeDescription() {
-        return this.selectedOffer.getName() + " <--> " + this.ownOffer.getName();
+    public Message getExchangeDescription() {
+        return new CustomMessage(this.selectedOffer.getName() + " <--> " + this.ownOffer.getName());
     }
 
     /**

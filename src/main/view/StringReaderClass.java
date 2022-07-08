@@ -10,7 +10,7 @@ public class StringReaderClass implements StringReader {
     public String in(Message prompt) {
         String s = null;
         while (s == null || s.equalsIgnoreCase("")) {
-            MessagePrinter.printText(prompt.getMessage());
+            MessagePrinter.printText(prompt);
             s = new Scanner(System.in).next();
         }
         return s;
@@ -19,14 +19,14 @@ public class StringReaderClass implements StringReader {
     public String inLine(Message prompt) {
         String s = null;
         while (s == null || s.equalsIgnoreCase("")) {
-            MessagePrinter.printText(prompt.getMessage());
+            MessagePrinter.printText(prompt);
             s = new Scanner(System.in).nextLine();
         }
         return s;
     }
 
     public String inPotentiallyEmptyLine(@NotNull Message prompt) {
-        MessagePrinter.printText(prompt.getMessage());
+        MessagePrinter.printText(prompt);
         return new Scanner(System.in).nextLine();
     }
 }

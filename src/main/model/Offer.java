@@ -1,5 +1,8 @@
 package main.model;
 
+import main.controller.CustomMessage;
+import main.controller.Message;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -70,7 +73,7 @@ public class Offer implements Serializable {
     /**
      * @return stringa contenente le informazioni relative a un'offerta
      */
-    public String getOfferInfos() {
+    public Message getOfferInfos() {
         StringBuilder sb = new StringBuilder();
         sb.append("Offerta " + name);
         sb.append("\n\tCategoria > " + category.printShortDescription());
@@ -82,7 +85,7 @@ public class Offer implements Serializable {
         }
         sb.append("\n");
 
-        return sb.toString();
+        return new CustomMessage(sb.toString());
     }
 
     /**

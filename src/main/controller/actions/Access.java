@@ -39,11 +39,11 @@ public class Access implements Selectable {
                 return;
             }
 
-            controller.signalToView(ErrorMessage.E_WRONG_PASSWORD.getMessage());
+            controller.signalToView(ErrorMessage.E_WRONG_PASSWORD);
             return;
         }
 
-        controller.signalToView(ErrorMessage.E_UNREGISTERED_USER.getMessage());
+        controller.signalToView(ErrorMessage.E_UNREGISTERED_USER);
 
     }
 

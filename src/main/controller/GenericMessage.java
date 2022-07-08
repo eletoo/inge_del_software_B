@@ -31,7 +31,7 @@ public enum GenericMessage implements Message {
     EXCHANGE_HOURS_EVERY_30_MINS("\nGli scambi potranno avvenire allo scoccare dell'ora o della mezz'ora all'interno della fascia oraria specificata"),
     DEADLINE("Scadenza dell'offerta dopo un numero di giorni pari a (inserire un numero maggiore di 0): "),
     CATEGORY_NAME("Inserisci il nome della categoria: "),
-    CATEGORY_DESCRIPTION("Inserire la descrizione della categoria: "),
+    CATEGORY_DESCRIPTION("Inserire la descrizione della categoria:\n-- ENTER per saltare -- "),
     FIELD_NAME("Nome campo: "),
     AT_LEAST_TWO_CHILDREN("\nN.B. Ogni categoria nodo deve avere almeno due sotto-categorie"),
     SELECT_CATEGORY("Scegliere una categoria della quale visualizzare le offerte: "),

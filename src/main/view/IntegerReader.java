@@ -13,10 +13,10 @@ public class IntegerReader implements IntReader{
     public int in(@NotNull Message message) {
         while (true) {
             try {
-                MessagePrinter.printText(message.getMessage());
+                MessagePrinter.printText(message);
                 return new Scanner(System.in).nextInt();
             } catch (NumberFormatException | InputMismatchException e) {
-                MessagePrinter.printText(ErrorMessage.E_INVALID_INPUT.getMessage());
+                MessagePrinter.printText(ErrorMessage.E_INVALID_INPUT);
             }
         }
     }

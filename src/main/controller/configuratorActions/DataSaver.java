@@ -22,7 +22,7 @@ public class DataSaver implements UserSelectable {
     @Override
     public void runAction(@NotNull Controller controller, User user) throws IOException {
         controller.getApp().save();
-        controller.signalToView(GenericMessage.SAVED_CORRECTLY.getMessage());
+        controller.signalToView(GenericMessage.SAVED_CORRECTLY);
     }
 
     /**
