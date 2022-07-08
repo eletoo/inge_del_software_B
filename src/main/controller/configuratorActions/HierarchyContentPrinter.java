@@ -1,6 +1,7 @@
 package main.controller.configuratorActions;
 
 import main.controller.Controller;
+import main.controller.CustomMessage;
 import main.controller.UserSelectable;
 import main.model.Hierarchy;
 import main.model.User;
@@ -23,7 +24,7 @@ public class HierarchyContentPrinter implements UserSelectable {
     public void runAction(@NotNull Controller controller, User user) throws IOException {
 
         for (Hierarchy h : controller.getApp().getHierarchiesStore().getHierarchies().values()) {
-            controller.signalToView(h.getRoot().getNome() + " " + h.getRoot().getDescrizione());
+            controller.signalToView(new CustomMessage(h.getRoot().getNome() + " " + h.getRoot().getDescrizione()));
             controller.signalToView(h.getRoot().getCategoryDefinition());
         }
     }

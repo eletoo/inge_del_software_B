@@ -30,11 +30,11 @@ public class AppContentPrinter implements UserSelectable {
     public void runAction(@NotNull Controller controller, User user) throws IOException {
 
         if (this.getHierarchies(controller.getApp()).isEmpty()) {
-            controller.signalToView(ErrorMessage.NO_HIERARCHIES_YET.getMessage());
+            controller.signalToView(ErrorMessage.NO_HIERARCHIES_YET);
             return;
         }
 
-        controller.signalToView(GenericMessage.HIERARCHIES.getMessage());
+        controller.signalToView(GenericMessage.HIERARCHIES);
 
         controller.signalListToView(
                 new LinkedList<>(this.getHierarchies(controller.getApp()).values()),
@@ -44,7 +44,7 @@ public class AppContentPrinter implements UserSelectable {
         if (controller.getApp().getInformationStore().getInformation() != null)
             controller.signalToView(controller.getApp().getInformationStore().getInformation().getInformations());
         else
-            controller.signalToView(ErrorMessage.NO_INFO_YET.getMessage());
+            controller.signalToView(ErrorMessage.NO_INFO_YET);
     }
 
     /**

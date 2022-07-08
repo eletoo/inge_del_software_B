@@ -15,6 +15,7 @@ import java.util.Map;
 
 /**
  * crea una gerarchia
+ *
  * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
  */
 public class HierarchyCreation implements UserSelectable {
@@ -41,14 +42,10 @@ public class HierarchyCreation implements UserSelectable {
 
             if (ans) {
                 String name = controller.askLineFromView(GenericMessage.FIELD_NAME);
-                boolean obbligatorio;
-
-                if (controller.askBooleanFromView(YesOrNoMessage.COMPULSORY_FIELD)) {
-                    obbligatorio = true;
-                } else {
-                    obbligatorio = false;
-                }
-                NativeField nuovo = new NativeField(obbligatorio, NativeField.Tipo.STRING);
+                NativeField nuovo = new NativeField(
+                        controller.askBooleanFromView(YesOrNoMessage.COMPULSORY_FIELD),
+                        NativeField.Tipo.STRING
+                );
                 campi.put(name, nuovo);
             }
         } while (ans);
@@ -58,12 +55,13 @@ public class HierarchyCreation implements UserSelectable {
 
     /**
      * aggiunge una categoria figlia a una categoria padre
+     *
      * @param controller controller
-     * @param padre categoria padre
-     * @param root categoria radice della gerarchia
+     * @param padre      categoria padre
+     * @param root       categoria radice della gerarchia
      * @return categoria radice
      */
-    public Category addChildToCategory(Controller controller, @NotNull CategoryEntry padre, Category root){
+    public Category addChildToCategory(Controller controller, @NotNull CategoryEntry padre, Category root) {
         if (padre.getCat() == root)
             root = padre.asNode();
         else {
@@ -77,18 +75,19 @@ public class HierarchyCreation implements UserSelectable {
             cat.setNativeFields(this.generateNativeFields(padre.getCat(), controller));
             ((Node) padre.getCat()).addChild(cat);
         } else
-            controller.signalToView(ErrorMessage.E_EXISTING_NAME_IN_HIERARCHY.getMessage());
+            controller.signalToView(ErrorMessage.E_EXISTING_NAME_IN_HIERARCHY);
 
         return root;
     }
 
     /**
      * crea una categoria
+     *
      * @param controller controller
-     * @param rootname nome della radice della gerarchia
+     * @param rootname   nome della radice della gerarchia
      * @return categoria radice
      */
-    public Category makeCategory(@NotNull Controller controller, String rootname){
+    public Category makeCategory(@NotNull Controller controller, String rootname) {
         Category root = new Leaf(rootname, controller.askPotentiallyEmptyStringFromView(GenericMessage.CATEGORY_DESCRIPTION));
         root.setNativeFields(this.generateNativeFields(null, controller));
 
@@ -96,7 +95,7 @@ public class HierarchyCreation implements UserSelectable {
             CategoryEntry padre = controller.getView().choose(
                     GenericMessage.AT_LEAST_TWO_CHILDREN,
                     getCategoriesAsList(root),
-                    CategoryEntry::getDisplayName
+                    ce -> new CustomMessage(ce.getDisplayName())
             );
 
             root = this.addChildToCategory(controller, padre, root);
@@ -106,8 +105,9 @@ public class HierarchyCreation implements UserSelectable {
 
     /**
      * crea la gerarchia
+     *
      * @param controller controller
-     * @param user utente
+     * @param user       utente
      * @throws IOException eccezione I/O
      */
     @Override
@@ -116,7 +116,7 @@ public class HierarchyCreation implements UserSelectable {
         String rootname = controller.askLineFromView(GenericMessage.CATEGORY_NAME);
 
         if (this.getHierarchies(app).isHierarchyNameTaken(rootname)) {
-            controller.signalToView(ErrorMessage.E_EXISTING_ROOT_CATEGORY.getMessage());
+            controller.signalToView(ErrorMessage.E_EXISTING_ROOT_CATEGORY);
             return;
         }
 
@@ -127,7 +127,7 @@ public class HierarchyCreation implements UserSelectable {
 
         if (controller.askBooleanFromView(YesOrNoMessage.SAVE_HIERARCHY)) {
             this.getHierarchies(app).save();
-            controller.signalToView(GenericMessage.SAVED_CORRECTLY.getMessage());
+            controller.signalToView(GenericMessage.SAVED_CORRECTLY);
             return;
         }
 
@@ -144,6 +144,7 @@ public class HierarchyCreation implements UserSelectable {
 
     /**
      * ottiene le categorie di una gerarchia in forma di lista
+     *
      * @param root radice della gerarchia
      * @return lista di categorie
      */

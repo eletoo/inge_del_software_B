@@ -1,11 +1,8 @@
 package main.controller.customerActions;
 
-import main.controller.ErrorMessage;
-import main.controller.GenericMessage;
+import main.controller.*;
 import main.exceptions.RequiredConstraintFailureException;
 import main.model.*;
-import main.controller.Controller;
-import main.controller.UserSelectable;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -19,23 +16,29 @@ import java.util.Map;
 public class OfferCreator implements UserSelectable {
     /**
      * crea un'offerta chiedendo all'utente di compilare i campi necessari
+     *
      * @param controller controller
-     * @param user utente
+     * @param user       utente
      * @throws IOException eccezione I/O
      */
     @Override
     public void runAction(@NotNull Controller controller, User user) throws IOException {
         if (controller.getApp().getHierarchiesStore().getHierarchies().isEmpty()) {
-            controller.signalToView(ErrorMessage.E_NO_CATEGORIES.getMessage());
+            controller.signalToView(ErrorMessage.E_NO_CATEGORIES);
             return;
         }
 
         var cat = controller.getView().choose(GenericMessage.CHOOSE_CATEGORY_TO_PUBLISH,
                 controller.getApp().getOffersStore().getLeafCategories(controller.getApp()),
-                CategoryEntry::getDisplayName
+                ce -> new CustomMessage(ce.getDisplayName())
         );
 
-        var offer = new Offer(controller.askLineFromView(GenericMessage.NAME), (Leaf) cat.getCat(), (Customer) user, OfferState.APERTA);
+        var offer = new Offer(
+                controller.askLineFromView(GenericMessage.NAME),
+                (Leaf) cat.getCat(),
+                (Customer) user,
+                OfferState.APERTA
+        );
 
         for (var field : cat.getCat().getNativeFields().entrySet()) {
             inputField(controller, offer, field);
@@ -56,9 +59,11 @@ public class OfferCreator implements UserSelectable {
      * @param field campo da compilare
      */
     private void inputField(@NotNull Controller controller, @NotNull Offer offer, Map.@NotNull Entry<String, NativeField> field) {
-        controller.signalToView("Valore per "
-                + field.getKey()
-                + (field.getValue().isObbligatorio() ? " (Obbligatorio) " : "(Opzionale)")
+        controller.signalToView(new CustomMessage(
+                        "Valore per "
+                                + field.getKey()
+                                + (field.getValue().isObbligatorio() ? " (Obbligatorio) " : "(Opzionale)")
+                )
         );
 
         offer.getFieldsValues()

@@ -34,11 +34,11 @@ public class Application implements Saveable, Loadable {
 
     @Override
     public void load() throws IOException {
-        this.exchangesStore.load();
-        this.offersStore.load();
         this.userDataStore.load();
         this.infoStore.load();
         this.hierarchiesStore.load();
+        this.offersStore.load();
+        this.exchangesStore.load();
     }
 
     @Override
@@ -49,11 +49,11 @@ public class Application implements Saveable, Loadable {
 
     @Override
     public void save() throws IOException {
-        this.exchangesStore.save();
-        this.offersStore.save();
         this.userDataStore.save();
         this.infoStore.save();
         this.hierarchiesStore.save();
+        this.offersStore.save();
+        this.exchangesStore.save();
     }
 
     @Override

@@ -1,0 +1,9 @@
+main.controller
+main.controller.actions
+main.controller.configuratorActions
+main.controller.customerActions
+main.controller.structures
+main.exceptions
+main.model
+main.model.stores
+main.view

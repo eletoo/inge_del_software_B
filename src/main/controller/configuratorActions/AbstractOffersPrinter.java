@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 /**
  * Gestisce la stampa delle offerte
+ *
  * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
  */
 public abstract class AbstractOffersPrinter implements UserSelectable {
@@ -23,14 +24,15 @@ public abstract class AbstractOffersPrinter implements UserSelectable {
 
     /**
      * Stampa tutte le offerte di tutti gli utenti con stato selezionato
+     *
      * @param controller controller
-     * @param user utente
+     * @param user       utente
      * @throws IOException eccezione I/O
      */
     @Override
     public void runAction(@NotNull Controller controller, User user) throws IOException {
         if (controller.getApp().getHierarchiesStore().getHierarchies().size() == 0) {
-            controller.signalToView(ErrorMessage.E_NO_CATEGORIES.getMessage());
+            controller.signalToView(ErrorMessage.E_NO_CATEGORIES);
             return;
         }
 

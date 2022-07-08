@@ -1,5 +1,6 @@
 package main.controller.configuratorActions;
 
+import main.controller.CustomMessage;
 import main.controller.GenericMessage;
 import main.controller.Controller;
 import main.controller.UserSelectable;
@@ -23,9 +24,9 @@ public class HierarchyFromFileConfigurator implements UserSelectable {
     public void runAction(@NotNull Controller controller, User user) throws IOException {
         try {
             controller.getApp().getHierarchiesStore().loadFromFile();
-            controller.signalToView(GenericMessage.SUCCESSFUL_HIERARCHY_IMPORT.getMessage());
+            controller.signalToView(GenericMessage.SUCCESSFUL_HIERARCHY_IMPORT);
         } catch (IOException e){
-            controller.signalToView(e.getMessage());
+            controller.signalToView(new CustomMessage(e.getMessage()));
         }
     }
 

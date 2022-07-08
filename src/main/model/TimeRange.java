@@ -1,5 +1,7 @@
 package main.model;
 
+import main.controller.CustomMessage;
+import main.controller.Message;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -75,8 +77,8 @@ public class TimeRange implements Serializable {
     /**
      * @return stringa contenente la descrizione dell'intervallo orario
      */
-    public String printTimeRange() {
-        return start.getTime() + "-" + end.getTime();
+    public Message printTimeRange() {
+        return new CustomMessage(start.getTime() + "-" + end.getTime());
     }
 
     /**

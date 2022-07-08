@@ -1,6 +1,7 @@
 package main.controller.customerActions;
 
 import main.controller.Controller;
+import main.controller.CustomMessage;
 import main.controller.UserSelectable;
 import main.model.Exchange;
 import main.model.User;
@@ -17,8 +18,9 @@ import java.util.stream.Collectors;
 public class LatestMessagePrinter implements UserSelectable {
     /**
      * stampa l'ultimo messaggio della controparte
+     *
      * @param controller controller
-     * @param user utente
+     * @param user       utente
      * @throws IOException eccezione I/O
      */
     @Override
@@ -33,7 +35,13 @@ public class LatestMessagePrinter implements UserSelectable {
         );
         var msg = exc.getLastMessageByCounterpart(user);
 
-        controller.signalToView(exc.getSelectedOffer().getName() + " <--> " + exc.getOwnOffer().getName() + ": " + (msg.getMessage() != null ? msg.getMessage() : "--"));
+        controller.signalToView(new CustomMessage(
+                        exc.getSelectedOffer().getName()
+                                + " <--> " + exc.getOwnOffer().getName()
+                                + ": "
+                                + (msg.getMessage() != null ? msg.getMessage() : "--")
+                )
+        );
     }
 
     /**

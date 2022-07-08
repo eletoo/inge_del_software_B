@@ -1,6 +1,7 @@
 package main.controller.actions;
 
 import main.controller.Controller;
+import main.controller.CustomMessage;
 import main.controller.Selectable;
 import main.model.*;
 import main.controller.GenericMessage;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 
 /**
  * Gestisce la registrazione degli utenti
+ *
  * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
  */
 public class Register implements Selectable {
@@ -24,6 +26,7 @@ public class Register implements Selectable {
 
     /**
      * esegue la registrazione dell'utente facendogli selezionare il tipo di profilo da creare
+     *
      * @param controller controller
      * @throws IOException eccezione I/O
      */
@@ -37,7 +40,7 @@ public class Register implements Selectable {
 
         List<UserType> users = Arrays.stream(UserType.values()).collect(Collectors.toList());
 
-        User user = controller.registerUser(controller.getView().choose(GenericMessage.SELECT_PROFILE_TYPE, users, UserType::getUserType));
+        User user = controller.registerUser(controller.getView().choose(GenericMessage.SELECT_PROFILE_TYPE, users, u -> new CustomMessage(u.getUserType())));
         user.onLogin(controller).runUserMenu(controller);
     }
 

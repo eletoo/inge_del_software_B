@@ -1,5 +1,7 @@
 package main.model;
 
+import main.controller.CustomMessage;
+import main.controller.Message;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -23,10 +25,10 @@ public class Time implements Serializable {
     /**
      * @return stringa contenente la descrizione dell'orario nel formato hh:mm
      */
-    public String getTime() {
+    public Message getTime() {
         String hour = this.hour == 0 ? "00" : String.valueOf(this.hour);
         String mins = this.minutes == 0 ? "00" : String.valueOf(this.minutes);
-        return hour + ":" + mins;
+        return new CustomMessage(hour + ":" + mins);
     }
 
     /**

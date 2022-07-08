@@ -46,7 +46,7 @@ public class Controller {
         List<Selectable> selectable = Context.initiateSelectableList();
         Selectable selected;
         do {
-            selected = sel.selectAction(this.view, selectable, Selectable::getActionName);
+            selected = sel.selectAction(this.view, selectable, s -> new CustomMessage(s.getActionName()));
             selected.runAction(this);
         } while (!(selected instanceof Exit));
     }
@@ -56,7 +56,7 @@ public class Controller {
      *
      * @param message messaggio
      */
-    public void signalToView(String message) {
+    public void signalToView(Message message) {
         // this.view.notify(message);
         MessagePrinter.printText(message);
     }
@@ -68,9 +68,9 @@ public class Controller {
      * @param toApply funzione da applicare alla lista
      * @param <T>     tipo della lista
      */
-    public <T> void signalListToView(@NotNull List<T> toPrint, Function<T, String> toApply) {
+    public <T> void signalListToView(@NotNull List<T> toPrint, Function<T, Message> toApply) {
         this.view.showList(toPrint, toApply);
-       // toPrint.forEach(e -> signalToView(toApply == null ? e.toString() : toApply.apply(e)));
+        // toPrint.forEach(e -> signalToView(toApply == null ? e.toString() : toApply.apply(e)));
     }
 
     /**
@@ -194,7 +194,7 @@ public class Controller {
     public void runSelectionMenu(List<UserSelectable> userMenu, User u) throws IOException {
         UserSelectable chosen;
         do {
-            chosen = this.view.choose(userMenu, UserSelectable::getActionName);
+            chosen = this.view.choose(userMenu, userSelectable -> new CustomMessage(userSelectable.getActionName()));
             chosen.runAction(this, u);
         } while (!(chosen instanceof main.controller.configuratorActions.Exit));
     }
@@ -210,13 +210,13 @@ public class Controller {
      * @return utente configuratore
      */
     public User onConfiguratorFirstLogin(Configurator u) {
-        this.signalToView(GenericMessage.CUSTOMIZE_CREDENTIALS.getMessage());
+        this.signalToView(GenericMessage.CUSTOMIZE_CREDENTIALS);
 
         String username;
         do {
             username = this.askStringFromView(GenericMessage.CUSTOMIZE_USERNAME);
             if (this.getApp().getUserDataStore().isUsernameTaken(username)) {
-                this.signalToView(ErrorMessage.E_CREDENTIALS_ERROR.getMessage());
+                this.signalToView(ErrorMessage.E_CREDENTIALS_ERROR);
                 continue;
             }
 
@@ -246,12 +246,14 @@ public class Controller {
         }
 
         //altrimenti è già stato proposto almeno un appuntamento
-        this.signalToView(e.getLastMessageByCounterpart(c).getMessage() != null ? e.getLastMessageByCounterpart(c).getMessage() : "");
+        this.signalToView(e.getLastMessageByCounterpart(c).getMessage() != null
+                ? new CustomMessage(e.getLastMessageByCounterpart(c).getMessage())
+                : new CustomMessage(""));
 
         if (e.getLastMessageByCounterpart(c).getMessage() != null && this.askBooleanFromView(YesOrNoMessage.ACCEPT_MEETING)) {
             app.getOffersStore().getOffer(e.getSelectedOffer()).setState(OfferState.CHIUSA);
             app.getOffersStore().getOffer(e.getOwnOffer()).setState(OfferState.CHIUSA);
-            this.signalToView(GenericMessage.CLOSED_OFFER.getMessage());
+            this.signalToView(GenericMessage.CLOSED_OFFER);
             app.getExchangesStore().removeExchange(e);
             app.save();
             return;
@@ -273,7 +275,7 @@ public class Controller {
      * @param userExchanges     scambi dell'utente
      * @throws IOException eccezione I/O
      */
-    private void manageExchange(Customer c, String noExchanges, String existingExchanges, Message selectExchange, @NotNull List<Exchange> userExchanges) throws IOException {
+    private void manageExchange(Customer c, Message noExchanges, Message existingExchanges, Message selectExchange, @NotNull List<Exchange> userExchanges) throws IOException {
         while (!userExchanges.isEmpty()) {
             Exchange toAccept;
             this.signalToView(existingExchanges);
@@ -319,15 +321,15 @@ public class Controller {
 
         manageExchange(
                 customer,
-                GenericMessage.NO_NEW_OFFERS.getMessage(),
-                GenericMessage.NEW_OFFERS.getMessage(),
+                GenericMessage.NO_NEW_OFFERS,
+                GenericMessage.NEW_OFFERS,
                 YesOrNoMessage.SELECT_EXCHANGE,
                 valid_exchanges);
 
         manageExchange(
                 customer,
-                GenericMessage.NO_PAST_OFFERS.getMessage(),
-                GenericMessage.PAST_OFFERS.getMessage(),
+                GenericMessage.NO_PAST_OFFERS,
+                GenericMessage.PAST_OFFERS,
                 YesOrNoMessage.SELECT_EXCHANGE,
                 past_exchanges);
 
