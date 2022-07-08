@@ -1,6 +1,8 @@
 package main.model;
 
-import main.controller.*;
+import main.controller.CategoryLongMessageForView;
+import main.controller.CategoryShortMessageForView;
+import main.controller.Message;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,25 +30,63 @@ public abstract class Category implements Serializable {
     }
 
     /**
+     * Funzione ricorsiva che computa per ogni livello se il nome e' stato utilizzato o meno.
+     *
+     * @param c    categoria in esame
+     * @param name nome
+     * @return true se name e' il nome della categoria o di uno dei suoi figli
+     */
+    private static boolean isNameTaken(@NotNull Category c, @NotNull String name) {
+        if (name.equals(c.nome))
+            return true;
+
+        if (c instanceof Node)
+            for (var child : ((Node) c).getCategorieFiglie())
+                if (isNameTaken(child, name))
+                    return true;
+        return false;
+    }
+
+    /**
+     * Funzione ricorsiva per la validazione della struttura di una categoria.
+     *
+     * @param c categoria di cui validare la struttura
+     * @return true se e' una foglia o se e' un nodo con almeno due figli con struttura valida
+     */
+    private static boolean isStructureValid(Category c) {
+        if (c instanceof Leaf)
+            return true;
+
+        if (c instanceof Node) {
+            if (((Node) c).getCategorieFiglie().size() < 2)
+                return false;
+            for (var child : ((Node) c).getCategorieFiglie())
+                if (!isStructureValid(child))
+                    return false;
+        }
+        return true;
+    }
+
+    /**
+     * Restituisce i campi nativi da assegnare alla categoria radice dotandoli di opportuni valori che ne indicano
+     * la compilazione obbligatoria o meno.
+     *
+     * @return campi da assegnare alla categoria radice
+     */
+    public static @NotNull Map<String, NativeField> generateRootNativeFields() {
+        NativeField statoConservazione = new NativeField(true, NativeField.Tipo.STRING);
+        NativeField descrizioneLibera = new NativeField(false, NativeField.Tipo.STRING);
+        Map<String, NativeField> campi = new HashMap<>();
+        campi.put("Stato Conservazione", statoConservazione);
+        campi.put("Descrizione Libera", descrizioneLibera);
+        return campi;
+    }
+
+    /**
      * @return descrizione della categoria
      */
     public String getDescrizione() {
         return descrizione;
-    }
-
-    /**
-     * @return nome della categoria
-     */
-    public String getNome() {
-        return nome;
-    }
-
-
-    /**
-     * @return mappa dei campi nativi
-     */
-    public Map<String, NativeField> getNativeFields() {
-        return campiNativi;
     }
 
     /**
@@ -57,10 +97,24 @@ public abstract class Category implements Serializable {
     }
 
     /**
+     * @return nome della categoria
+     */
+    public String getNome() {
+        return nome;
+    }
+
+    /**
      * @param nome nome da dare alla categoria
      */
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    /**
+     * @return mappa dei campi nativi
+     */
+    public Map<String, NativeField> getNativeFields() {
+        return campiNativi;
     }
 
     /**
@@ -87,24 +141,6 @@ public abstract class Category implements Serializable {
      */
     public boolean isNameTaken(String name) {
         return isNameTaken(this, name);
-    }
-
-    /**
-     * Funzione ricorsiva che computa per ogni livello se il nome e' stato utilizzato o meno.
-     *
-     * @param c    categoria in esame
-     * @param name nome
-     * @return true se name e' il nome della categoria o di uno dei suoi figli
-     */
-    private static boolean isNameTaken(@NotNull Category c, @NotNull String name) {
-        if (name.equals(c.nome))
-            return true;
-
-        if (c instanceof Node)
-            for (var child : ((Node) c).getCategorieFiglie())
-                if (isNameTaken(child, name))
-                    return true;
-        return false;
     }
 
     /**
@@ -141,41 +177,6 @@ public abstract class Category implements Serializable {
      */
     public boolean isStructureValid() {
         return isStructureValid(this);
-    }
-
-    /**
-     * Funzione ricorsiva per la validazione della struttura di una categoria.
-     *
-     * @param c categoria di cui validare la struttura
-     * @return true se e' una foglia o se e' un nodo con almeno due figli con struttura valida
-     */
-    private static boolean isStructureValid(Category c) {
-        if (c instanceof Leaf)
-            return true;
-
-        if (c instanceof Node) {
-            if (((Node) c).getCategorieFiglie().size() < 2)
-                return false;
-            for (var child : ((Node) c).getCategorieFiglie())
-                if (!isStructureValid(child))
-                    return false;
-        }
-        return true;
-    }
-
-    /**
-     * Restituisce i campi nativi da assegnare alla categoria radice dotandoli di opportuni valori che ne indicano
-     * la compilazione obbligatoria o meno.
-     *
-     * @return campi da assegnare alla categoria radice
-     */
-    public static @NotNull Map<String, NativeField> generateRootNativeFields() {
-        NativeField statoConservazione = new NativeField(true, NativeField.Tipo.STRING);
-        NativeField descrizioneLibera = new NativeField(false, NativeField.Tipo.STRING);
-        Map<String, NativeField> campi = new HashMap<>();
-        campi.put("Stato Conservazione", statoConservazione);
-        campi.put("Descrizione Libera", descrizioneLibera);
-        return campi;
     }
 
     /**

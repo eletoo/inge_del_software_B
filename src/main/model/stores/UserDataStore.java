@@ -7,7 +7,8 @@ import main.model.Saveable;
 import main.model.User;
 
 import java.io.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserDataStore implements Loadable, Saveable, Serializable {
 

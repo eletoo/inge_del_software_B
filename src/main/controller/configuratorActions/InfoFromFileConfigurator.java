@@ -1,8 +1,8 @@
 package main.controller.configuratorActions;
 
+import main.controller.Controller;
 import main.controller.CustomMessage;
 import main.controller.GenericMessage;
-import main.controller.Controller;
 import main.controller.UserSelectable;
 import main.model.User;
 import org.jetbrains.annotations.NotNull;
@@ -11,13 +11,15 @@ import java.io.IOException;
 
 /**
  * configura le informazioni di scambio da file
+ *
  * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
  */
 public class InfoFromFileConfigurator implements UserSelectable {
     /**
      * configura le informazioni di scambio da file
+     *
      * @param controller controller
-     * @param user utente
+     * @param user       utente
      * @throws IOException eccezione I/O
      */
     @Override
@@ -25,7 +27,7 @@ public class InfoFromFileConfigurator implements UserSelectable {
         try {
             controller.getApp().getInformationStore().loadFromFile();
             controller.signalToView(GenericMessage.SUCCESSFUL_IMPORT);
-        } catch (IOException e){
+        } catch (IOException e) {
             controller.signalToView(new CustomMessage(e.getMessage()));
         }
     }

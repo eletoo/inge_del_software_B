@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class IntegerReader implements IntReader{
+public class IntegerReader implements IntReader {
 
     @Override
     public int in(@NotNull PrintableMessage message) {

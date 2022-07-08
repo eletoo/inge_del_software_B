@@ -3,7 +3,7 @@ package main.controller.structures;
 import main.model.Application;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.*;
+import java.io.IOException;
 
 /**
  * carica le gerarchie salvate

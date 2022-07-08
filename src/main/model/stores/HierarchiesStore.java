@@ -1,9 +1,7 @@
 package main.model.stores;
 
 import com.google.gson.*;
-import main.controller.Controller;
 import main.controller.ErrorMessage;
-import main.controller.GenericMessage;
 import main.exceptions.InvalidFileContentException;
 import main.model.*;
 import org.jetbrains.annotations.NotNull;

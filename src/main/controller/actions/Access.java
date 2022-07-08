@@ -10,6 +10,7 @@ import java.io.IOException;
 
 /**
  * Gestisce l'accesso all'applicazione
+ *
  * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
  */
 public class Access implements Selectable {
@@ -22,6 +23,7 @@ public class Access implements Selectable {
     /**
      * se è il primo accesso richiama il metodo del controller opportuno, altrimenti chiede le credenziali e autentica
      * l'utente
+     *
      * @param controller controller
      * @throws IOException eccezione I/O
      */

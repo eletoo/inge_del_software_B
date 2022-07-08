@@ -13,16 +13,16 @@ public class OfferMessageForView implements Message {
     private OfferState state;
     private Map<String, Object> fieldsValues;
 
-    public OfferState getState() {
-        return state;
-    }
-
     public OfferMessageForView(String name, Leaf category, Customer owner, OfferState state, Map<String, Object> fieldsValues) {
         this.name = name;
         this.category = category;
         this.owner = owner;
         this.state = state;
         this.fieldsValues = fieldsValues;
+    }
+
+    public OfferState getState() {
+        return state;
     }
 
     public String getName() {

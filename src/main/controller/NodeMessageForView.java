@@ -6,6 +6,16 @@ import java.util.List;
 
 public class NodeMessageForView implements Message {
 
+    private CategoryLongMessageForView msg;
+    private List<Category> categorieFiglie;
+    private String nome;
+
+    public NodeMessageForView(CategoryLongMessageForView msg, List<Category> categorieFiglie, String nome) {
+        this.msg = msg;
+        this.categorieFiglie = categorieFiglie;
+        this.nome = nome;
+    }
+
     public CategoryLongMessageForView getMsg() {
         return msg;
     }
@@ -16,16 +26,5 @@ public class NodeMessageForView implements Message {
 
     public String getNome() {
         return this.nome;
-    }
-
-    private CategoryLongMessageForView msg;
-    private List<Category> categorieFiglie;
-
-    private String nome;
-
-    public NodeMessageForView(CategoryLongMessageForView msg, List<Category> categorieFiglie, String nome) {
-        this.msg = msg;
-        this.categorieFiglie = categorieFiglie;
-        this.nome = nome;
     }
 }

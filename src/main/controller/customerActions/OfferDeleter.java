@@ -1,8 +1,7 @@
 package main.controller.customerActions;
 
-import main.controller.ErrorMessage;
-import main.model.Application;
 import main.controller.Controller;
+import main.controller.ErrorMessage;
 import main.controller.UserSelectable;
 import main.model.Offer;
 import main.model.OfferState;

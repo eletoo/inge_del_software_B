@@ -4,9 +4,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class CategoryEntry {
 
-    private Category cat;
     private final Node father;
     private final String displayName;
+    private Category cat;
 
     /**
      * Costruttore.
@@ -15,6 +15,20 @@ public class CategoryEntry {
         this.cat = cat;
         this.father = father;
         this.displayName = displayName;
+    }
+
+    /**
+     * Trasforma una categoria foglia in nodo copiandone i valori.
+     *
+     * @param c categoria da trasformare in nodo
+     * @return categoria trasformata in nodo
+     */
+    public static @NotNull Node catAsNode(Category c) {
+        if (c instanceof Node) return (Node) c;
+
+        Node newcat = new Node(c.getNome(), c.getDescrizione());
+        newcat.setNativeFields(c.getNativeFields());
+        return newcat;
     }
 
     /**
@@ -36,20 +50,6 @@ public class CategoryEntry {
      */
     public String getDisplayName() {
         return displayName;
-    }
-
-    /**
-     * Trasforma una categoria foglia in nodo copiandone i valori.
-     *
-     * @param c categoria da trasformare in nodo
-     * @return categoria trasformata in nodo
-     */
-    public static @NotNull Node catAsNode(Category c) {
-        if (c instanceof Node) return (Node) c;
-
-        Node newcat = new Node(c.getNome(), c.getDescrizione());
-        newcat.setNativeFields(c.getNativeFields());
-        return newcat;
     }
 
     /**

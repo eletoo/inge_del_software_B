@@ -1,6 +1,7 @@
 package main.model;
 
-import main.controller.*;
+import main.controller.Controller;
+import main.controller.UserSelectable;
 import main.controller.configuratorActions.*;
 import org.jetbrains.annotations.NotNull;
 

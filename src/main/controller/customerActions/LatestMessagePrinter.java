@@ -3,7 +3,6 @@ package main.controller.customerActions;
 import main.controller.Controller;
 import main.controller.CustomMessage;
 import main.controller.UserSelectable;
-import main.model.Exchange;
 import main.model.User;
 import org.jetbrains.annotations.NotNull;
 

@@ -2,7 +2,7 @@ package main.controller;
 
 import main.model.Offer;
 
-public class ExchangedOffersMessageForView implements Message{
+public class ExchangedOffersMessageForView implements Message {
 
     private Offer own;
     private Offer selected;

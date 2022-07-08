@@ -1,6 +1,8 @@
 package main.model;
 
-import main.controller.*;
+import main.controller.CategoryLongMessageForView;
+import main.controller.Message;
+import main.controller.NodeMessageForView;
 
 import java.util.ArrayList;
 import java.util.List;

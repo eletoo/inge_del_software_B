@@ -1,14 +1,16 @@
 package main.controller;
 
-import main.model.Application;
 import main.controller.actions.Exit;
 import main.controller.structures.*;
 import main.model.*;
-import main.view.*;
+import main.view.ActionSelection;
+import main.view.IntegerReader;
+import main.view.StringReaderClass;
+import main.view.View;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -21,19 +23,34 @@ public class Controller {
 
     //parla con la view
     private Application app;
-
-    public View getView() {
-        return view;
-    }
-
     private View view;
-
     private RegistrationHandler rh;
 
     public Controller(Application app, View view) {
         this.app = app;
         this.view = view;
         this.rh = new RegistrationHandler(app);
+    }
+
+    /**
+     * prepara le strutture dati
+     *
+     * @param app applicazione
+     * @throws IOException eccezione I/O
+     */
+    public static void prepareStructures(Application app) throws IOException {
+        StructureLoader s = new DirectoryStructure();
+        s.prepareStructure(app);
+        s = new InfoStructure();
+        s.prepareStructure(app);
+        s = new OfferStructure();
+        s.prepareStructure(app);
+        s = new ExchangeStructure();
+        s.prepareStructure(app);
+    }
+
+    public View getView() {
+        return view;
     }
 
     /**
@@ -124,23 +141,6 @@ public class Controller {
         } while (!ans.equalsIgnoreCase("y") && !ans.equalsIgnoreCase("n"));
 
         return ans.equalsIgnoreCase("y");
-    }
-
-    /**
-     * prepara le strutture dati
-     *
-     * @param app applicazione
-     * @throws IOException eccezione I/O
-     */
-    public static void prepareStructures(Application app) throws IOException {
-        StructureLoader s = new DirectoryStructure();
-        s.prepareStructure(app);
-        s = new InfoStructure();
-        s.prepareStructure(app);
-        s = new OfferStructure();
-        s.prepareStructure(app);
-        s = new ExchangeStructure();
-        s.prepareStructure(app);
     }
 
     /**

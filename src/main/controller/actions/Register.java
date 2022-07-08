@@ -1,10 +1,10 @@
 package main.controller.actions;
 
 import main.controller.Controller;
-import main.controller.CustomMessage;
-import main.controller.Selectable;
-import main.model.*;
 import main.controller.GenericMessage;
+import main.controller.Selectable;
+import main.model.User;
+import main.model.UserType;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;

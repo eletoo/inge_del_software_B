@@ -3,8 +3,6 @@ package main.controller;
 import main.model.Day;
 import main.model.Time;
 
-import java.util.List;
-
 public class ExchangeMessageForView implements Message {
 
     private String place;
@@ -18,6 +16,7 @@ public class ExchangeMessageForView implements Message {
         this.day = days;
         this.timeRange = timeRanges;
     }
+
     public String getPlace() {
         return place;
     }

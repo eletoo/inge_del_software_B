@@ -10,13 +10,15 @@ import java.io.IOException;
 
 /**
  * esce dal menù utente
+ *
  * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
  */
 public class Exit implements UserSelectable {
     /**
      * esce dal menù utente
+     *
      * @param controller controller
-     * @param user utente
+     * @param user       utente
      * @throws IOException eccezione I/O
      */
     @Override

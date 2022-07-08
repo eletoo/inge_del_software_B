@@ -4,7 +4,10 @@ import main.controller.Controller;
 import main.controller.ErrorMessage;
 import main.controller.GenericMessage;
 import main.controller.UserSelectable;
-import main.model.*;
+import main.model.Leaf;
+import main.model.Offer;
+import main.model.OfferState;
+import main.model.User;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;

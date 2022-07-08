@@ -14,9 +14,38 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class User implements UserAction, Serializable {
+    public UserType type;
     private String username;
     private String hashedPw;
-    public UserType type;
+
+    /**
+     * Costruttore: salva la password dopo l'hashing
+     *
+     * @param _username username
+     * @param _password password in chiaro
+     */
+    public User(String _username, String _password) {
+        this.username = _username;
+        this.hashedPw = hashPassword(_password);
+    }
+
+    /**
+     * Permette di effettuare l'hashing della password dell'utente in modo da non salvarla in chiaro
+     *
+     * @param pw password in chiaro
+     * @return password dopo l'hashing
+     */
+    @Contract("_ -> new")
+    private static @NotNull String hashPassword(@NotNull String pw) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            digest.update(pw.getBytes());
+            return new String(Base64.getEncoder().encode(digest.digest()));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
 
     public String getUserType() {
         return this.type.getUserType();
@@ -47,39 +76,10 @@ public abstract class User implements UserAction, Serializable {
     }
 
     /**
-     * Costruttore: salva la password dopo l'hashing
-     *
-     * @param _username username
-     * @param _password password in chiaro
-     */
-    public User(String _username, String _password) {
-        this.username = _username;
-        this.hashedPw = hashPassword(_password);
-    }
-
-    /**
      * @return username
      */
     public String getUsername() {
         return username;
-    }
-
-    /**
-     * Permette di effettuare l'hashing della password dell'utente in modo da non salvarla in chiaro
-     *
-     * @param pw password in chiaro
-     * @return password dopo l'hashing
-     */
-    @Contract("_ -> new")
-    private static @NotNull String hashPassword(@NotNull String pw) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            digest.update(pw.getBytes());
-            return new String(Base64.getEncoder().encode(digest.digest()));
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
     }
 
     /**

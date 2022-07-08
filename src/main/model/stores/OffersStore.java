@@ -1,13 +1,14 @@
 package main.model.stores;
 
-import main.model.Application;
 import main.exceptions.NonLoadableFromFileException;
 import main.exceptions.NonSaveableOnFileException;
 import main.model.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class OffersStore implements Loadable, Saveable, Serializable {
@@ -17,12 +18,12 @@ public class OffersStore implements Loadable, Saveable, Serializable {
         offers = new LinkedList<>();
     }
 
-    public void setOffers(List<Offer> offers) {
-        this.offers = offers;
-    }
-
     public List<Offer> getOffers() {
         return offers;
+    }
+
+    public void setOffers(List<Offer> offers) {
+        this.offers = offers;
     }
 
     public List<Offer> getOffers(Leaf categoria) {
@@ -79,7 +80,7 @@ public class OffersStore implements Loadable, Saveable, Serializable {
      * Visualizza le offerte di una categoria foglia specificata dall'utente
      *
      * @param leaf foglia
-     * @param s   stato delle offerte da visualizzare
+     * @param s    stato delle offerte da visualizzare
      */
     public List<Offer> getOffers(Leaf leaf, OfferState s) {
         return this
@@ -91,7 +92,8 @@ public class OffersStore implements Loadable, Saveable, Serializable {
 
     /**
      * Permette all'utente di scegliere una categoria foglia da una gerarchia
-     * @param app    applicazione
+     *
+     * @param app applicazione
      * @return categoria foglia selezionata dall'utente
      */
     public List<CategoryEntry> getLeafCategories(@NotNull Application app) {

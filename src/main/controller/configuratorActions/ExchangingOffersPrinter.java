@@ -4,6 +4,7 @@ import main.model.OfferState;
 
 /**
  * stampa le offerte in stato in sambio
+ *
  * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
  */
 public class ExchangingOffersPrinter extends AbstractOffersPrinter {

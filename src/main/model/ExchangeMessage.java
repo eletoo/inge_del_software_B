@@ -1,7 +1,6 @@
 package main.model;
 
 import main.controller.ExchangeMessageForView;
-import main.controller.Message;
 
 import java.io.Serializable;
 
@@ -26,17 +25,17 @@ public class ExchangeMessage implements Serializable {
     }
 
     /**
-     * @return autore del messaggio
-     */
-    public Customer getAuthor() {
-        return this.author;
-    }
-
-    /**
      * @param message messaggio da impostare
      */
     public void setMessage(ExchangeMessageForView message) {
         this.message = message;
+    }
+
+    /**
+     * @return autore del messaggio
+     */
+    public Customer getAuthor() {
+        return this.author;
     }
 
     /**

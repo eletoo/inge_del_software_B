@@ -11,11 +11,11 @@ public enum Day implements Serializable {
     SATURDAY("Sabato"),
     SUNDAY("Domenica");
 
+    private String dayName;
+
     Day(String dayName) {
         this.dayName = dayName;
     }
-
-    private String dayName;
 
     public String getDay() {
         return this.dayName;

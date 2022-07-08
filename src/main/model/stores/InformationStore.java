@@ -1,7 +1,8 @@
 package main.model.stores;
 
-import com.google.gson.*;
-import main.controller.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import main.controller.ErrorMessage;
 import main.exceptions.InvalidFileContentException;
 import main.exceptions.NoConfigurationFileException;
 import main.exceptions.WrongDirectoryContentException;
@@ -11,7 +12,9 @@ import main.model.LocalPath;
 import main.model.Saveable;
 
 import java.io.*;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class InformationStore implements Loadable, Saveable, Serializable {
 

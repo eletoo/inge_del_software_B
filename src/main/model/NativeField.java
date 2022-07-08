@@ -19,10 +19,24 @@ public class NativeField implements Serializable {
     }
 
     /**
+     * @return true se il campo a compilazione obbligatoria
+     */
+    public boolean isObbligatorio() {
+        return obbligatorio;
+    }
+
+    /**
      * @param obbligatorio true se il campo nativo e' a compilazione obbligatoria
      */
     public void setObbligatorio(boolean obbligatorio) {
         this.obbligatorio = obbligatorio;
+    }
+
+    /**
+     * @return tipo del campo
+     */
+    public Tipo getType() {
+        return type;
     }
 
     /**
@@ -56,20 +70,6 @@ public class NativeField implements Serializable {
         public Object deserialize(String o) {
             return this.des.apply(o);
         }
-    }
-
-    /**
-     * @return true se il campo a compilazione obbligatoria
-     */
-    public boolean isObbligatorio() {
-        return obbligatorio;
-    }
-
-    /**
-     * @return tipo del campo
-     */
-    public Tipo getType() {
-        return type;
     }
 
 }

@@ -1,7 +1,6 @@
 package main.controller.configuratorActions;
 
 import main.controller.*;
-import main.model.Category;
 import main.model.Hierarchy;
 import main.model.Node;
 import main.model.User;

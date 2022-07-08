@@ -1,12 +1,11 @@
 package main.model;
 
-import main.controller.CustomMessage;
-import main.controller.Message;
 import main.controller.OfferMessageForView;
-import main.controller.PrintableMessage;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class Offer implements Serializable {
     private String name;

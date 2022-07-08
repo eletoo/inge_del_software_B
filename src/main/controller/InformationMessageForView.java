@@ -14,16 +14,16 @@ public class InformationMessageForView implements Message {
 
     private int deadline;
 
-    public int getDeadline() {
-        return deadline;
-    }
-
     public InformationMessageForView(String place, List<String> addresses, List<Day> days, List<TimeRange> time, int deadline) {
         this.place = place;
         this.addresses = addresses;
         this.days = days;
         this.time = time;
         this.deadline = deadline;
+    }
+
+    public int getDeadline() {
+        return deadline;
     }
 
     public String getPlace() {

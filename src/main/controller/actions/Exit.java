@@ -5,17 +5,19 @@ import main.controller.Selectable;
 
 /**
  * Gestisce l'uscita dall'applicazione
+ *
  * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
  */
 public class Exit implements Selectable {
     private String actionName;
 
     public Exit() {
-        this.actionName ="Esci";
+        this.actionName = "Esci";
     }
 
     /**
      * esce dall'applicazione
+     *
      * @param controller controller
      */
     @Override

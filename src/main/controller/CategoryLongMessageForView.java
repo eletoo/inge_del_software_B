@@ -4,7 +4,7 @@ import main.model.NativeField;
 
 import java.util.Map;
 
-public class CategoryLongMessageForView implements Message{
+public class CategoryLongMessageForView implements Message {
 
     private String nome;
     private String descrizione;

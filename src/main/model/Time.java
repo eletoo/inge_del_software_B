@@ -1,6 +1,5 @@
 package main.model;
 
-import main.controller.Message;
 import main.controller.TimeMessageForView;
 import org.jetbrains.annotations.NotNull;
 
@@ -51,6 +50,15 @@ public class Time implements Serializable {
     }
 
     /**
+     * Imposta i minuti di un orario
+     *
+     * @param minutes minuti
+     */
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
+    /**
      * @return ora
      */
     public int getHour() {
@@ -64,15 +72,6 @@ public class Time implements Serializable {
      */
     public void setHour(int hour) {
         this.hour = hour;
-    }
-
-    /**
-     * Imposta i minuti di un orario
-     *
-     * @param minutes minuti
-     */
-    public void setMinutes(int minutes) {
-        this.minutes = minutes;
     }
 
     /**

@@ -1,10 +1,8 @@
 package main.view;
 
-import main.controller.PrintableMessage;
 import main.controller.Select;
 import main.controller.Selectable;
 import org.jetbrains.annotations.NotNull;
-
 
 import java.util.List;
 import java.util.function.Function;

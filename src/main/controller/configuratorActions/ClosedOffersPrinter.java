@@ -1,9 +1,10 @@
 package main.controller.configuratorActions;
 
-import main.model.*;
+import main.model.OfferState;
 
 /**
  * Stampa le offerte in stato chiuso
+ *
  * @author Elena Tonini, Claudia Manfredi, Mattia Pavlovic
  */
 public class ClosedOffersPrinter extends AbstractOffersPrinter {

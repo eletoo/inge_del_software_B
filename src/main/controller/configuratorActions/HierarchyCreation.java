@@ -1,6 +1,5 @@
 package main.controller.configuratorActions;
 
-import main.model.Application;
 import main.controller.*;
 import main.model.*;
 import main.model.stores.HierarchiesStore;
