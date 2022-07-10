@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.9)  21 JUN 2022 19:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.3.9)  22 JUN 2022 16:26
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -706,10 +706,7 @@ Dictionary: translator-months-dictionary, Language: English
 Dictionary: translator-numbers-dictionary, Language: English 
 ) (c:/texlive/2021/texmf-dist/tex/latex/translator/translator-theorem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
-) (texout/presentation.nav) (./structure.tex
-Overfull \vbox (14.0pt too high) has occurred while \output is active []
-
- (texout/presentation.toc) [1
+) (texout/presentation.nav) (./structure.tex (texout/presentation.toc) [1
 
 {c:/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}pdfTeX warning (ext4): destination with the same identifier (name{Navigation1}) has been already used, duplicate ignored
 
@@ -732,7 +729,7 @@ l.14 \end{frame}
                    \relax 
 l.14 \end{frame}
                  (./Sections/initial testing/testMain.tex (./Sections/initial testing/test01.tex
-<images//initial testing/testApplicazione.png, id=81, 775.39688pt x 453.19313pt>
+<images//initial testing/testApplicazione.png, id=32, 775.39688pt x 453.19313pt>
 File: images//initial testing/testApplicazione.png Graphic file (type png)
 <use images//initial testing/testApplicazione.png>
 Package pdftex.def Info: images//initial testing/testApplicazione.png  used on input line 23.
@@ -848,23 +845,7 @@ l.51 \end{frame}
 l.51 \end{frame}
                 
 
-])) (./Sections/MVC/mvcMain.tex) (./Sections/grasp/graspMain.tex) (./Sections/solid/solidMain.tex) (./Sections/gof/gofMain.tex) (./Sections/refactor/refactorMain.tex) (./Sections/final testing/finalTestMain.tex)
-No file presentation.bbl.
-[10
-
-pdfTeX warning (ext4): destination with the same identifier (name{Navigation9}) has been already used, duplicate ignored
-
-\pgfpages@shipoutshipoutbox ...physicalpagesizes }
-                                                  \endgroup 
-l.29 \end{frame}
-                pdfTeX warning (ext4): destination with the same identifier (name{page.9}) has been already used, duplicate ignored
-
-\pgfpages@shipoutshipoutbox ...physicalpagesizes }
-                                                  \endgroup 
-l.29 \end{frame}
-                
-
-])
+])) (./Sections/MVC/mvcMain.tex) (./Sections/grasp/graspMain.tex) (./Sections/solid/solidMain.tex) (./Sections/gof/gofMain.tex) (./Sections/refactor/refactorMain.tex) (./Sections/final testing/finalTestMain.tex))
 \tf@nav=\write6
 \openout6 = `presentation.nav'.
 
@@ -874,14 +855,14 @@ l.29 \end{frame}
 \tf@snm=\write8
 \openout8 = `presentation.snm'.
 
- [11
+ [10
 
-pdfTeX warning (ext4): destination with the same identifier (name{Navigation10}) has been already used, duplicate ignored
+pdfTeX warning (ext4): destination with the same identifier (name{Navigation9}) has been already used, duplicate ignored
 
 \pgfpages@shipoutshipoutbox ...physicalpagesizes }
                                                   \endgroup 
 l.11 \end{document}
-                   pdfTeX warning (ext4): destination with the same identifier (name{page.10}) has been already used, duplicate ignored
+                   pdfTeX warning (ext4): destination with the same identifier (name{page.9}) has been already used, duplicate ignored
 
 \pgfpages@shipoutshipoutbox ...physicalpagesizes }
                                                   \endgroup 
@@ -890,21 +871,21 @@ l.11 \end{document}
 
 ] (texout/presentation.aux)
 Package rerunfilecheck Info: File `presentation.out' has not changed.
-(rerunfilecheck)             Checksum: 2DC04087EBD2BA52FC1822B264F13266;1085.
+(rerunfilecheck)             Checksum: DBED5CDB496DA2DFE713C617CEDF1DD5;172.
  ) 
 Here is how much of TeX's memory you used:
- 21724 strings out of 479390
- 422132 string characters out of 5870921
- 685548 words of memory out of 5000000
- 39265 multiletter control sequences out of 15000+600000
+ 21697 strings out of 479390
+ 422351 string characters out of 5870921
+ 680486 words of memory out of 5000000
+ 39249 multiletter control sequences out of 15000+600000
  471839 words of font info for 37 fonts, out of 8000000 for 9000
  430 hyphenation exceptions out of 8191
  99i,16n,104p,474b,592s stack positions out of 5000i,500n,10000p,200000b,80000s
 <c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on texout/presentation.pdf (11 pages, 214733 bytes).
+Output written on texout/presentation.pdf (10 pages, 206410 bytes).
 PDF statistics:
- 289 PDF objects out of 1000 (max. 8388607)
- 243 compressed objects within 3 object streams
- 30 named destinations out of 1000 (max. 500000)
- 120 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 157 PDF objects out of 1000 (max. 8388607)
+ 115 compressed objects within 2 object streams
+ 20 named destinations out of 1000 (max. 500000)
+ 56 words of extra memory for PDF output out of 10000 (max. 10000000)
 

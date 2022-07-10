@@ -6,11 +6,11 @@
 \pagenumbering{arabic}
 
 
-\section{Sommario}
 \begin{frame}[allowframebreaks]
     \frametitle{Sommario}
     \setbeamertemplate{section in toc}[sections numbered]
-    \tableofcontents
+   %{\insertsection \dotfill \insertframestartpage-\insertframeendpage}
+   \tableofcontents
 \end{frame}
 
 %\input delle sezioni da mettere nella presentazione
@@ -21,9 +21,3 @@
 \input{Sections/gof/gofMain.tex}
 \input{Sections/refactor/refactorMain.tex}
 \input{Sections/final testing/finalTestMain.tex}
-
-\section{Bibliografia}
-\begin{frame}[allowframebreaks]
-    \frametitle{Bibliografia}
-    \bibliography{texmf/bibtex/bib/references.bib}
-\end{frame}

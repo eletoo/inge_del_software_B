@@ -1,12 +1,5 @@
 # Fdb version 3
-["bibtex texout/presentation"] 1655830958 "texout/presentation.aux" "texout/presentation.bbl" "texout/presentation" 1655830961
-  "c:/texlive/2021/texmf-dist/bibtex/bst/base/ieeetr.bst" 1646818025 18361 1a00e58565e7f19bf2b3e1bfb82254ae ""
-  "texmf/bibtex/bib/references.bib" 0 -1 0 ""
-  "texout/presentation.aux" 1655830960 5016 79ca5edf29aa00ac426c42855bff8ed1 "pdflatex"
-  (generated)
-  "texout/presentation.bbl"
-  "texout/presentation.blg"
-["pdflatex"] 1655830958 "c:/Users/Elena Tonini/OneDrive/Desktop/Latex/inge-b-doc/presentation.tex" "texout/presentation.pdf" "presentation" 1655830961
+["pdflatex"] 1655908003 "c:/Users/Elena Tonini/OneDrive/Desktop/Latex/inge-b-doc/presentation.tex" "texout/presentation.pdf" "presentation" 1655908023
   "Sections/MVC/mvcMain.tex" 1655829983 21 470b35e30a98fb3af5a3c497a04bf6a2 ""
   "Sections/final testing/finalTestMain.tex" 1655828378 24 557ed91971cfe513bbb7313f7d5108ae ""
   "Sections/gof/gofMain.tex" 1655829475 36 3c8d0ae145bd77f94f8ae03b8b6fe093 ""
@@ -191,13 +184,12 @@
   "c:/texlive/2021/texmf.cnf" 1646825247 713 e69b156964470283e0530f5060668171 ""
   "images//initial testing/testApplicazione.png" 1655830451 194927 fc1929e86ab11cf3bb860be1c3c6730d ""
   "presentation.tex" 1655826754 399 3b90509213491aad6c58706f0741bdc3 ""
-  "settings.tex" 1655827233 1938 3ce5470d1bb0783ff6e40d06675515b3 ""
-  "structure.tex" 1655829969 787 e7626bf10daba6f86ce90eca767c7f84 ""
-  "texout/presentation.aux" 1655830960 5016 79ca5edf29aa00ac426c42855bff8ed1 "pdflatex"
-  "texout/presentation.bbl" 0 -1 0 "bibtex texout/presentation"
-  "texout/presentation.nav" 1655830960 2671 b1643eb6d0cff4688db31cb98f7c6014 "pdflatex"
-  "texout/presentation.out" 1655830960 1085 2dc04087ebd2ba52fc1822b264f13266 "pdflatex"
-  "texout/presentation.toc" 1655830960 464 b2088e2e4f3403addd3cc016e9aa758e "pdflatex"
+  "settings.tex" 1655907991 5178 42a6cab9a24eb67ad60841c67dfff493 ""
+  "structure.tex" 1655907984 686 9d38c139f6da67831120f92060def2a4 ""
+  "texout/presentation.aux" 1655908021 2559 c00c530d71184f4a9d56b54e1c282cca "pdflatex"
+  "texout/presentation.nav" 1655908021 1282 b296a0362fcaf163504e629f9a496247 "pdflatex"
+  "texout/presentation.out" 1655908021 172 dbed5cdb496da2dfe713c617cedf1dd5 "pdflatex"
+  "texout/presentation.toc" 1655908021 68 779d23b8ffc605d321da93901b61fde7 "pdflatex"
   (generated)
   "texout/presentation.aux"
   "texout/presentation.log"

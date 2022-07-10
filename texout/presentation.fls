@@ -1063,7 +1063,6 @@ INPUT c:/texlive/2021/texmf-dist/tex/latex/beamer/beamerouterthemesidebar.sty
 INPUT c:/texlive/2021/texmf-dist/tex/latex/beamer/beamerouterthemesidebar.sty
 INPUT c:/texlive/2021/texmf-dist/tex/latex/beamer/beamerouterthemesidebar.sty
 INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmss12.tfm
-INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmss8.tfm
 INPUT c:/texlive/2021/texmf-dist/tex/latex/pgf/utilities/pgfpages.sty
 INPUT c:/texlive/2021/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 INPUT c:/texlive/2021/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
@@ -1174,6 +1173,7 @@ INPUT c:/texlive/2021/texmf-dist/tex/latex/translator/translator-theorem-diction
 INPUT texout/presentation.nav
 INPUT texout/presentation.nav
 INPUT texout/presentation.nav
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmss8.tfm
 INPUT ./structure.tex
 INPUT structure.tex
 INPUT ./structure.tex
