@@ -1,0 +1,16 @@
+    @Test
+    void isNameTaken() {
+        n.addChild(f);
+        assertTrue(n.isNameTaken("Foglia"));
+    }
+
+    @Test
+    void nodeStructureIsInvalidIfHasNoChildren() {
+        assertFalse(n.isStructureValid());
+    }
+
+    @Test
+    void nodeStructureIsInvalidIfHasOneChild(){
+        n.addChild(f);
+        assertFalse(n.isStructureValid());
+    }

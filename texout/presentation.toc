@@ -1,7 +1,7 @@
 \beamer@sectionintoc {1}{Testing della Versione 5\hfill 2}{2}{0}{1}
-\beamer@sectionintoc {2}{Pattern MVC\hfill 7}{7}{0}{2}
-\beamer@sectionintoc {3}{Pattern GRASP\hfill 7}{7}{0}{3}
-\beamer@sectionintoc {4}{Principi SOLID\hfill 7}{7}{0}{4}
-\beamer@sectionintoc {5}{Pattern della Gang of Four\hfill 7}{7}{0}{5}
-\beamer@sectionintoc {6}{Refactoring\hfill 7}{7}{0}{6}
-\beamer@sectionintoc {7}{Testing finale\hfill 7}{7}{0}{7}
+\beamer@sectionintoc {2}{Pattern MVC\hfill 9}{9}{0}{2}
+\beamer@sectionintoc {3}{Pattern GRASP\hfill 10}{10}{0}{3}
+\beamer@sectionintoc {4}{Principi SOLID\hfill 11}{11}{0}{4}
+\beamer@sectionintoc {5}{Pattern della Gang of Four\hfill 12}{12}{0}{5}
+\beamer@sectionintoc {6}{Refactoring\hfill 13}{13}{0}{6}
+\beamer@sectionintoc {7}{Testing finale\hfill 20}{20}{0}{7}

@@ -9,10 +9,16 @@
 \begin{frame}[allowframebreaks]
     \frametitle{Sommario}
     \setbeamertemplate{section in toc}[sections numbered]
-   %{\insertsection \dotfill \insertframestartpage-\insertframeendpage}
-   \tableofcontents
+    \tableofcontents
 \end{frame}
 
+\AtBeginSection[]{%
+\begin{frame}[plain]%
+  \begin{center}%
+    \usebeamerfont{section title}\insertsection%
+  \end{center}%
+\end{frame}%
+}
 %\input delle sezioni da mettere nella presentazione
 \input{Sections/initial testing/testMain.tex}
 \input{Sections/MVC/mvcMain.tex}

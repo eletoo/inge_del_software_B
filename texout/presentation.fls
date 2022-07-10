@@ -1051,6 +1051,30 @@ INPUT c:/texlive/2021/texmf-dist/tex/latex/tools/calc.sty
 INPUT c:/texlive/2021/texmf-dist/tex/latex/graphics/graphicx.sty
 INPUT c:/texlive/2021/texmf-dist/tex/latex/amsmath/amsmath.sty
 INPUT c:/texlive/2021/texmf-dist/tex/latex/hyperref/hyperref.sty
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/listings.sty
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/listings.sty
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/listings.sty
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/listings.sty
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/listings.sty
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/listings.sty
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/listings.sty
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/listings.sty
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/listings.sty
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/listings.sty
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/listings.sty
+INPUT c:/texlive/2021/texmf-dist/tex/latex/graphics/keyval.sty
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/lstmisc.sty
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/lstmisc.sty
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/lstmisc.sty
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/lstmisc.sty
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/listings.cfg
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/listings.cfg
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/listings.cfg
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/listings.cfg
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/lstlang1.sty
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/lstlang1.sty
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/lstlang1.sty
+INPUT c:/texlive/2021/texmf-dist/tex/latex/listings/lstlang1.sty
 INPUT c:/texlive/2021/texmf-dist/tex/latex/beamer/beamerouterthemesidebar.sty
 INPUT c:/texlive/2021/texmf-dist/tex/latex/beamer/beamerouterthemesidebar.sty
 INPUT c:/texlive/2021/texmf-dist/tex/latex/beamer/beamerouterthemesidebar.sty
@@ -1234,10 +1258,87 @@ INPUT ./Sections/refactor/refactorMain.tex
 INPUT Sections/refactor/refactorMain.tex
 INPUT ./Sections/refactor/refactorMain.tex
 INPUT Sections/refactor/refactorMain.tex
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmmi10.tfm
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmmi8.tfm
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmmi6.tfm
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmsy8.tfm
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmsy6.tfm
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmex10.tfm
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
+INPUT c:/texlive/2021/texmf-dist/tex/latex/amsfonts/umsa.fd
+INPUT c:/texlive/2021/texmf-dist/tex/latex/amsfonts/umsa.fd
+INPUT c:/texlive/2021/texmf-dist/tex/latex/amsfonts/umsa.fd
+INPUT c:/texlive/2021/texmf-dist/tex/latex/amsfonts/umsa.fd
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam7.tfm
+INPUT c:/texlive/2021/texmf-dist/tex/latex/amsfonts/umsb.fd
+INPUT c:/texlive/2021/texmf-dist/tex/latex/amsfonts/umsb.fd
+INPUT c:/texlive/2021/texmf-dist/tex/latex/amsfonts/umsb.fd
+INPUT c:/texlive/2021/texmf-dist/tex/latex/amsfonts/umsb.fd
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmssi10.tfm
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmssi8.tfm
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmssi8.tfm
+INPUT ./images//refactoring/extractclass1.png
+INPUT ./images//refactoring/extractclass1.png
+INPUT images//refactoring/extractclass1.png
+INPUT ./images//refactoring/extractclass1.png
+INPUT ./images//refactoring/extractclass1.png
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm
+INPUT ./images//refactoring/extractclass2.png
+INPUT ./images//refactoring/extractclass2.png
+INPUT images//refactoring/extractclass2.png
+INPUT ./images//refactoring/extractclass2.png
+INPUT ./images//refactoring/extractclass2.png
+INPUT ./images//refactoring/extractclass3.png
+INPUT ./images//refactoring/extractclass3.png
+INPUT images//refactoring/extractclass3.png
+INPUT ./images//refactoring/extractclass3.png
+INPUT ./images//refactoring/extractclass3.png
+INPUT ./images//refactoring/extractclass4.png
+INPUT ./images//refactoring/extractclass4.png
+INPUT images//refactoring/extractclass4.png
+INPUT ./images//refactoring/extractclass4.png
+INPUT ./images//refactoring/extractclass4.png
+INPUT ./images//refactoring/extractclass5.png
+INPUT ./images//refactoring/extractclass5.png
+INPUT images//refactoring/extractclass5.png
+INPUT ./images//refactoring/extractclass5.png
+INPUT ./images//refactoring/extractclass5.png
 INPUT ./Sections/final testing/finalTestMain.tex
 INPUT Sections/final testing/finalTestMain.tex
 INPUT ./Sections/final testing/finalTestMain.tex
 INPUT Sections/final testing/finalTestMain.tex
+INPUT ./images//final testing/finaltesting-category1.png
+INPUT ./images//final testing/finaltesting-category1.png
+INPUT images//final testing/finaltesting-category1.png
+INPUT ./images//final testing/finaltesting-category1.png
+INPUT ./images//final testing/finaltesting-category1.png
+INPUT ./images//final testing/finaltesting-category2.png
+INPUT ./images//final testing/finaltesting-category2.png
+INPUT images//final testing/finaltesting-category2.png
+INPUT ./images//final testing/finaltesting-category2.png
+INPUT ./images//final testing/finaltesting-category2.png
+INPUT ./images//final testing/finaltesting-time1.png
+INPUT ./images//final testing/finaltesting-time1.png
+INPUT images//final testing/finaltesting-time1.png
+INPUT ./images//final testing/finaltesting-time1.png
+INPUT ./images//final testing/finaltesting-time1.png
+INPUT ./images//final testing/finaltesting-time2.png
+INPUT ./images//final testing/finaltesting-time2.png
+INPUT images//final testing/finaltesting-time2.png
+INPUT ./images//final testing/finaltesting-time2.png
+INPUT ./images//final testing/finaltesting-time2.png
+INPUT ./images//final testing/finaltesting-time3.png
+INPUT ./images//final testing/finaltesting-time3.png
+INPUT images//final testing/finaltesting-time3.png
+INPUT ./images//final testing/finaltesting-time3.png
+INPUT ./images//final testing/finaltesting-time3.png
 OUTPUT texout/presentation.nav
 OUTPUT texout/presentation.toc
 OUTPUT texout/presentation.snm
@@ -1248,3 +1349,6 @@ INPUT c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb
 INPUT c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb
 INPUT c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb
 INPUT c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb
+INPUT c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb
+INPUT c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb
+INPUT c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb
